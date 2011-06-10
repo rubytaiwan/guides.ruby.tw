@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 正規表示式</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>正規表示式 Regular expressions</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Strings" href=strings.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Arrays" href=arrays.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>正規表示式</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>來編寫更有趣的程式吧。這一次我們使用一個簡潔精準的<em>樣式 (pattern)</em>來測試一個字串是否符合描述。</p>
+<p>這些樣式中，有些字元及字元組合具有特殊意思，包括：</p>
+<p></p><table border="1"><tbody><tr><td><code>[]</code> </td><td> 指定的範圍（例如：<code>[a-z]</code> 表示一個在 <code>a</code> 到 <code>z</code> 的範圍內的字母） </td></tr>
+<tr><td>
+<code>\w</code> </td><td> 一般字元 (word character)，即 <code>[0-9A-Za-z_]</code></td></tr>
+<tr><td>
+<code>\W</code> </td><td> 非一般字元 (non-word character)</td></tr>
+<tr><td>
+<code>\s</code> </td><td> 空白字元 (space character)，即 <code>[ \t\n\r\f]</code></td></tr>
+<tr><td>
+<code>\S</code> </td><td> 非空白字元 (non-space character)</td></tr>
+<tr><td>
+<code>\d</code> </td><td> 數字 (digit character)，即 <code>[0-9]</code></td></tr>
+<tr><td>
+<code>\D</code> </td><td> 非數字 (non-digit character)</td></tr>
+<tr><td>
+<code>\b</code> </td><td> 退位 (0x08)（僅用於指定的範圍）</td></tr>
+<tr><td>
+<code>\b</code> </td><td> 單字邊界（若不是於指定的範圍）</td></tr>
+<tr><td>
+<code>\B</code> </td><td> 非單字邊界</td></tr>
+<tr><td>
+<code>*</code> </td><td> 前一符號的內容出現 0 或數次。</td></tr>
+<tr><td>
+<code>+</code> </td><td> 前一符號的內容出現 1 或數次。</td></tr>
+<tr><td>
+<code>{m,n}</code> </td><td> 前一符號的內容，最少出現 m 次，最多出現 n 次。</td></tr>
+<tr><td>
+<code>?</code> </td><td> 前一符號的內容最多出現一次，同 <code>{0,1}</code></td></tr>
+<tr><td>
+<code>|</code> </td><td> 符合前一個或後一個表示式</td></tr>
+<tr><td>
+<code>()</code> </td><td> 分組</td></tr></tbody></table>
+<p>使用這種奇特詞彙的樣式，一般稱為<em>正規表示式 (regular expressions)</em>。Ruby 和 Perl 一樣，都是用斜線 (/) 包住樣式內容，而不用雙引號。如果你從未接觸過正規表示式，那麼正規表示式對你來說可能一點也不<em>正規</em>，但是花點時間熟悉一下絕對是明智之舉。正規表示式具備有高效率的解釋能力 (expressive power)，對於樣式比對、搜尋、或操作文字字串，都能為你省卻許多麻煩（及不少程式碼）。</p>
+<p>例如，我們想要測試一個字串是否符合一項描述：「以小寫的 f 開頭，接著是一個大寫的字母，之後隨意打些字母，只要沒有小寫的就行。」如果你熟悉 C 程式，現在腦海大概已經浮現十幾行程式碼了吧？沒錯吧，你這是自找麻煩。而用 Ruby 的話，你只要用 <code>/^f[A-Z][^a-z]*$/</code> 這個正規表示式測試你的字串就可以。</p>
+<p>那如果是測試「在角括號內含有一個十六進位數」呢？也沒問題。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> def chab(s)&nbsp;&nbsp; # &quot;contains hex in angle brackets&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp; (s =~ /&lt;0(x|X)(\d|[a-f]|[A-F])+&gt;/) != nil</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+&nbsp; nil<BR> ruby&gt;<font color="#ffff00"><B> chab &quot;Not this one.&quot;</B></font><BR>
+&nbsp; false<BR> ruby&gt;<font color="#ffff00"><B> chab &quot;Maybe this?{0x35}&quot;&nbsp; &nbsp; # wrong kind of brackets</B></font><BR>
+&nbsp; false<BR> ruby&gt;<font color="#ffff00"><B> chab &quot;Or this?&lt;0x38z7e&gt;&quot;&nbsp; 
+&nbsp; # bogus hex digit</B></font><BR>
+&nbsp; false<BR> ruby&gt;<font color="#ffff00"><B> chab &quot;Okay, this: &lt;0xfc0004&gt;.&quot;</B></font><BR>
+&nbsp; true</div>
+
+<p>雖然正規表示式一眼看來會讓人感到迷惘，但你很快就會感到愉悅，因為它可以讓你省卻不少麻煩。</p>
+<p>以下這個小程式可以幫你測試常規表示式（編註：你也可以使用 <a href="http://rubular.com/">Rubular</a> 這個網路服務做練習）。將它儲存為 <code>regx.rb</code>，並在命令列輸入 <code>&quot;ruby regx.rb&quot;</code> 以執行程式。</p>
+<p></p><div class="rbscript"># 需要 ANSI 終端機！<BR>
+<BR> st = &quot;\033[7m&quot;<BR> en = &quot;\033[m&quot;<BR>
+<BR> puts &quot;Enter an empty string at any time to exit.&quot;<BR>
+<BR> while true<BR>
+&nbsp; print &quot;str&gt; &quot;; STDOUT.flush; str = gets.chop<BR>
+&nbsp; break if str.empty?<BR>
+&nbsp; print &quot;pat&gt; &quot;; STDOUT.flush; pat = gets.chop<BR>
+&nbsp; break if pat.empty?<BR>
+&nbsp; re = Regexp.new(pat)<BR>
+&nbsp; puts str.gsub(re,&quot;#{st}\\&amp;#{en}&quot;)<BR> end</div>
+
+<p>這個程式需要輸入兩次，一次是字串，另一次是正規表示式。字串就會與正規表示式開始比對，然後將所有匹配的部分反白顯示。先別在意細節，很快就會來分析這段程式碼。</p>
+<p></p><div class="shell">str&gt; foobar<BR> pat&gt; ^fo+<BR>
+<font color="red"><B>foo</B></font>bar<BR> ~~~</div>
+
+<p><em>在程式輸出中，上面的紅色字母會反白顯示。&quot;~~~&quot; 是為了方便使用文字瀏覽器 (text-based browser) 的用戶而加的。</em></p>
+<p>多試試幾個輸入吧。</p>
+<p></p><div class="shell">str&gt; abc012dbcd555<BR> pat&gt; \d<BR> abc<font color="red"><B>012</B></font>dbcd<font color="red"><B>555</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; ~~~&nbsp; &nbsp; ~~~</B></font></div>
+
+<p>如果對結果感到驚訝，請參考上面的表格：<code>\d</code> 與字母 <code>d</code> 完全沒有關係，只是與數字匹配。</p>
+<p>那如果有一個以上的結果符合樣式呢？</p>
+<p></p><div class="shell">str&gt; foozboozer<BR> pat&gt; f.*z<BR>
+<font color="red"><B>foozbooz</B></font>er<BR> ~~~~~~~~</div>
+
+<p>符合的是 <code>foozbooz</code>，而不僅僅是 <code>fooz</code>，正規表示式會與最長的子字串匹配。</p>
+<p>這是用來隔離冒號區隔時間欄位 (colon-delimited time field) 的樣式。</p>
+<p></p><div class="shell">str&gt; Wed Feb&nbsp; 7 08:58:04 JST 1996<BR> pat&gt; [0-9]+:[0-9]+(:[0-9]+)?<BR> Wed Feb&nbsp; 7 <font color="red"><B>08:58:04</B></font> JST 1996<BR>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; ~~~~~~~~</div>
+
+<p>就正規表示式而言，&quot;<code>=~</code>&quot; 是匹配的運算子 (operator)，如果發現符合的話，就會在字串中傳回位置，沒有符合就會傳回 <code>nil</code>。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;abcdef&quot; =~ /d/</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 3</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;aaaaaa&quot; =~ /d/</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Strings" href=strings.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Arrays" href=arrays.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

@@ -1,0 +1,141 @@
+body
+{
+  width: 90%;
+  margin: 10px auto;
+  background-color: #ffe0e0;
+  color: #300;
+  border: 1px solid #baa;
+  line-height: 1.35em;
+}
+
+code
+{
+  font-weight: bold;
+  color: #600000;
+}
+
+a
+{
+  text-decoration: none;
+  border: 0;
+}
+
+#top
+{
+  padding: 0;
+  margin: 0;
+  color: white;
+  background-color: #cf0000;
+  border: 0;
+  /*border-bottom: 1px solid #baa;*/
+}
+
+#bottom
+{
+  clear: both;
+  line-height: 110%;
+  font-size: 75%;
+  padding: 0;
+  margin: 0;
+  color: white;
+  background-color: #cf0000;
+  border: 0;
+  /*border-top: 1px solid #baa;*/
+}
+
+#bottom a
+{
+ color: #ddd;
+ font-weight: bold;
+}
+
+#top h2
+{
+  padding: 0;
+  margin: 0;
+}
+
+#navcol
+{
+  font-size: 70%;
+  background-color: #efd0d0;
+/*  background-color: #cf0000;
+  color: white;*/
+  line-height: 118%;
+  float: left;
+  width: 11em;
+  margin: 0;
+  padding: 1em;
+  clear: both;
+  border-top: 1px solid #bba;
+}
+
+#navcol a {
+  color: #800000;
+}
+
+#content
+{
+  margin-left: 11em;
+  padding: 0.5em;
+  max-width: 60em;
+}
+
+.shell {
+  margin: 1em;
+  padding: 0.5em 1em;
+  color: white;
+  background-color: black;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #dcc #cbb #a99 #cbb;
+  line-height: 1.25em;
+  font-family: mono,lucida console,courier;
+}
+
+.rbscript {
+  margin: 1em;
+  padding: 0.1em 1em;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #dcc #cbb #a99 #cbb;
+  line-height: 1.25em;
+  font-family: mono,lucida console,courier;
+  color: black; background-color: #ffe8e8;
+}
+
+.cscript {
+  margin: 1em;
+  padding: 0.1em 1em;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #dcc #cbb #a99 #cbb;
+  line-height: 1.25em;
+  font-family: mono,lucida console,courier;
+  color: black; background-color: #e8e8e8;
+}
+
+
+#navcol p { margin: 0 0 1em 0; }
+#content h2 { margin: 0 0 .5em 0; }
+
+
+/* for tables */
+
+.noborder {
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+}
+
+.rubyred {
+  color: white;
+  padding: 0.6em 2em;
+}
+
+.rubygray {
+  background-color: #404040;
+  color: white;
+  padding: 0.6em 2em;
+  margin: 0;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 繼承</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>繼承 Inheritance</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Classes" href=classes.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Redefinition of methods" href=redefinemethods.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>繼承</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>日常生活中的物件類別都會分有階層， 我們知道<em>所有貓都是哺乳類</em>，<em>所有哺乳類都是動物</em>。較小的類別會<em>繼承 (inherit)</em> 具有所屬較大類別的特徵。如果所有哺乳類都會呼吸，那麼所有貓也會呼吸。</p>
+<p>我們可以在 Ruby 表達這種概念： </p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Mammal</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def breathe</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; puts &quot;inhale and exhale&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> class Cat &lt; Mammal</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def speak</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; puts &quot;Meow&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>雖然我們沒有指定 <code>Cat</code> 應該呼吸，但因為 <code>Cat</code> 被定義為 <code>Mammal</code> 的子類別，所以就會繼承 <code>Mammal</code> 類別的行為。（物件導向程式語言的術語中，較小的類別稱為<em>子類別 (subclass)</em>，較大的類別稱為<em>父類別 (superclass)</em>。）從程式員的角度看來，貓很自然就會呼吸，我們再加入 <code>speak</code> （講話）的方法後，我們的貓就會呼吸講話。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> tama = Cat.new</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Cat:0xbd80e8&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> tama.breathe</B></font><BR> inhale and exhale<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> tama.speak</B></font><BR> Meow<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>有時，特定子類別不應繼承父類別的某些特性。例如，鳥類一般都會飛，但企鵝就是不會飛的鳥。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Bird</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def preen</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; puts &quot;I am cleaning my feathers.&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def fly</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; puts &quot;I am flying.&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> class Penguin &lt; Bird</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def fly</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; fail &quot;Sorry.I'd rather swim.&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>我們不需要徹底地為每個新類別定義每個特徵，只要加入或重新定義子類別與父類別的差異即可 (編註：我們在 Penguin 裡覆寫掉 fly 這個方法)。繼承有時候也稱為<em>差分程式設計 (differential programming)</em>， 這也是物件導向程式設計的其中一項優點。</p>
+
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Classes" href=classes.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Redefinition of methods" href=redefinemethods.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 控制結構</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>控制結構 Control structures</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Back to the simple examples" href=backtoexamples.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Iterators" href=iterators.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>控制結構</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>本節將探討 Ruby 的控制結構。</p>
+<h3><a name="label-0" id="label-0"><code>case</code></a></h3><!-- RDLabel: "case" -->
+<p>我們用 <code>case</code> 敘述來測試一連串條件，初看與 C 及 Java 的 <code>switch</code> 相似，但我們之後就會發現 Ruby 的 case 效果更為強大。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> i=8</B></font><BR> ruby&gt;<font color="#ffff00"><B> case i</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> when 1, 2..5</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;1..5&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> when 6..10</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;6..10&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> 6..10<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p><code>2..5</code> 是 2 到 5 <em>範圍 (range)</em> 的表示式。以下表示式會測試 <code>i</code> 值是否處於該範圍內： </p>
+<p></p><div class="rbscript">(2..5) === i</div>
+
+<p><code>case</code> 內部使用關聯運算子 (relationship operator) <code>===</code>，同一時間檢查數個條件。為保持 Ruby 的物件導向特質，出現在 <code>when</code> 條件內的物件會以 <code>===</code> 適當解釋。例如，以下程式碼會測試字串是否等於第一個 <code>when</code> 的字串，再測試是否符合第二個 <code>when</code> 的正規表示式。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> case 'abcdef'</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> when 'aaa', 'bbb'</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;aaa or bbb&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> when /def/</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;includes /def/&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> includes /def/<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<h3><a name="label-1" id="label-1"><code>while</code></a></h3><!-- RDLabel: "while" -->
+<p>Ruby 能夠以簡單的方式建立迴圈，不過在下一節中，我們會學會使用<em>迭代器 (iterator)</em>，那就不再經常需要編寫明顯的迴圈。</p>
+<p><code>while</code> 就是重複的 <code>if</code>， 我們曾在猜字遊戲及正規表示式中使用過（請見<a href="regexp.html">前一節</a>）；句型為 <code>while <em>condition</em> ... end</code>，所包含的程式碼區塊在<em>條件 (condition)</em> 為真時就會重複。但 <code>while</code> 及 <code>if</code> 也可以簡單地應用與個別的敘述：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> i = 0</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 0</B></font><BR> ruby&gt;<font color="#ffff00"><B> puts &quot;It's zero.&quot; if i==0</B></font><BR> It's zero.<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> puts &quot;It's negative.&quot; if i&lt;0</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> puts i+=1 while i&lt;3</B></font><BR> 1<BR> 2<BR> 3<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>你有時候希望否定一個測試條件， <code>unless</code> 就是 <code>if</code> 的否定型，<code>until</code> 則是 <code>while</code> 的否定型。你可以自行試驗看看。</p>
+<p>共有四種方式能夠從內部中斷迴圈。第一種是 <code>break</code>，與 C 的一樣，表示完全逸出迴圈； 第二種是 <code>next</code>，跳至迴圈下一個迭代 (iteration) 的起始處（等同於 C 的<code>continue</code>）； 第三種是 <code>redo</code>，可重新開始目前的迴圈。以下 C 程式碼用以闡釋 <code>break</code>、<code>next</code>、<code>redo</code> 的意義：</p>
+<p></p><div class="cscript">while (condition) {<BR> label_redo:<BR>
+&nbsp;&nbsp; goto label_next;&nbsp; &nbsp; &nbsp; &nbsp; /* ruby's &quot;next&quot; */<BR>
+&nbsp;&nbsp; goto label_break;&nbsp; &nbsp; &nbsp;&nbsp; /* ruby's &quot;break&quot; */<BR>
+&nbsp;&nbsp; goto label_redo;&nbsp; &nbsp; &nbsp; &nbsp; /* ruby's &quot;redo&quot; */<BR>
+&nbsp;&nbsp; ...<BR>
+&nbsp;&nbsp; ...<BR> label_next:<BR> }<BR> label_break:<BR> ...</div>
+
+<p>第四種從內部中斷迴圈的方式是 <code>return</code>。<code>return</code> 不單能逸出迴圈，更會逸出包含迴圈的方法。若提供一個參數值，則此方法會回傳這個值，否則會傳回 <code>nil</code>。</p>
+
+<h3><a name="label-2" id="label-2"><code>for</code></a></h3><!-- RDLabel: "for" -->
+<p>C 程式員現在會好奇怎麼建立一個 &quot;for&quot; 迴圈。Ruby 的 <code>for</code> 具有相同作用，但更有彈性。以下的迴圈會跑一次 <em>集合物件 (collection)</em> 中的每個元素（陣列、雜湊、連續數值等），無需程式員特別指示索引：</p>
+<p></p><div class="rbscript">for elt in collection<BR>
+&nbsp; # ... elt 是集合物件中的一個元素<BR> end</div>
+
+<p>集合物件可以是數值範圍（多數人談及迴圈時，所指的就是這個）：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> for num in (4..6)</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp; puts num</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> 4<BR> 5<BR> 6<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 4..6</B></font></div>
+
+<p>本例中，我們會一一說明陣列元素。：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> for elt in [100,-9.6,&quot;pickle&quot;]</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp; puts &quot;#{elt}\t(#{elt.class})&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> 100&nbsp; &nbsp; (Fixnum)<BR> -9.6&nbsp;&nbsp; (Float)<BR> pickle (String)<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; [100, -9.6, &quot;pickle&quot;]</B></font></div>
+
+<p>但我們有點超前進度，所以先溫習一下之前所學。<code>for</code> 其實就是 <code>each</code> 的另一種寫法，即是迭代器的第一個範例。以下兩種句型效果相同：</p>
+<p></p><div class="rbscript">#&nbsp; 如果你習慣用 C 或 Java，你可能會比較喜歡這個。<BR> for element in collection<BR>
+&nbsp; ...<BR> end<BR>
+<BR> #&nbsp; Smalltalk 程式員則可能喜歡這個。<BR> collection.each {|element|<BR>
+&nbsp; ...<BR> }</div>
+
+<p>迭代器一般能夠替代傳統的迴圈，熟悉用法後用處會更大。那現在就進入下一節學習吧。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Back to the simple examples" href=backtoexamples.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Iterators" href=iterators.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

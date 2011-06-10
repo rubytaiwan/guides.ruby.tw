@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 區域變數</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>區域變數 Local variables</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Instance variables" href=instancevars.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Class constants" href=constants.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>區域變數</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+
+<p>區域變數 (local variable) 以小寫字母或底線字元 (<code>_</code>) 開頭， 與全域變數及實例變數不同，區域變數初始化前並沒有 <code>nil</code> 值：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> $foo</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> @foo</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo</B></font><BR>
+<font color="#50ffff"><B>ERR: (eval):1: undefined local variable or method `foo' for main(Object)</B></font></div>
+
+<p>第一次指派予區域變數的工作，其性質就像是宣告。如果你使用一個沒有初始化的區域變數，Ruby 直譯器可能會以為你指的是一個假值 (bogus variable)，例如可能是拼錯方法名稱。就會出現上面看的錯誤訊息。</p>
+<p>一般來說，區域變數的作用域包括</p>
+<ul>
+<li><code>Proc.new{</code> ... <code>} 或 lambda{</code> ... <code>} </code></li>
+<li><code>loop{</code> ... <code>}</code></li>
+<li><code>def</code> ... <code>end</code></li>
+<li><code>class</code> ... <code>end</code></li>
+<li><code>module</code> ... <code>end</code></li>
+<li>整份腳本（除非出現以上任何一項）</li>
+</ul>
+<p>下例中，<code>defined? </code>是檢查識別符 (identifier) 有否定義的運算子。若已定義，就會傳回該識別符的描述，否則就傳回 <code>nil</code>。如你所見，<code>bar</code> 的作用域位於迴圈內；若迴圈結束，<code>bar</code> 就變成未定義了。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> foo = 44; puts foo; defined?(foo)</B></font><BR> 44<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;local-variable&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> loop{bar=45; puts bar; break}; defined?(bar)</B></font><BR> 45<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>位於同一作用域的程序物件（編註：即 Proc.new 和 lambda 裡)，會共享該作用域內的所有區域變數。因此，區域變數 <code>bar</code> 由 
+<code>main</code>、程序物件 <code>p1</code> 及 <code>p2</code> 所共享：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> bar=nil</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> p1 = Proc.new {|n| bar=n}</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Proc:0x8deb0&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> p2 = Proc.new {bar}</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Proc:0x8dce8&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> p1.call(5)</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font><BR> ruby&gt;<font color="#ffff00"><B> bar</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font><BR> ruby&gt;<font color="#ffff00"><B> p2.call</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font></div>
+
+<p>請注意，開頭的 &quot;<code>bar=nil</code>&quot; 不能省略，它可確保 <code>bar</code> 的作用域涵蓋 <code>p1</code> 及 <code>p2</code>。否則 <code>p1</code> 及 <code>p2</code> 會使用各自的區域變數 <code>bar</code>，呼叫 <code>p2</code> 時，就會出現 &quot;undefined local variable or method&quot;（未定義區域變數或方法）錯誤。我們可以寫 <code>bar=0</code>，但使用 <code>nil</code> 對於之後看程式碼的人則比較禮貌。這樣就能夠清楚的顯示你只是設定作用域，因為所指派的值並無任何意義。</p>
+
+<p>程序物件具有一項強大的功能，就是能夠以引數的方式傳遞：共享的區域變數就算不在原有的作用域，仍然保持有效。</p>
+
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> def box</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; contents = nil</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; get = Proc.new {contents}</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; set = Proc.new {|n| contents = n}</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; return get, set</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> reader, writer = box</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; [#&lt;Proc:0x40170fc0&gt;, #&lt;Proc:0x40170fac&gt;] </B></font><BR> ruby&gt;<font color="#ffff00"><B> reader.call</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> writer.call(2)</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 2</B></font><BR> ruby&gt;<font color="#ffff00"><B> reader.call</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 2</B></font></div>
+
+<p>Ruby 對於作用域非常聰明， 從例子中就能夠證明如此，<code>contents</code> 變數由 <code>reader</code> 及 <code>writer</code> 所共享。但我們也能利用以上定義的 <code>box</code>，製造多重的閱讀器－寫入器 (reader-writer) 對，每對閱讀器－寫入器可共享 <code>contents</code> 變數，而且對與對之間並不會互相干擾。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> reader_1, writer_1 = box</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; [#&lt;Proc:0x40172820&gt;, #&lt;Proc:0x4017280c&gt;]</B></font><BR> ruby&gt;<font color="#ffff00"><B> reader_2, writer_2 = box</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; [#&lt;Proc:0x40172668&gt;, #&lt;Proc:0x40172654&gt;]</B></font><BR> ruby&gt;<font color="#ffff00"><B> writer_1.call(99)</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 99</B></font><BR> ruby&gt;<font color="#ffff00"><B> reader_1.call</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 99</B></font><BR> ruby&gt;<font color="#ffff00"><B> reader_2.call&nbsp; # 該 box 中尚無任何內容</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>這種程式設計也具有物件導向框架。<code>box</code> 方法的作用就像類別，<code>get</code> 與 <code>set</code> 就像是方法（那些不是真正的方法<em>名稱</em>除外，他們會隨著不同的 box 實例而不同），而 <code>contents</code> 則是單獨的實例變數。當然，使用 Ruby 認可的類別框架，可編寫出更容易閱讀的程式碼。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Instance variables" href=instancevars.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Class constants" href=constants.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

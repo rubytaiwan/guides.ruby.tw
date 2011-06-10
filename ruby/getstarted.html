@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 起步走</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>起步走</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr> 
+          <td> 
+            <a title="previous: What is ruby?" href=index.html> 
+            <img border=0 src="la-plexi.png" /></a></td> 
+          <td> 
+            <a title="next: Simple examples" href=examples.html> 
+            <img border=0 src="ra-plexi.png" /></a></td> 
+         </tr> 
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr>
+<tr><td>&gt;</td><td><strong>起步走</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>首先，看看是不是已經安裝了 Ruby (若沒有安裝，請參考下面的編註)。在 shell 提示符後（即 &quot;<code>%</code>&quot;，不要再輸入 <code>%</code>了），輸入</p> 
+<p></p><div class="shell">% ruby -v</div> 
+ 
+<p>（<code>-v</code> 會通知直譯器顯示 Ruby 的版本），然後按下 <em>Enter</em> 鍵。如果已經安裝 Ruby，就出現以下訊息：</p> 
+<p></p><div class="shell">% ruby -v<BR> ruby 1.8.3 (2005-09-21) [i586-linux] # 編註：目前通行的版本為 1.8.6 以上。</div> 
+ 
+<p>如果還沒有安裝 Ruby，你可以請管理員安裝或自己安裝，反正 Ruby 是自由軟體，並無任何安裝或使用限制。</p> 
+<p>現在就來體驗 Ruby 吧。你可以利用 <code>-e</code> 選項，把 Ruby 程式直接放上命令列： </p> 
+<p></p><div class="shell">% ruby -e 'puts &quot;hello world&quot;'<BR> hello world</div> 
+ 
+<p>一般來說，Ruby 程式可儲存在檔案內。</p> 
+<p></p><div class="shell">% echo &quot;puts 'hello world'&quot; &gt; hello.rb<BR> % ruby hello.rb<BR> hello world</div> 
+ 
+<p>如果要編寫比這更長的程式碼，最好使用文字編輯器！</p> 
+<p>只要能放進命令列，有些異常複雜而實用的程式碼也能利用小型的程式完成。以下例子將當前目錄的標頭檔(附檔名 .h)及所有 C 原始碼(附檔名 .c)中的 <code>foo</code> 替換為 <code>bar</code>，將原始檔案以 &quot;.bak&quot; 結尾備份起來。</p> 
+<p></p><div class="shell">% ruby -i.bak -pe 'sub &quot;foo&quot;, &quot;bar&quot;' *.[ch]</div> 
+ 
+<p>這個程式的效果類似於 UNIX <code>cat</code> 指令（但速度比 <code>cat</code> 慢）：</p> 
+<p></p><div class="shell">% ruby -pe 0 file</div> 
+
+<h3>安裝 Ruby (編註)</h3>
+
+目前通行的版本是 Ruby 1.8.6 和 Ruby 1.8.7，這裡推薦您使用 1.8.7。
+
+<h4>Windows 使用者</h4> 
+ 
+<p>下載安裝 <a href="http://rubyinstaller.org/">Ruby 1.8.7</a></p> 
+ 
+<h4>Ubuntu Linux 使用者</h4> 
+ 
+<p>用 Firefox 瀏覽 <a href="http://www.rubyenterpriseedition.com/download.html">Download Ruby Enterprise Edition</a> 中的 Ubuntu Linux，然後點選下載套件並安裝即可。</p> 
+ 
+<h4>MacOS Snow Lepard 使用者</h4> 
+ 
+<p>您的作業系統已經內建了 Ruby 1.8.7。</p> 
+
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+ 
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: What is ruby?" href=index.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Simple examples" href=examples.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html>

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 迭代器</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>迭代器 Iterators</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Control structures" href=control.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Object-oriented thinking" href=oothinking.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>迭代器</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+
+<p>迭代器 (iterator) 並不是 Ruby 的原創概念， 這已在物件導向程式語言中普遍使用。它也被用在 Lisp 中，只是並不稱為迭代器而已。然而很多人仍然不熟悉迭代器的概念，因此以下將詳細解釋。</p>
+<p><em>迭代 (iterate)</em> 指的是重複做相同的事，所以<em>迭代器 (iterator)</em> 就是用來重複多次相同的事。</p>
+<p>我們編寫程式碼後，需要在不同的情況下迴圈。使用 C 時，我會用 <code>for</code> 或 <code>while</code>。例如，</p>
+<p></p><div class="cscript">char *str;<BR> for (str = &quot;abcdefg&quot;; *str != '\0'; str++) {<BR>
+&nbsp; /* process a character here */<BR> }</div>
+
+<p>C 的<code> for(...) </code>語法提供建立迴圈的抽象概念，但測試空字元 (null character) 的<code> *str </code>程式碼，需要程式員了解字串的內部結構。如此讓人覺得 C 是低階的語言。高階語言應更能彈性地支援迭代。請看一下的<code> sh </code>shell 腳本：</p>
+<p></p><div class="rbscript">#!/bin/sh<BR>
+<BR> for i in *.[ch]; do<BR>
+&nbsp; # ... 針對每個檔案執行某件事<BR> done</div>
+
+<p>處理目前目錄下的所有 C source 及標頭檔，由命令 shell 負責提取檔案名稱，並一一替代。這樣比 C 看來高階得多吧，你說呢？</p>
+<p>但我們還要留意：雖然語言能夠為內建資料型態提供迭代器，但如果我們得為自定的資料型態編寫低階的迴圈才能迭代，就太令人失望了。畢竟使用 OOP（物件導向程式）時，我們經常要一一定義資料型態，這就成了嚴重的問題。</p>
+<p>因此每種 OOP 語言都有些方式有助於迭代。有些語言會提供特殊的類別；Ruby 則讓我們直接定義迭代。</p>
+<p>Ruby <code>字串 (string)</code> 型態具有一些實用的迭代器：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;abc&quot;.each_byte{|c| printf &quot;&lt;%c&gt;&quot;, c}; print &quot;\n&quot;</B></font><BR>
+&lt;a&gt;&lt;b&gt;&lt;c&gt;<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p><code>each_byte</code> 是字串中用於處理每個字元的迭代器。每個字元都會代入區域變數 <code>c</code> 中。這段程式也可以改寫為類似 C 語言的寫法...</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> s=&quot;abc&quot;;i=0</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 0</B></font><BR> ruby&gt;<font color="#ffff00"><B> while i&lt;s.length</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp; printf &quot;&lt;%c&gt;&quot;, s[i]; i+=1</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end; print &quot;\n&quot;</B></font><BR>
+&lt;a&gt;&lt;b&gt;&lt;c&gt;<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>⋯⋯然而，<code>each_byte</code> 迭代器的概念較簡單，而且即使之後<code>字串 (string)</code> 類別的結構大幅改變，仍有較大機會繼續運作。迭代器的好處在於面對變化仍能保持耐用，確實稱得上是良好的程式碼。（好的，耐心點，我們很快就會討論<em>類別 (class)</em>）</p>
+<p><code>字串 (string)</code> 的另一個迭代器是 <code>each_line</code>。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;a\nb\nc\n&quot;.each_line{|l| print l}</B></font><BR> a<BR> b<BR> c<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>比起 C 程式，迭代器更能事半功倍（尋找行分隔符號 (line delimiter)、建立子字串等）。</p>
+
+<p>前一節的 <code>for</code> 敘述就是使用 <code>each</code> 迭代器進行迭代的。<code>字串 (string)</code> 的 <code>each</code> 與 <code>each_line</code> 效果相同（編註：Ruby 1.9 之後版本，移除了字串的 <code>each</code> 函式，所以必須改用 <code>each_line</code>。此例在 1.9 之後版本無法執行。），那麼就將上述的範例用 <code>for</code> 改寫：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> for l in &quot;a\nb\nc\n&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; print l </B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> a<BR> b<BR> c<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>將控制結構 <code>retry</code> 與迭代的迴圈一起運作，就能重新開始迴圈。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> c=0</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 0</B></font><BR> ruby&gt;<font color="#ffff00"><B> for i in 0..4</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; print i</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; if i == 2 and c == 0</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; c = 1</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; print &quot;\n&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; retry</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end; print &quot;\n&quot;</B></font><BR> 012<BR> 01234<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>將 <code>retry</code> 替換為 <code>redo</code>，會令目前的迴圈重做一次迭代，輸出內容為：</p>
+<p></p><div class="shell">012<BR> 234</div>
+
+<p><code>yield</code> 有時會出現在迭代器的定義中。<code>yield</code> 可將控制移至傳遞往迭代器的程式碼區塊 (block of code)（這將在<a href="procobjects.html">程序物件</a>一節中討論）。以下範例定義了迭代器 <code>repeat</code>，這個迭代器可按引數所指定的次數，重複程式碼區塊。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> def repeat(num)</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; while num &gt; 0</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; yield</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; num -= 1</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> repeat(3) { puts &quot;foo&quot; }</B></font><BR> foo<BR> foo<BR> foo<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>使用 <code>retry</code>，就能定義類似 Ruby 標準的 <code>while</code> 迭代器。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> def WHILE(cond)</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; return if not cond</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; yield</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; retry</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> i=0; WHILE(i&lt;3) { print i; i+=1 }</B></font><BR> 012&nbsp;&nbsp; nil</div>
+
+<p>你明白甚麼是迭代器了嗎？雖然仍有些限制，但你已經可以自行編寫迭代器。事實上，每當定義新資料型態時，常會一併定義合適的迭代器，方便作為搭配。因此，上述範例並不說得上非常有用。了解甚麼是類別 (class) 後，再來討論一些實用的迭代器吧。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Control structures" href=control.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Object-oriented thinking" href=oothinking.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

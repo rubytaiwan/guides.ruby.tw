@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 方法</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>方法 Methods</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Object-oriented thinking" href=oothinking.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Classes" href=classes.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>方法</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+<p>甚麼是方法？物件導向程式設計中，我們不希望直接在物件以外處理資料，相反地，物件本身應了解自己如何運作（當你友善地請求它去做事情時）。你可以這樣想，我們把訊息傳給物件，物件就會作出某些動作或有意義的回應。我們不需要了解或關心物件內部實際如何運作。這個允許我們要求物件執行的工作（或者說，這個物件可以了解的訊息），就稱之為物件<em>方法 (method)</em>。</p>
+<p>在 Ruby 中，我們利用點符號 (.) 呼叫物件的方法（與 C++ 或 Java 相同）。接收的物件位於點符號左側。</p>
+
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;abcdef&quot;.length</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 6</B></font></div>
+
+<p>直觀上，這個字串物件被詢問了字串的長度。技術上而言，我們呼叫了該物件 <code>&quot;abcdef&quot;</code> 的 <code>length</code> 方法。</p>
+<p>其他物件可能在解釋 <code>length</code> 上有些微差別，或者完全一樣。要在程式執行中，才會決定如何應對訊息，而採取甚麼動作則取決於變數所指的是甚麼物件。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> foo = &quot;abc&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;abc&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo.length</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 3</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo = [&quot;abcde&quot;, &quot;fghij&quot;]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; [&quot;abcde&quot;, &quot;fghij&quot;]</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo.length</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 2</B></font></div>
+
+<p><em>長度 (length)</em> 的意義取決於所討論的物件。上述範例中，我們第一次詢問<code> foo </code>的長度時，所指的是字串，而這只有一個合理的答案。第二次時，<code>foo </code>指的是陣列，我們就可能合理地想到長度可能是 2、5 或 10，但最適當的答案當然是 2（如果希望的話，也可以想出其他種類的長度）。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> foo[0].length</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo[0].length + foo[1].length</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 10</B></font></div>
+
+<p>要注意的是，陣列<em>知道身為陣列的責任</em>。Ruby 的資料都明白自己的責任，所以收到要求後，他們都會以適當的方式完成工作。這可減輕程式員的工作，無需記住一大堆函數名稱，只要記住較少量的方法名稱即可，這與我們知道如何用自然語言表達的概念相同，並可應用於不同種類的資料，同樣能得到預期的結果。物件導向程式設計語言的這項特色（我個人認為 Java 在這方面並不出色）稱為<em>多型 (polymorphism)</em>。</p>
+<p>如果物件收到不能理解的訊息，錯誤就會「丟出」(raise)：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> foo = 5</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font><BR> ruby&gt;<font color="#ffff00"><B> foo.length</B></font><BR>
+<font color="#50ffff"><B>ERR: (eval):1: undefined method `length' for 5(Fixnum)</B></font></div>
+
+<p>雖然我們不需要知道方法如何運作，但必須清楚物件能夠接受那些方法。</p>
+<p>若方法具有引數，引數通常用括號括起，</p>
+<p></p><div class="rbscript">object.method(arg1, arg2)</div>
+
+<p>但如果並不會造成歧義的話，也可以省略。</p>
+<p></p><div class="rbscript">object.method arg1, arg2</div>
+
+<p>Ruby 有個特別的變數稱為 <code>self</code>，指向現在的物件（也就是呼叫此方法的物件）。因為經常使用 &quot;<code>self.</code>&quot;，所以在物件本身呼叫方法時，可以省略：</p>
+<p></p><div class="rbscript">self.method_name(args...)</div>
+
+<p>即等同於</p>
+<p></p><div class="rbscript">method_name(args...)</div>
+
+<p>我們可以把傳統的<em>函數呼叫 (function call)</em> 當做是物件 method，只是省略了 <code>self</code> 呼叫。因此 Ruby 可稱為純物件導向語言（編註：因為所有函式都在物件之中）。當然，這個函數呼叫與其他程式語言的函數非常類似，這也方便了那些不明白 Ruby 中函數呼叫就是物件方法的人。如果必要的話，我們會說 "<em>函數 (functions)</em>"，以跟物件方法(object methods)做區別。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Object-oriented thinking" href=oothinking.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Classes" href=classes.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 例外處理：救援</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>例外處理：救援 Exception processing: rescue</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Class constants" href=constants.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Exception processing: ensure" href=ensure.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>例外處理：救援</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>執行中的程式可能出現意料之外的問題。例如：發現要讀取的檔案不存在；儲存資料時發現磁碟已滿；輸入不合適的內容。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> file = open(&quot;some_file&quot;)</B></font><BR>
+<font color="#50ffff"><B>ERR: (eval):1:in `open': No such file or directory - some_file</B></font></div>
+
+<p>穩健的程式能夠快速發現問題，並完善解決， 要達成這樣的目標總是讓人沮喪。C 程式員需要檢查任何可能出錯的系統呼叫 (system call)，並立即決定應對措施：</p>
+<p></p><div class="cscript">FILE *file = fopen(&quot;some_file&quot;, &quot;r&quot;);<BR> if (file == NULL) {<BR>
+&nbsp; fprintf( stderr, &quot;File doesn't exist.\n&quot; );<BR>
+&nbsp; exit(1);<BR> }<BR> bytes_read = fread( buf, 1, bytes_desired, file );<BR> if (bytes_read != bytes_desired ) {<BR>
+&nbsp; /* do more error handling here ... */<BR> }<BR> ...</div>
+
+<p>這種工作讓人感到厭煩，程式員就會開始不小心，甚至不檢查，最終造成程式未能完善處理例外。另一方面，做好這類檢查工作，會讓程式變得難以看懂，因為太多錯誤處理會讓程式碼顯得雜亂。</p>
+<p>Ruby 就如許多現代語言一樣，能以區隔的 (compartmentalized) 方式處理例外的程式碼區塊，效果出眾而且不會對閱讀程式碼造成困難。標示有 <code>begin</code> 的程式碼區塊執行後若遇到例外，就將控制轉移至標示有 <code>rescue</code> 的錯誤處理程式碼區塊 (block of error handling code)。若沒有出現例外，就不會使用 <code>rescue</code> 程式碼。以下方法會傳回文字檔的第一行，若沒有例外的話則傳回 <code>nil</code>：</p>
+<p></p><div class="rbscript">def first_line( filename )<BR>
+&nbsp; begin<BR>
+&nbsp; &nbsp; file = open(&quot;some_file&quot;)<BR>
+&nbsp; &nbsp; info = file.gets<BR>
+&nbsp; &nbsp; file.close<BR>
+&nbsp; &nbsp; info&nbsp; # 最後計算的內容為傳回值<BR>
+&nbsp; rescue<BR>
+&nbsp; &nbsp; nil&nbsp;&nbsp; # 無法讀取檔案？那就不傳回字串<BR>
+&nbsp; end<BR> end</div>
+
+<p>有時候，我們需要能夠變通地處理問題。例如：如果無法找到需要的檔案，可嘗試使用標準輸入 (standard input)：</p>
+<p></p><div class="rbscript">begin<BR>
+&nbsp; file = open(&quot;some_file&quot;)<BR> rescue<BR>
+&nbsp; file = STDIN<BR> end<BR>
+<BR> begin<BR>
+&nbsp; # ... 處理輸入 ...<BR> rescue<BR>
+&nbsp; # ... 並在此處理其他例外。<BR> end</div>
+
+<p><code>retry</code> 可用於 <code>rescue</code> 程式碼，以重新開始 <code>begin</code> 程式碼。現在把剛才的例子編寫得精簡一點吧：</p>
+<p></p><div class="rbscript">fname = &quot;some_file&quot;<BR> begin<BR>
+&nbsp; file = open(fname)<BR>
+&nbsp; # ... 處理輸入 ...<BR> rescue<BR>
+&nbsp; fname = &quot;STDIN&quot;<BR>
+&nbsp; retry<BR> end</div>
+
+<p>但是，這裡有個錯誤， 一個不存在的檔案會讓這個程式碼無限迴圈。使用 <code>retry</code> 處理例外時，一定要注意這種陷阱。</p>
+
+<p>在所有的 Ruby 函式庫中，如果出現例外錯誤，就會喚起 (raise) 例外。你也可以在自己的程式碼中喚起例外。若要喚起例外，可以使用 <code>raise</code>。這只需要一個引數，即描述該例外的字串。可選擇使用甚麼引數，但不得省略， 之後可使用特別的全域變數 <code>$!</code> 存取。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> raise &quot;test error&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; test error</B></font><BR> ruby&gt;<font color="#ffff00"><B> begin</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; raise &quot;test2&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> rescue</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;An error occurred: #{$!}&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR> An error occurred: test2<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Class constants" href=constants.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Exception processing: ensure" href=ensure.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

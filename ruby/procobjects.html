@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 程序物件</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>程序物件 Procedure objects</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Modules" href=modules.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Variables" href=variables.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>程序物件</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>當有意料之外的事件發生時，誰都希望能夠有指定的回應措施。這其實很簡單，只要我們能夠將程式碼區塊如引數般傳至其他方法，也就是能夠像使用 資料 般一樣對待  程式碼。</p>
+
+
+<p>使用 <code>Proc.new</code> 創造一個新的<em>程序物件 (procedure object)</em> （編註：原英文版使用 proc 方法，現在的慣例改成使用 Proc.new 或 lambda)：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> quux = Proc.new {</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;QUUXQUUXQUUX!!!&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> }</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Proc:0x4017357c&gt;</B></font></div>
+
+<p>現在 <code>quux</code> 所指的是一個物件，與大部分物件一樣，具有能夠被呼叫的行為。具體來說，可以透過 <code>call</code> 方法來執行：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> quux.call</B></font><BR> QUUXQUUXQUUX!!!<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>那麼，可以將 <code>quux</code> 用作方法引數嗎？當然可以。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> def run( p )</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;About to call a procedure...&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; p.call</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;There: finished.&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> run quux</B></font><BR> About to call a procedure...<BR> QUUXQUUXQUUX!!!<BR> There: finished.<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>利用 <code>trap</code> 方法，我們能夠針對任何系統信號，指派不同應對措施。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> inthandler = Proc.new { puts &quot;^C was pressed.&quot; }</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Proc:0x401730a4&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> trap &quot;SIGINT&quot;, inthandler</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Proc:0x401735e0&gt;</B></font></div>
+
+<p>一般來說，按下 <em>^C</em> 會離開直譯器。現在，會輸出一個訊息，然後直譯器繼續運行，不會失去正在進行的工作。（你不會一直受困於直譯器內，隨時都可以輸入 <code>exit</code> 來離開。）</p>
+<p>前往下一節前，我們要注意：與信號連結 (binding) 前，並不一定要為程序物件命名。<em>匿名 (anonymous)</em> 的程序物件就像</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> trap &quot;SIGINT&quot;, Proc.new { puts &quot;^C was pressed.&quot; }</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>或更常見的寫法如下：</p>
+
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> trap &quot;SIGINT&quot; do</B></font><BR>
+
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; puts &quot;^C was pressed.&quot; </B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;end </B></font><BR>
+
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+<p>如果只有一行，我們會更簡潔點地寫成：</p>
+
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> trap(&quot;SIGINT&quot;) { puts &quot;^C was pressed.&quot; } </B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font></div>
+
+
+<p>(編著：此段範例與原英文版略有不同)</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Modules" href=modules.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Variables" href=variables.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

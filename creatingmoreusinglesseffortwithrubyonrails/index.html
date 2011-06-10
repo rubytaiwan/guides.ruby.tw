@@ -1,0 +1,216 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" /> 
+		<title>少就是多) Ruby on Rails 簡介</title> 
+		<link rel="STYLESHEET" type="text/css" href="/oldstyle.css"> 
+	</head> 
+<body> 
+		<h1> 
+			少就是多) Ruby on Rails 簡介
+		</h1>
+		<h4>翻譯自 <a href="http://www.alistapart.com/articles/creatingmoreusinglesseffortwithrubyonrails">Creating More Using Less Effort with Ruby on Rails</a> by <a href="http://www.alistapart.com/authors/s/michaelslater">MICHAEL SLATER</a></h4>
+		
+		
+		<p>
+		如果你開發網站，想必應該聽過 <a href="http://rubyonrails.org/">Ruby on Rails</a> (RoR) 的大名。但是如果是網頁設計師或前端工程師，或除了PHP沒有用過其他框架，那麼採用 Ruby on Rails 方案似乎會是一個很大的改變。在這篇文章中，我希望能夠除去 Ruby on Rails 神秘的面紗，並說服你採取行動，這將會非常值得如果你的需求符合下述的 Ruby on Rails 甜蜜點。</p>
+
+<p>
+學新方法去做本來就會做的事情，還要同時學新觀念和新技巧,確實會花你一點時間。直接了當地說，即使是 Ruby on Rails，轉換技術都將會摧毀你的生產力。然而，我相信網站開發者如果開始採用 Ruby on Rails，將變得更有生產力做出更好的網站，以及從中獲得更多的樂趣。</p>
+
+<h3>Rails樂趣</h3>
+
+<p>Ruby on Rails(簡稱Rails)是一個完整的框架，意思是說他包含了前端跟後端。它讓 “要做多種不同工作的人” 開發者能擁有極強有力的工具。即使基本上你只是前端或後端工程師，你仍可以有效率的使用 Ruby on Rails。我們可以清楚定義前端(瀏覽器HTML、CSS和JavaScript)和後端(Ruby和Rails框架)的介面，所以如果你只想要專注在其中一端的話，不需要全盤了解。</p>
+
+<p>如果你是網頁設計師或前端工程師，你會學到如何使用 Ruby on Rails 樣板系統，而且學一點內嵌Ruby程式碼在 View 檔案。這將讓你成為後端開發者更好的夥伴，因為你可以直接操作 Rails 應用程式，而不是讓某人去整合HTML和CSS。</p>
+
+<p>因此無論你用前端或後端工程師的角度採用 Ruby on Rails，可以想想看有哪些專案可以考慮採用？</p>
+
+
+<h3>甜蜜點</h3>
+
+<p>Ruby on Rails 是 <a href="http://www.basecamphq.com//">Basecamp</a>、<a href="http://www.blinksale.com/">Blinksale</a>、<a href="http://www.43things.com/">43Things</a>、<a href="http://odeo.com/">Odeo</a>、<a href="http://www.revolutionhealth.com/">Revolution Health</a>、<a href="http://twitter.com/">Twitter</a>、<a href="http://www.yellowpages.com/">YellowPages.com</a>和 A List Apart 這些網頁應用程式和網站的核心。這股Rails熱情也擴展到許多大網路公司。Yahoo、eBay、Amazon和 AOL 都有 Ruby on Rails 專案，而 <a href="http://www.thoughtworks.com/">ThoughtWorks</a> 也正在建立Rails企業級應用程式。但是這麼多不同的 Ruby on Rails 應用程式，有幾個重要的共通最適關鍵。
+
+<p>當一個網站或網路服務有以下三個特點的時候，最適合採用 Ruby on Rails 方案：
+
+<ol>
+<li>一個資料庫形式的網站（譯註：一個透過存取資料庫，動態產生內容的網站) 或有足夠規模到適合使用一個強大功能的框架。</li>
+<li>一個特別而不適用於傳統的 CMS 系統 (如果 Joomla 或 Durpal 完全符合你所需，這些系統會是更好的選擇）。</li>
+<li>一個全新的應用，允許開發人員開始全新的資料庫跟軟體架構。</li>
+</ol>
+
+這些是 Ruby on Rails 應用程式的甜蜜點。應用程式如有這些特性，一旦決定投入學習Rails，採用 RoR 將很可能會比 PHP、.NET或Java 開發的更快速。</p>
+
+<h3>生產力爆增</h3>
+
+<p>一個最主要的理由就是 Ruby on Rails 增加生產力：建立新的應用程式、增加新功能變成容易地多。結合程式語言(Ruby)和框架(Rails)意指你將可以用更少程式碼。更少的程式和更好的架構表示當要改變時相對無痛，所以你可以迭代和實驗更樂意。這將帶我們有更好的網站，而且懷希望地更有樂趣去建構網站。</p>
+
+<p>當然，採用主要的新工具需要時間的投資，一時沒辦法輕鬆。如果你正專注在一專案，可能不是很適合。但是如果你需要持續建構網站，而且是有一定程度的複雜，一個短期學習 Ruby on Rails 的投資，長期來說將會是值得的。</p>
+
+<p>要了解我會為什麼相信你可以用 Ruby on Rails 做更多事且寫更少程式，讓我們快速看一下 Ruby。</p>
+
+<h3>遇見 Ruby</h3>
+
+<p>Ruby 是個現代的物件導向語言。在任何 Ruby 程式裡，所有東西都是物件。Ruby也是一個動態語言，這表示：</p>
+
+<p>Ruby 被動態直譯(就像PHP)，所以沒有編譯(像C或Java)。這加速了迭代式開發。在Ruby裡，變數被使用的時候才被動態指定一個型別，降低了在其他程式語言必須定義跟設定變數。一個Ruby程式可以動態產生程式，修改即使正在執行的自己。Rails內部就使用這個能力，來讓你可以簡單享受所謂的 "Magic"。(你不需要了解到底這個技巧如何運作)</p>
+
+<p>Ruby 是一個讀寫非常美妙簡潔的語言，但是他的優點不只如此。正因為Ruby可以被強力擴展，Rails框架才可以將他轉換成像是建造網站應用程式的專用語言。</p>
+
+<p>Ruby(語言)和Rails(框架)是兩回事，他們彼此在很多地方相輔相成。所有 Ruby on Rails 應用程式由Ruby寫成，而Ruby的特性帶給Ruby on Rails很大的影響。有些框架，像是 CakePHP，帶了很多 Rails 點子過去。但是Ruby的能力和彈性給了Rails比許多別的框架更多清楚和彈性。如果你正打算投資學習一個框架，學習Ruby並不會是很大的障礙，而且回報相當可觀。</p>
+
+<h3>Rails 方案</h3>
+
+<p>許多網站並沒有使用任何應用框架：你就寫你要的程式和盡可能到處複製貼上你所需的程式。對小網站來說這ok，但是很快你就會失去控制，亂七八糟的程式碼將很難理解與維護。</p>
+
+<p>使用像 Ruby on Rails 這樣的框架，很多關於如何組織你的程式碼的決定早就已經為你想好了，而且還有一堆可供挑選使用的函式庫。</p>
+
+<p>另一個重要的Rails特性是使用 model-view-controller (MVC) 結構來組織每一個應用。 MVC 是一個組織軟體專案的良好設計模式，當你有很多網站或有新人加入工作時，它將帶給你程式碼一致性的結構。它提供個別獨立的檔案，有著乾淨的介面可以分開前端與後端的開發者。</p>
+
+<h4>資料庫與物件</h4>
+
+<p>Ruby on Rails 被設計成用來建構資料庫應用程式，其中許多核心元件專注在與資料庫的互動。Rails的核心函式庫稱作 Active Record，它實做了被稱作物件-關聯對應(ORM)。有了ORM，你可以操作代表資料的軟體物件，然後 Active Record 函式庫將會處理與資料庫的操作。</p>
+
+<p>這聽起來可能有點抽象神秘，讓我們更具體些。即使不知道任何 Ruby 或任何物件導向語言，我打賭你也可以對下列的程式碼範例有感覺，以下是實際的 Ruby on Rails 程式碼。</p>
+
+<p>假設你有一個書店網站，你想要加入一本新書。你可以這樣寫：</p>
+
+<code>
+newbook = Book.new
+</code>
+
+<p>你正告訴這個 "Book" 類別你要一個空的 book 物件，稱作 "newbook"。你可以設定標題或任何其他屬性，直觀如下：</p>
+
+<code>
+newbook.title = "Angle of Repose"
+newbook.author = "Wallace Stegner"
+</code>
+
+<p>在這同時，你有一個物件在記憶體。這時你需要的是：</p>
+
+<code>
+newbook.save
+</code>
+
+<p>...然後你的新書將會被寫入資料庫。Active Record 產生 SQL 告訴資料庫插入一筆資料。你還可以只用少少幾行的程式碼就可以做欄位檢查，並產生錯誤訊息。</p>
+
+<p>現在你想要在成千上萬中的資料庫找那本書。只要寫：</p>
+
+<code>
+angle_of_repose = Book.find_by_title "Angle of Repose"
+</code>
+
+<p>...於是你得到物件被稱作 "angle_of_repose"，它有著所有從資料庫撈出來的資料。</p>
+
+<p>當然還有更多，不過也不會太多了; 操作對應網站資料的軟體物件是如此自然有威力的方式。在RoR，你有豐富的軟體物件對應到你的資料庫表格，這些物件被組合成 MVC 系統中的 "model" 層。</p>
+
+<p>你的程式碼與 model 物件互動，然後 Active Record 產生 SQL 讓資料庫如你所寫。你不需要撰寫任何資料庫SQL語法。正因為不需要讓你的程式與資料庫直接溝通，你也可以透過更改設定輕鬆更換資料庫軟體。</p>
+
+<h4>VIEWS 和 CONTROLLERS</h4>
+
+<p>要建立網頁，Rails 提供樣本系統可以輕易地使用一致的網頁結構，插入相同的元件不需要重複程式碼，展示來自資料庫的資料，顯示並處理表單。這些樣板組成MVC系統的 "view" 層。</p>
+
+<p>如果你是前端開發者，這是 Rails 中你應該特別專注的部份。你可以簡單假設你的 "view" 檔案將會處理任何你要顯示出來的資料變數。正如同 PHP 檔案混合了 PHP 程式碼和 HTML，一個典型的 Rails view 也是混合了 Ruby 和 HTML。繼續我們的書店範例，這裡是一段 view 程式碼顯示書的標題和作者：</p>
+
+<code>
+&lt;h1>&lt;%= book.title %>&lt;/h1>
+&lt;p>&lt;%= book.author %>&lt;/p>
+</code>
+
+<p>Ruby 程式碼被標記成 &lt;%= and %>; 其餘則是HTML。HTML和Ruby程式碼的輸出結合後，建立出網頁。</p>
+
+<p>Rails 被整合成支援 <a href="http://www.prototypejs.org/">Prototype</a> 和 <a href="http://script.aculo.us/">Scriptaculous</a> Javascript 函式庫，再加上一個稱作 Ruby JavaScript(RJS) 用來建構 Ajax 使用者介面的厲害機制。你可以用 Ruby 幾乎完全所有事情，包括最終被執行在瀏覽器的 Javascript 程式碼 (Rails 框架會處理這些轉換)</p>
+
+<p>一個 "controller" 是一整塊Ruby程式碼用來與 Model 溝通，並準備資料給 view。任何view所需的資料都會先在 controller 用一組變數所組成。這個 controller 也在頁面載入好以後回應 Ajax 的需求。Controller 也提供多種其他功能，從使用者認證到錯誤處理等。</p>
+
+<h3>慣例勝於設定 (Convention over Configuration)</h3>
+
+<p>Rails 試圖努力對任何事情都去提供一個合理的預設值。根據這個稱作慣例勝於設定的哲學，Rails 大大降低了設定檔的需要。</p>
+
+<p>如果你依照Rails的慣例，將會有令人驚艷的成果，從路由request對應到正確的 controller 和 view，到驗證表單資料和顯示錯誤訊息，都可以直接運作。與其他語言和框架比較起來，它使用了更少程式去達到更多常見的任務。</p>
+
+<p>慣例勝於設定的方式對初學者可能會有點挫折，特別是如果是從一個已經存在的應用程式開始用起，因為會有隱藏的假設藏在程式碼裡面。這些假設會讓程式簡潔，但是當你不知道的時候也會造成困惑。但當你學習Rails慣例之後，Rails的所有事情就會變成有意義了。一旦當你建構全新的網站時，你將如虎添翼般，因為有這麼多已經為你定義好的東西。</p>
+
+<h3>它並不完美</h3>
+
+<p>Rails 的確有它的缺點。當應用程式滿足上述的甜蜜點時，這些缺點可以被忽略不計，但是在極端情況卻是很大的問題。</p>
+
+<p>Ruby 比大多數其他程式語言還來的慢。當然這幾年將會改善，但是他對少數應用程式來說這是一個缺點，的確是個問題。不過實際上對絕大多數的網站這並不是問題所在。</p>
+
+<p>對 MVC 框架的架空使用也將拖慢速度。仔細看大多數的Rails應用都執行良好，但是很多 Model 操作都可以經由調校降低對資料庫的存取次數。你常常可以徹底地降低資料庫操作：Rails 包含了強而有利的快取系統，常常被存取的網頁可以只被建立一次，然後被讀取很多次。</p>
+
+<p>Rails 應用程式也常常在hosting比PHP碰到更多的麻煩。因為Rails框架程式大小的關係，它需要一直使用記憶體，而不是只在有request的時候。你需要100-200MB的專用記憶體來維持一個低流量的Rails應用。對比的PHP則可以在一台機器裡跑上上百的應用，因為他們不需要佔據任何記憶體直到被存取。(譯註：這個局面已改變，請參考 <a href="http://modrails.com/">mod_rails</a>)</p>
+
+<p>因為那些伺服器需求，共用 Hosting 通常對 Rails 應用問問多多。一 VPS(虛擬專用伺服器)通常是最佳的選擇。設定一台Rails伺服器比起PHP是複雜許多。這在一兩年前也許是個大問題，不過現在有許多 hosting 公司已經對 Rails 提供專門的解決方案。</p>
+
+<p>這些伺服器的要求也導致Ruby on Rails hosting傾向比起其他平台和語言成本更昂貴些。如果你符合Rails的甜蜜點，相對於比起使用Rails得到的好處，你的網站應當足夠重要到可以負擔這些增加的hosting費用。</p>
+
+<h3>學習曲線</h3>
+
+<p>Rails 的複雜讓初學者比較難以開始：它需要花幾個月的時間來熟悉Rails全部。但是你可以先從學習如何打造一個基本的Rails網站。一旦你開始採用，你將逐漸補齊所需要的技能和知識。</p>
+
+<p>建構網站的開發者來自四方八方不同背景，大部分可以分成兩類：</p>
+
+<ol>
+<li>有點子建構網站，而且只想學習剛剛好足夠多的技術。</li>
+<li>看見網站就像看見程式的程式設計師。</li>
+</ol>
+
+<p>Ruby on Rails 由程式設計師建構，也是為了寫給程式設計師使用。所以如果你來自專業軟體開發背景，它將會比來自於網頁設計領域更容易熟悉。</p>
+
+<p>如果你不是軟體設計師，將有更多東西要學，但也不是不可能。學習一部分的Ruby，學點物件導向程序，那麼了解Rails也不會太困難。要使用Rails建構網站你只需要具備有限的一小部分的 Ruby 能力即可。</p>
+
+<p>你可以不需要運作在框架裡面的進階Ruby技巧。你不需要了解Rails內部運作，或內部技術(例如metaprogramming)。</p>
+
+<p>Rails 系統的許多實做技術來自於軟體開發領域，包括使用原始碼管理系統，一個自動測試框架，文件工具，和佈署工具。如果你正在做點對點式(ad-hoc)的網站開發，這些也許是陌生的觀念，但是一旦你開始熟悉，它將讓你的工作生涯更健全。</p>
+
+<h3>該學什麼</h3>
+
+<p>學習 Rails 的奧祕在於知道什麼是你學習一開始可以忽略的東西，如此你才可以先在一段時間內牢記所知，而不是一次就用眼花撩亂的技術來構成Rails應用(一個學習開端是利用此文作者的 Ruby on Rails <a href="http://www.BuildingWebApps.com/learning_rails">免費線上課程</a>）</p>
+
+<p>開始學習基本的Ruby。你不需要學太深，但是要有效率的開發Rails你必須知道這些基本的東西。Rails 看起來有點像標記語言(markup)，它也試圖這樣想，但你必須了解到網站並不是一組網頁檔案，而是由程式來產生網頁。</p>
+
+<p>如果你專注在前端，學習如何 layout, view 樣板，還有局部樣板(partials)是如何運作的。如果你是專注在後端開發，它將關注在 model 和 controller 層而並提供 view 所需要的變數。</p>
+
+<p>一開始，你可以忽略 Ajax; 它是一個可以大大改善使用者經驗的另一層技術，但是它真的不是必要的。所以當你學習 Rails 的時候可以先把 RJS, Prototype 和 Scriptaculous 放一邊。當你已經會基本東西之後，再來加入新潮的 Ajax 功能。</p>
+
+<p>如果你是後端開發者，專注在學習如何塑模你的應用領域成為一組資源，建立你的資料庫表格，然後使用物件。Rails 框架既廣且深，所以你將持續花時間學習，但是一開始你不需要太多。</p>
+
+<p>當你正在學習 Rails，你可以忽略測試和其相關的複雜東西，即使它在 Rails 的討論中非常值得關注。當你更進一步，回來在做即可。不要讓這些東西拖慢你一開始的學習或是增加你的認知負擔。</p>
+
+<h3> 換你上場了!</h3>
+
+<p>一旦你準備好要加速了，Ruby on Rails 將變成一位老朋友。你的手指尖有著滿滿的工具，你將有著前所未有的生產效率。用更少程式碼做更多事情，你將樂於其中建構出更好的網站。不會再回頭了。</p>
+
+<p>原文插圖來自<a href="http://www.alistapart.com/about/kevincornell">Kevin Cornell</a></p>
+
+<h3>關於作者</h3>
+
+<p>Michael Slater 是<a href="http://www.CollectiveKnowledge.com/">Collective Knowledge Works, Inc.</a>的老闆，這家公司建立知識社群平台。他同時也是<a href="http://www.BuildingWebApps.com/learning_rails">Learning Rails free online course</a>的共同創辦人和<a href="http://www.BuildingWebApps.com/">BuildingWebApps.com</a>的編輯主任。</p>
+
+
+<h3>關於譯者</h3>
+
+<p>張文鈿 (a.k.a. <a href="http://ihower.tw">ihower</a>) 於 May 23rd, 2008 </p>
+
+		<address> 
+			Translated with the permission of A List Apart Magazine and the author[s]. 
+		</address> 
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</body> 
+</html> 
+ 

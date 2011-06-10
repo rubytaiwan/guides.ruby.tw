@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 基本要素</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>基本要素</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Object initialization" href=objinitialization.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: About the guide" href=about.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>基本要素</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>本節主要討論一些實作事項。</p>
+
+<h3><a name="label-0" id="label-0">敘述分隔符號 (statement delimiter)</a></h3><!-- RDLabel: "Statement delimiters" -->
+<p>有些語言需要某些標點符號（例如分號 (<code>;</code>)）來結束程式中的每個敘述， 而 Ruby 則是根據 shell 的傳統，例如 <code>sh</code> 及 <code>csh</code>。同一行上的多項敘述必須以分號來分隔，但並不需要在該行結尾處使用，換行字元 (linefeed) 在此的作用與分號相同。如果該行以反斜線 (<code>\</code>) 結尾，則可忽略之後的換行字元，如此能讓單一邏輯程式敘述行 (logical line) 橫跨數行。</p>
+<h3><a name="label-1" id="label-1">註解 (comments)</a></h3><!-- RDLabel: "Comments" -->
+<p>為甚麼要寫註解？雖然程式碼編寫得清楚明瞭就足夠，但有時候在空白處隨便寫下些註解也會很有用，不應該認為別人看到你的程式碼，就會立即知道你編寫的方法。此外，實際上，今天的你與明天的你也可能判若兩人，經過一段時間，當我們回頭修改或改進程式的時候，可能會說：「我知道我寫了這個，但到底寫來幹嘛呢？」</p>
+<p>有些經驗豐富的程式員會準確地指出，矛盾或過時的註解不如不要。沒錯，註解不應用來替代清楚易讀的程式碼；而如果你的程式碼不清不楚，那就有可能存在錯誤。初學 Ruby 時，你可能需要寫較多的註解，不過當你能夠以簡雅易讀的程式碼表達時，註解也就會越來越少。</p>
+<p>Ruby 依循常見的腳本傳統，使用井號 (<code>#</code>) 來代表開始寫註解。直譯器會忽略任何以 <code>#</code> 開頭的內容，直至該行結束。</p>
+<p>此外，為了方便篇幅較長的註解，Ruby 直譯器也會忽略從 &quot;<code>=begin</code>&quot; 到 &quot;<code>=end</code>&quot; 之間的任何內容。</p>
+<p></p><div class="rbscript">#!/usr/bin/env ruby<BR>
+<BR> =begin<BR> **********************************************************************<BR>
+&nbsp; 這是註解區塊，你可在此編寫註解，<BR>
+&nbsp; 方便讀者（包括你自己）閱讀程式碼。直譯器會忽略這些內容，<BR>
+&nbsp; 所以並不需要在每行都加上 #。<BR> **********************************************************************<BR> =end</div>
+
+<h3><a name="label-2" id="label-2">組織你的程式碼</a></h3><!-- RDLabel: "Organizing your code" -->
+<p>Ruby 具有高層級的動態性 (dynamism)，指的是類別、模組、方法只會在定義它們的程式碼運作後才存在。如果你習慣使用較靜態的語言編寫程式的話，有時候可能會出現驚喜。</p>
+<p></p><div class="rbscript"># 以下結果會導致 &quot;undefined method&quot;（未定義方法）錯誤：<BR>
+<BR> puts successor(3)<BR>
+<BR> def successor(x)<BR>
+&nbsp; x + 1<BR> end</div>
+
+<p>雖然直譯器執行前，會檢查整份腳本文件的語法，但 <code>def successor ... end</code> 程式碼需要真的運作，才能建立 <code>successor</code> 方法。因此，排列腳本的次序將是關鍵。</p>
+<p>這看起來好像嚴格規定要以從下而上的方式組織程式碼，但其實並不是。當直譯器遇上方法定義，只要你確定該方法真的被呼叫時能夠獲得定義，直譯器就能安全的包含未定義的參考 (references)：</p>
+<p></p><div class="rbscript"># 轉換華氏為攝氏，<BR> # 分為兩個步驟。<BR>
+<BR> def f_to_c(f)<BR>
+&nbsp; scale(f - 32.0)&nbsp; # 雖然這是向前參考 (forward reference)，但沒有問題。<BR> end<BR>
+<BR> def scale(x)<BR>
+&nbsp; x * 5.0 / 9.0<BR> end<BR>
+<BR> printf &quot;%.1f is a comfortable temperature.\n&quot;, f_to_c(72.3)</div>
+
+<p>比起 Perl 或 Java，這看起來好像沒那麼方便，但比起不使用原型 (prototype) 下編寫 C，則來得自由（C 總是會要求你保持甚麼參考甚麼的偏序 (partial ordering)）。將上層 (top-level) 程式碼置於原始檔案 (source file) 底層，總是能夠運作， 這雖然起初看來是讓人覺得有點煩惱。合理而輕鬆來強制執行所希望行為的方式是，在檔案頂層定義一個 <code>main</code> 函數，然後從底層呼叫。</p>
+<p></p><div class="rbscript">#!/usr/bin/env ruby<BR>
+<BR> def main<BR>
+&nbsp; # 在此表達上層邏輯 ...<BR> end<BR>
+<BR> # ... 在此輸入支援程式碼，並且適當組織 ...<BR>
+<BR> main # ... 並在此開始執行。</div>
+
+<p>這也有助於 Ruby 提供工具，將複雜的程式斷為易讀的區塊，既可重複使用又邏輯相關。我們已使用過 <code>include</code> 來存取模組， 你之後也會發現 <code>load</code> 及 <code>require</code> 命令 (facility) 很實用。<code>load</code> 在所指示的檔案被複製、貼上時就會運作（類似 C 的 <code>#include</code> 前置處理指令 (preprocessor directive)）。<code>require</code> 則比較複雜，可以讓程式碼在需要時，最多載入一次。</p>
+<h3><a name="label-3" id="label-3">總結</a></h3><!-- RDLabel: "That's it..." -->
+<p>這份手冊應該足夠讓你開始用 Ruby 編寫程式了。如果有進一步的問題，可以前往使用者社群求助，或者參考越來越多的參考書或網上資源。</p>
+<p>祝你好運，享受編寫樂趣！</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Object initialization" href=objinitialization.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: About the guide" href=about.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 繼續簡單示範</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>繼續簡單示範</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Arrays" href=arrays.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Control structures" href=control.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>繼續簡單示範</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+<p>現在我們來分析一下之前的程式範例。</p>
+<p>下列程式碼在<a 
+href="http://www.rubyist.net/%7Eslagell/ruby/examples.html">簡單示範</a>一節中出現過。</p>
+<p></p><div class="rbscript">def fact(n)<BR>
+&nbsp; if n == 0<BR>
+&nbsp; &nbsp; 1<BR>
+&nbsp; else<BR>
+&nbsp; &nbsp; n * fact(n-1)<BR>
+&nbsp; end<BR> end<BR> puts fact(ARGV[0].to_i)</div>
+
+<p>因為這是我們第一次解釋，所以每一行都會仔細說明。</p>
+<h3><a name="label-0" id="label-0">階乘</a></h3><!-- RDLabel: "Factorials" -->
+<p></p><div class="rbscript">def fact(n)</div>
+
+<p>第 1 行中，<code>def</code> 用來定義函數 (function) 的敘述（或者準確來說是<em>方法 (method)</em>；我們會在<a 
+href="methods.html">之後的章節</a>探討甚麼是方法）。這裡指出函數 <code>fact</code> 有一個引數 (argument)，即是 <code>n</code>。</p>
+<p></p><div class="rbscript">if n == 0</div>
+
+<p><code>if</code> 是用來判斷條件 (condition)。若條件成立，便運行下一行程式碼，否則就運行 <code>else</code> 之後的程式碼。</p>
+<p></p><div class="rbscript">1</div>
+
+<p>若條件成立，<code>if</code> 的值就是 1。</p>
+<p></p><div class="rbscript">else</div>
+
+<p>若條件不成立，就會運行從 else 到 <code>end</code> 的程式碼。</p>
+<p></p><div class="rbscript">n * fact(n-1)</div>
+
+<p>若條件不成立，<code>if</code> 的值就是 <code>n</code> 乘以 <code>fact(n-1)</code>。</p>
+<p></p><div class="rbscript">end</div>
+
+<p>第一個 <code>end</code> 結束 <code>if</code> 敘述。</p>
+<p></p><div class="rbscript">end</div>
+
+<p>第二個 <code>end</code> 結束 <code>def</code> 敘述。</p>
+<p></p><div class="rbscript">puts fact(ARGV[0].to_i)</div>
+
+<p>這樣便會呼叫 <code>fact()</code> 函數，並傳入從命令列傳進來的參數，並輸出結果。</p>
+
+<p><code>ARGV</code> 是包含命令列引數的陣列。由於 <code>ARGV</code> 的成員都是字串，因此要用 <code>to_i</code> 轉換為整數 (integral number)。Ruby 不會像 Perl 那樣，自動將字串轉換為整數。</p>
+<p>如果這個程式中輸入負數，會怎麼樣呢？你發現問題了嗎？能夠修正嗎？</p>
+<h3><a name="label-1" id="label-1">字串</a></h3><!-- RDLabel: "Strings" -->
+<p>接下來我們會分析<a href="strings.html">字串</a>一節的猜字程式。這個程式有點長，所以我們會編號方便指示。</p>
+<p></p><div class="rbscript">01 words = ['foobar', 'baz', 'quux']<BR> 02 secret = words[rand(3)]<BR> 03<BR> 04 print &quot;guess?&quot;<BR> 05 while guess = STDIN.gets<BR> 06&nbsp;&nbsp; guess.chop!<BR> 07&nbsp;&nbsp; if guess == secret<BR> 08&nbsp; &nbsp;&nbsp; puts &quot;You win!&quot;<BR> 09&nbsp; &nbsp;&nbsp; break<BR> 10&nbsp;&nbsp; else<BR> 11&nbsp; &nbsp;&nbsp; puts &quot;Sorry, you lose.&quot;<BR> 12&nbsp;&nbsp; end<BR> 13&nbsp;&nbsp; print &quot;guess?&quot;<BR> 14 end<BR> 15 puts &quot;the word is &quot;+ secret + &quot; . &quot;</div>
+
+<p>程式中，使用了 <code>while</code> 這個新的控制結構。若指定的條件為真時，就會重複運行 <code>while</code> 與其對應的 <code>end</code> 之間的程式碼。這個範例中，<code>guess=STDIN.gets</code> 既是一個有動作的敘述（收集使用者輸入的一行內容，並儲存為 <code>guess</code>），也是一項判斷條件（若沒有輸入任何內容，<code>guess</code> 即等於整個 <code>guess=STDIN.gets</code> 表示式的值，而這個值是 <code>nil</code>，會讓 <code>while</code> 停止迴圈。）</p>
+
+<p><code>STDIN</code> 是標準輸入 (standard input) 物件。一般來說，<code>guess=gets</code> 的功能與 <code>guess=STDIN.gets</code> 一樣。</p>
+
+<p>第 2 行的 <code>rand(3)</code> 會傳回 0 至 2 間的一個亂數 ( random number)， 用來提取陣列 <code>words</code> 中的一個元素。</p>
+
+<p>第 5 行中，我們利用方法 <code>STDIN.gets</code>，從標準輸入中提取一行內容。提取時若出現 <em>EOF</em>（檔案結尾），<code>gets</code> 會傳回 <code>nil</code>。因此 <code>while</code> 程式碼會不斷重複，直到遇到代表結束輸入的 <em>^D</em>（DOS/Windows 中則是 <em>^Z</em> 或 <em>F6</em>）。</p>
+
+<p>第 6 行中 <code>guess.chop!</code> 會刪除 <code>guess</code> 後的最後一個字元；在本例中這是一個<em>換行 (newline)</em> 字元，這是因為 <code>gets</code> 會包含使用者按下的 <em>Return</em> 鍵，這是我們不感興趣的。</p>
+
+<p>在第 15 行中輸出謎底。我們將謎底寫為三個字串將之相加在一起；這與將 <code>secret</code> 寫為 <code>#{secret}</code> 的單一字串效果相同，清楚顯示這是將要計算的變數，而不只是逐字輸出而已：</p>
+
+<p></p><div class="rbscript">puts &quot;the word is #{secret}.&quot;</div>
+
+<p>許多程式員都覺得這樣能夠比較簡潔地顯示輸出的內容。（編註：執行的效率也比較好，不需要呼叫相加兩次）</p>
+
+<p>我們現在已經熟悉如何使用 <code>puts</code> 作為標準輸出，但這個腳本的第 4 及 13 行卻是用 <code>print</code>。它們是不太一樣的。<code>print</code> 會準確輸出所提供的內容；<code>puts</code> 則一定會以輸出行 (output line) 結尾。在第 4 及 13 行使用 <code>print</code>，會讓游標停留在顯示內容的後面，而不是下一行開頭。這可用作提示使用者輸入。一般來說，以下四個輸出呼叫 (output call) 的結果都是相同。</p>
+<p></p><div class="rbscript"># 若內容沒有換行，則 puts 會隱含加上換行：<BR> puts&nbsp; &quot;Darwin's wife, Esmerelda, died in a fit of penguins.&quot;<BR>
+<BR> # 換行必須明確加入：<BR> print &quot;Darwin's wife, Esmerelda, died in a fit of penguins.\n&quot;<BR>
+<BR> # 可用 + 連接輸出內容：<BR> print 'Darwin's wife, Esmerelda, died in a fit of penguins.'+&quot;\n&quot;<BR>
+<BR> # 或提供多個字串以連接：<BR> print 'Darwin's wife, Esmerelda, died in a fit of penguins.', &quot;\n&quot;</div>
+
+<p>你可能需要留意：文字視窗有時會為了速度而緩衝輸出內容，只有遇到換行字元時，才會收集個別字元並加以顯示。所以如果使用者猜字後，猜字程式無法如預期般顯示提示行，大概就是因為緩衝引起的。輸出提示後，你可以 <code>flush</code> 輸出內容，避免上述情況發生。它可通知標準輸出裝置（該物件稱為 <code>STDOUT</code>）：「別等了，馬上顯示緩衝區的內容。」</p>
+<p></p><div class="rbscript">04 print &quot;guess?&quot;; STDOUT.flush<BR>
+&nbsp; ...<BR> 13 print &quot;guess?&quot;; STDOUT.flush</div>
+
+<p>事實上，我們在下一個腳本會更小心使用這個指令。</p>
+
+<h3><a name="label-2" id="label-2">正規表示式</a></h3><!-- RDLabel: "Regular expressions" -->
+<p>最後，我們會討論<a href="regexp.html">正規表示式</a>一節的程式。</p>
+
+<p></p><div class="rbscript">01 st = &quot;\033[7m&quot;<BR> 02 en = &quot;\033[m&quot;<BR> 03<BR> 04 puts &quot;Enter an empty string at any time to exit.&quot;<BR> 05<BR> 06 while true<BR> 07&nbsp;&nbsp; print &quot;str&gt; &quot;; STDOUT.flush; str=gets.chop<BR> 08&nbsp;&nbsp; break if str.empty?<BR> 09&nbsp;&nbsp; print &quot;pat&gt; &quot;; STDOUT.flush; pat=gets.chop<BR> 10&nbsp;&nbsp; break if pat.empty?<BR> 11&nbsp;&nbsp; re = Regexp.new(pat)<BR> 12&nbsp;&nbsp; puts str.gsub(re, &quot;#{st}\\&amp;#{en}&quot;)<BR> 13 end</div>
+
+<p>第 6 行中，<code>while</code> 的條件硬性指定為 <code>true</code>，所以形成無窮迴圈。但是，我們在第 8 及 10 行輸入 <code>break</code> 敘述來逃出迴圈。這兩個 <code>break</code> 都用了「<code>if</code> 修飾詞 (modifier)」，<code>if</code> 修飾詞僅在指定條件符合時，才會執行其左邊的敘述。這種由右到左的演算邏輯並不常見，但卻貼近日常用語的表達形式。由於不需要用 <code>end</code> 敘述來通知直譯器之後的程式碼有多少需要符合條件，所以也顯得簡潔。一般來說，只有在敘述與條件能夠簡短地寫在一行的情況下，才會使用 <code>if</code> 修飾詞。</p>
+
+<p>請注意這個程式與猜字程式在使用者介面上的差別。使用者可在這個程式的空白行上按下 <em>Return</em> 鍵離開程式。因此我們測試輸入字串是否為空，而非是否不存在。</p>
+
+<p>第 7 及 9 行中有一個「非破壞性的」(non-destructive) 的 chop（去除尾部空白）；同樣，我們用 <code>gets</code> 去掉不要的換行字元。加入驚嘆號就是「破壞性的」(destructive) chop， 那兩者有甚麼差別呢？在 Ruby 中，我們一般在方法名稱後加上 '<code>!</code>' 或 '<code>?</code>'。驚嘆號（<code>!</code> 有時讀作 &quot;bang!&quot;）代表具有破壞性，即會改變所接觸物件的值。<code>chop!</code> 會直接影響字串，但 <code>chop</code> 則會提供一個刪減後的版本，而不影響原本的物件。以下將闡釋兩者的差異。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> s1 = &quot;forth&quot;</B></font><BR>
+&nbsp; &quot;forth&quot;<BR> ruby&gt;<font color="#ffff00"><B> s1.chop!&nbsp; &nbsp; &nbsp;&nbsp; # 這改變了 s1。</B></font><BR>
+&nbsp; &quot;fort&quot;<BR> ruby&gt;<font color="#ffff00"><B> s2 = s1.chop&nbsp;&nbsp; # 這將變更後的版本置於 s2，</B></font><BR>
+&nbsp; &quot;for&quot;<BR> ruby&gt;<font color="#ffff00"><B> s1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;&nbsp; # ⋯⋯而不影響 s1。</B></font><BR>
+&nbsp; &quot;fort&quot;</div>
+
+<p>你也會看見有 <code>chomp</code> 及 <code>chomp!</code>。提供更多選擇性：<em>字串結尾是一個換行字元時</em>，結尾才會刪掉。例如：<code>&quot;XYZ&quot;.chomp!</code>，並不會有任何效果。記住兩者差別的技巧就是，想像人或動物吃東西前，總會先嘗嘗味道，才會一口咬下去，而不像斧頭那樣隨便就砍下去。</p>
+<p>第 8 及 10 行也出現另一種命名方式。問號（<code>?</code> 有時讀作 &quot;huh?&quot;）的「述語」(predicate) 方法，表示只會傳回 <code>true</code> 或 <code>false</code>。（編註：! 和 ? 結尾的命名方式，只是一個慣例。前者暗示有某種副作用，後者暗示回傳值是 <code>Boolean</code> 布林值）</p>
+
+<p>第 11 行利用使用者提供的字串，建立一個正規表示式物件。第 12 行則完成真正的工作，使用 <code>gsub</code> 將 ANSI 標記替換 (<code>g</code>lobally <code>sub</code>stitute) 到表示式中每個匹配的內容；第 12 行也會輸出結果。</p>
+<p>我們可以將第 12 行拆成：</p>
+<p></p><div class="rbscript">highlighted = str.gsub(re,&quot;#{st}\\&amp;#{en}&quot;)<BR> puts highlighted</div>
+
+<p>或是「破壞性」的形式：</p>
+<p></p><div class="rbscript">str.gsub!(re,&quot;#{st}\\&amp;#{en}&quot;)<BR> puts str</div>
+
+<p>再看看第 12 行的最後部分， <code>st</code> 及 <code>en</code> 在第 1 至 2 行中定義為 ANSI 碼改變文字顏色。並在第 12 行以 <code>#{}</code> 包含其內，確保解釋正確（如此我們並不會看到輸出變數的<em>名稱 (names)</em>）， 兩者之間看到的是 <code>\\&amp;</code>。這有點困難， 因為這個替代字串以雙引號括起，所以其中的一對斜線會解釋成為單一斜線，造成 <code>gsub</code> 實際看到的是 <code>\&amp;</code>，而這剛好是指示一開始符合樣式的特別程式碼。所以新字串顯示時，除了符合指定樣式部分會反白顯示以外，其餘都跟舊字串一樣。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Arrays" href=arrays.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Control structures" href=control.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

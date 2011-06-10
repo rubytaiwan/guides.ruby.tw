@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 簡單示範</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>簡單示範</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Getting started" href=getstarted.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Strings" href=strings.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&gt;</td><td><strong>簡單示範</strong></td></tr>
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+
+<p>來寫個函式計算階乘吧。<code>n</code> 階乘的數學定義是：</p> 
+<pre>n! = 1                （當 n==0）
+   = n * (n-1)!       （否則）</pre> 
+<p>這可在 Ruby 中寫成：</p> 
+<p></p><div class="rbscript">def fact(n)<BR> 
+&nbsp; if n == 0<BR> 
+&nbsp; &nbsp; 1<BR> 
+&nbsp; else<BR> 
+&nbsp; &nbsp; n * fact(n-1)<BR> 
+&nbsp; end<BR> end</div> 
+ 
+<p>你會發現 <code>end</code> 重複出現， Ruby 正是因此而稱為類似「算法」(Algol) 的語言。（其實，Ruby 的語法更接近 Eiffel 語言。）你也會發現並沒有 <code>return</code> 敘述， 因為 Ruby 函數會回傳最後計算的步驟。Ruby 可以使用 <code>return</code> 敘述，但並不必要。</p> 
+<p>來試試我們的階乘函式吧。再加入一行程式碼就能運作這個程式：</p> 
+<p></p><div class="rbscript"># 計算出數字的階乘<BR> # 請把程式儲存為 fact.rb<BR> 
+<BR> def fact(n)<BR> 
+&nbsp; if n == 0<BR> 
+&nbsp; &nbsp; 1<BR> 
+&nbsp; else<BR> 
+&nbsp; &nbsp; n * fact(n-1)<BR> 
+&nbsp; end<BR> end<BR> 
+<BR> puts fact(ARGV[0].to_i)</div> 
+ 
+<p>上面的 <code>ARGV</code> 是一個陣列，其中包含了命令列引數 (command line arguments)，而 <code>to_i</code> 將字元字串 (character string) 轉換為整數。</p> 
+<p></p><div class="shell">% ruby fact.rb 1<BR> 1<BR> % ruby fact.rb 5<BR> 120</div> 
+ 
+<p>能不能計算引數為 40 呢？這會讓你的計算機溢位 (overflow)……</p> 
+<p></p><div class="shell">% ruby fact.rb 40<BR> 815915283247897734345611269596115894272000000000</div> 
+ 
+<p>確實能夠運算， 其實只要電腦的記憶體足夠，Ruby 能夠處理任何整數。所以就算是 400 也能夠計算：</p> 
+<p></p><div class="shell">% ruby fact.rb 400<BR> 64034522846623895262347970319503005850702583026002959458684<BR> 44594280239716918683143627847864746326467629435057503585681<BR> 08482981628835174352289619886468029979373416541508381624264<BR> 61942352307046244325015114448670890662773914918117331955996<BR> 44070954967134529047702032243491121079759328079510154537266<BR> 72516278778900093497637657103263503315339653498683868313393<BR> 52024373788157786791506311858702618270169819740062983025308<BR> 59129834616227230455833952075961150530223608681043329725519<BR> 48526744322324386699484224042325998055516106359423769613992 <BR> 31917134063858996537970147827206606320217379472010321356624 <BR> 61380907794230459736069956759583609615871512991382228657857 <BR> 95493616176544804532220078258184008484364155912294542753848 <BR> 03558374518022675900061399560145595206127211192918105032491 <BR> 00800000000000000000000000000000000000000000000000000000000 <BR> 0000000000000000000000000000000000000000000</div> 
+ 
+<p>我們不可能一眼就看出對錯，但結果一定是對的。:-)</p> 
+
+<h2><a name="label-0" id="label-0">互動模式</a></h2><!-- RDLabel: "The input/evaluation loop" --> 
+
+<p>執行 Ruby 而未輸入引數，Ruby 會從標準輸入 (standard input) 讀取指令，在輸入結束後開始執行：</p> 
+<p></p><div class="shell">% ruby<BR> puts &quot;hello world&quot;<BR> puts &quot;good-bye world&quot;<BR> ^D<BR> hello world<BR> good-bye world</div> 
+ 
+<p>上面的 <em>^D</em> 表示 control-D，可以方便地在 Unix 環境中表示輸入結束。在 DOS/Windows 中，可以按 <em>F6</em> 或 <em>^Z</em>。</p> 
+<p>Ruby 同時具有 <code>eval.rb</code> 程式，可以利用鍵盤在互動式迴圈 (interactive loop) 中輸入 Ruby 程式碼，隨即就能顯示結果。這在本手冊中將經常使用。（編註：您可以使用 <code>irb</code> 指令直接進入此互動模式）</p> 
+
+<p>若你使用 ANSI 相容的終端機 (terminal)（如果是使用 UNIX 系統，那幾乎都是 ANSI 相容的終端機；有些舊版本的 DOS，需要安裝 <code>ANSI.SYS</code> 或 <code>ANSI.COM</code>；不幸的是，Windows XP 現在幾乎無法使用），就應該使用<a href="eval.txt">加強版 <code>eval.rb</code></a>，提供視覺縮排協助 (visual indenting assistance)、提示報告、顏色強調。不然的話，在可用於任何終端機的非 ANSI 版中，到 <code>sample</code> 子目錄中。這是一小段 <code>eval.rb</code>：</p> 
+<p></p><div class="shell">% ruby eval.rb （編註：您也可以直接輸入 irb 指令直接進入此互動模式）<BR> ruby&gt;<font color="#ffff00"><B> puts &quot;Hello, world.&quot;</B></font><BR> Hello, world.<BR> 
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> exit</B></font></div> 
+ 
+<p><code>hello world</code> 由 <code>puts</code> 產生。下一行（即 <code>nil</code>）報告任何最後計算的結果；Ruby 不會區分 <em>敘述 (statements)</em> 與 <em>表示式 (expressions)</em>，所以計算程式碼也就是執行程式碼。這個例子中，<code>nil</code> 表示 <code>puts</code> 並無傳回任何有意義的值。請注意，我們可以輸入 <code>exit</code> 或利用 <code>^D</code> 離開這個直譯器回圈。</p> 
+<p>本手冊中，&quot;<code>ruby&gt;</code>&quot; 代表 <code>eval.rb</code> （編註：或 <code>irb</code>）這個實用小程式的輸入提示符。</p> 
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Getting started" href=getstarted.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Strings" href=strings.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

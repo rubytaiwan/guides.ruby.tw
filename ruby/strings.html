@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 字串</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>字串 Strings</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Simple examples" href=examples.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Regular expressions" href=regexp.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>字串</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+<p>Ruby 可用於處理字串與數值資料。字串會用雙引號 (&quot;...&quot;) 或單引號 ('...') 括起。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;abc&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;abc&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> 'abc'</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;abc&quot;</B></font></div>
+
+<p>不同情況下，雙引號與單引號會有不同效果。用雙引號括起的字串可利用前導的反斜線逸出 (escape) 字元，或是使用 <code>#{}</code> 來計算裡面的程式。用單引號括起的字串並不執行這種行為，所顯示的就是結果。範例：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> puts &quot;a\nb\nc&quot;</B></font><BR> a<BR> b<BR> c<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> puts 'a\nb\n'</B></font><BR> a\nb\nc<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;\n&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;\n&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> '\n'</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;\\n&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;\001&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;\001&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> '\001'</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;\\001&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;abcd #{5*3} efg&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;abcd 15 efg&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> var = &quot; abc &quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot; abc &quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;1234#{var}5678&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;1234 abc 5678&quot;</B></font></div>
+
+<p>與 C 相比，Ruby 的字串處理更聰明又易用。例如，你可以用 <code>+</code> 串接 (concatenate) 字串，用 <code>*</code> 重複字串。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;foo&quot; + &quot;bar&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;foobar&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;foo&quot; * 2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;foofoo&quot;</B></font></div>
+
+<p>用 C 連接字串比較困難，需要明確的記憶體管理才能實行：</p>
+<p></p><div class="cscript">char *s = malloc(strlen(s1)+strlen(s2)+1);<BR> strcpy(s, s1);<BR> strcat(s, s2);<BR> /* ... */<BR> free(s);</div>
+
+<p>而使用 Ruby，我們不需要擔心字串佔用的空間， 完全擺脫記憶體管理的約束。</p>
+<p>你可用字串完成下列事項：</p>
+<p>串接：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> word = &quot;fo&quot; + &quot;o&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;foo&quot;</B></font></div>
+
+<p>重複：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> word = word * 2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;foofoo&quot;</B></font></div>
+
+<p>提取字元（請注意，Ruby 的字元都是整數）：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> word[0]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 102&nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; # 102 是 `f' 的 ASCII 碼 （編註：Ruby 1.9 之後版本，變更為回傳 f）</B></font><BR> ruby&gt;<font color="#ffff00"><B> word[-1]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 111&nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; # 111 是 `o' 的 ASCII 碼（編註：Ruby 1.9 之後版本，變更為回傳 o）</B></font></div>
+
+<p>（負號指從字串結尾計算偏移位置，而不是從字串開頭。）</p>
+
+<p>提取子字串：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> herb = &quot;parsley&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;parsley&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> herb[0,1]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;p&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> herb[-2,2]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;ey&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> herb[0..3]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;pars&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> herb[-5..-2]</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;rsle&quot;</B></font></div>
+
+<p>比對：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> &quot;foo&quot; == &quot;foo&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; true</B></font><BR> ruby&gt;<font color="#ffff00"><B> &quot;foo&quot; == &quot;bar&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; false</B></font></div>
+
+<p>現在使用一下這些功能吧。這是一個「猜字」的謎題，可能「謎題」對以下內容有點太嚴肅了吧 <code>;-)</code></p>
+<p></p><div class="rbscript"># 把程式儲存為 guess.rb<BR> words = ['foobar', 'baz', 'quux']<BR> secret = words[rand(3)]<BR>
+<BR> print &quot;guess?&quot;<BR> while guess = STDIN.gets<BR>
+&nbsp; guess.chop!<BR>
+&nbsp; if guess == secret<BR>
+&nbsp; &nbsp; puts &quot;You win!&quot;<BR>
+&nbsp; &nbsp; break<BR>
+&nbsp; else<BR>
+&nbsp; &nbsp; puts &quot;Sorry, you lose.&quot;<BR>
+&nbsp; end<BR>
+&nbsp; print &quot;guess?&quot;<BR> end<BR> puts &quot;The word was &quot; + secret + &quot;.&quot;</div>
+
+<p>現在，先別太在意這個程式碼的細節。這個程式運作起來會像這樣。</p>
+<p></p><div class="shell">% ruby guess.rb<BR> guess?foobar<BR> Sorry, you lose.<BR> guess?quux<BR> Sorry, you lose.<BR> guess?^D<BR> The word was baz.</div>
+
+<p>（成功機率有三分之一，我應該猜的更準才是。）</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Simple examples" href=examples.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Regular expressions" href=regexp.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

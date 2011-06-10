@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 存取器</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>存取器 Accessors</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Exception processing: ensure" href=ensure.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Object initialization" href=objinitialization.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="globalvars.html">全域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>存取器</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+<h3><a name="label-0" id="label-0">甚麼是存取器？</a></h3><!-- RDLabel: "What is an accessor?" -->
+<p>我們曾在之前的章節討論過實例變數，但尚未深入探討。物件的實例變數即是物件的屬性 (attribute)，用以區分出同類別的其他物件。能夠讀寫這些屬性非常重要，若要讀寫便需要稱為<em>屬性存取器 (attribute accessors)</em> 的公開方法（編註：所有實例變數都不公開的，除非透過公開方法存取)。我們等一下就會看到，並不是每次都需要明確地寫出存取器方法，現在先看一下所有的步驟。兩種存取器分別是<em>寫入器 (writer)</em> 及<em>閱讀器 (reader)</em>。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Fruit</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def set_kind(k)&nbsp; # 寫入器</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; @kind = k</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def get_kind&nbsp; 
+&nbsp;&nbsp; # 閱讀器</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; @kind</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> f1 = Fruit.new</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Fruit:0xfd7e7c8c&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f1.set_kind(&quot;peach&quot;)&nbsp; # 使用該寫入器</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;peach&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f1.get_kind&nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp;&nbsp; # 使用該閱讀器</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;peach&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # 檢驗該物件</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Fruit:0xfd7e7c8c @kind=&quot;peach&quot;&gt;</B></font></div>
+
+<p>很簡單吧，我們可以儲存取回想查看的水果資料， 但方法名稱有點冗長。以下例子就比較精簡方便：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Fruit</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def kind=(k)</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; @kind = k</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def kind</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; @kind</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2 = Fruit.new</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; #&lt;Fruit:0xfd7e7c8c&gt;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2.kind = &quot;banana&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;banana&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2.kind</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;banana&quot;</B></font></div>
+
+<h3><a name="label-1" id="label-1"><code>inspect</code> 方法</a></h3><!-- RDLabel: "The inspect method" -->
+<p>先離題一下， 現在你會注意到，我們要直接查看物件時，就會出現 <code>#&lt;anObject:0x83678&gt;</code> 這個難懂的訊息。這只是個預設的行為，我們可以隨意變更。只要加上稱為 <code>inspect</code> 的方法， 就會傳回以合理方式描述物件的字串，包括物件部分或所有實例變數的狀態。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Fruit</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def inspect</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; &quot;a fruit of the #{@kind} variety&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;a fruit of the banana variety&quot;</B></font></div>
+
+<p>一個相關的方法稱為 <code>to_s</code> （轉換為字串），於輸出物件時使用。一般來說，你可以將 <code>inspect</code> 想像為編寫程式並用以除錯的工具，而 <code>to_s</code> 則是重新定義程式輸出的方式。<code>eval.rb</code> 顯示結果時就會使用 <code>inspect</code>。你可使用 <code>p</code> 方法，輕易地從程式取出除錯輸出。</p>
+<p></p><div class="rbscript"># 這兩行是相等的：<BR> p anObject<BR> puts anObject.inspect</div>
+
+<h3><a name="label-2" id="label-2">簡單使用存取器</a></h3><!-- RDLabel: "Making accessors the easy way" -->
+<p>因為不少實例變數都需要存取器方法，因此 Ruby 提供了一些快捷的方式。</p>
+<p></p><table border="1"><tbody><tr><td><em>快捷方式 </em> </td><td> <em> 效果 </em> </td></tr>
+<tr><td>
+<code> attr_reader :v </code> </td><td> <code> def v; @v; end </code> </td></tr>
+<tr><td>
+<code> attr_writer :v </code> </td><td> <code> def v=(value); @v=value; end </code> </td></tr>
+<tr><td>
+<code> attr_accessor :v </code> </td><td> <code> attr_reader :v; attr_writer :v </code> </td></tr>
+<tr><td>
+<code> attr_accessor :v, :w </code> </td><td> <code> attr_accessor :v; attr_accessor :w </code></td></tr></tbody></table>
+<p>讓我們善用這些方式加到程式裡吧。首先我們需要一個自動產生出來的閱讀器及寫入器，然後加入新的資訊至 <code>inspect</code>：</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Fruit</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; attr_accessor :condition</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def inspect</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; &quot;a #{@condition} #{@kind}&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2.condition = &quot;ripe&quot;</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;ripe&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;a ripe banana&quot;</B></font></div>
+
+<h3><a name="label-3" id="label-3">更多水果的樂趣</a></h3><!-- RDLabel: "More fun with fruit" -->
+<p>如果沒有人吃成熟的水果，那就讓時間來解決吧。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> class Fruit</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; def time_passes</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp; &nbsp;&nbsp; @condition = &quot;rotting&quot;</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B>&nbsp;&nbsp; end</B></font><BR>
+&nbsp; &nbsp; |<font color="#ffff00"><B> end</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;a ripe banana&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2.time_passes</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;rotting&quot;</B></font><BR> ruby&gt;<font color="#ffff00"><B> f2</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; &quot;a rotting banana&quot;</B></font></div>
+
+<p>開始前，我們先要說明一個問題。如果我們現在創造第三件水果，那會怎麼樣呢？要記住，指派值予實例變數後，實例變數才會存在。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> f3 = Fruit.new</B></font><BR>
+<font color="#50ffff"><B>ERR: failed to convert nil into String</B></font></div>
+
+<p>這是因為 <code>inspect</code> 方法發出問題，而且問題很明顯。我們要求它回報水果的種類及狀態，但是 <code>f3</code> 還未獲指派任何屬性。如果我們想的話，可以重新編寫 <code>inspect</code> 方法，讓它可以用<code> defined? </code>方法測試實例變數，並只在實例變數存在時才回報，但這樣就可能不是很實用，因為每種水果都有他們的種類與狀態，我們就要確保它們都已經定義。這將在下一節中討論。</p>
+
+
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Exception processing: ensure" href=ensure.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Object initialization" href=objinitialization.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <link rev="made" href="mailto:slagell@ruby-lang.org">
+  <link rel="stylesheet" href="ug.css" type="text/css">
+  <title>Ruby 使用手冊 | 全域變數</title>
+</head>
+<body bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+<div id=top>
+<table class=noborder width=100%><tr>
+       <td>
+        <table class=noborder width=100%>
+        <tr>
+	<td><div class=rubyred><h2>Ruby 使用手冊</h2></div></td></tr>
+        <tr>
+        <td><div class=rubygray>全域變數 Global variables</div></td>
+        </tr></table>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Variables" href=variables.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Instance variables" href=instancevars.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<div id=navcol>
+<table>
+<table>
+<tr><td>&nbsp;</td><td><a href="index.html">甚麼是 Ruby？</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="getstarted.html">起步走</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="examples.html">簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="strings.html">字串</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="regexp.html">正規表示式</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="arrays.html">陣列</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="backtoexamples.html">繼續簡單示範</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="control.html">控制結構</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="iterators.html">迭代器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="oothinking.html">物件導向思維</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="methods.html">方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="classes.html">類別</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="inheritance.html">繼承</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="redefinemethods.html">重新定義方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accesscontrol.html">存取控制</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="singletonmethods.html">單件方法</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="modules.html">模組</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="procobjects.html">程序物件</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="variables.html">變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><strong>全域變數</strong></td></tr> 
+<tr><td>&nbsp;</td><td><a href="instancevars.html">實例變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="localvars.html">區域變數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="constants.html">類別常數</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="rescue.html">例外處理：救援</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="ensure.html">例外處理：確認</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="accessors.html">存取器</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="objinitialization.html">物件初始化</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="misc.html">基本要素</a></td></tr> 
+<tr><td>&nbsp;</td><td><a href="about.html">關於本手冊</a></td></tr> 
+<tr><td colspan=2><hr></td></tr>
+<tr><td colspan=2>
+  <a href="http://www.ruby-lang.org">Ruby 程式語言首頁</a>
+</td></tr>
+
+</table>
+</div>
+<div id=content>
+
+
+<p>全域變數以 <code>$</code> 開頭， 可從程式中任何地方開始。初始化前，全域變數有一個特別的值－－<code>nil</code>。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> $foo</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> $foo = 5</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font><BR> ruby&gt;<font color="#ffff00"><B> $foo</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font></div>
+
+<p>應儘量少用全域變數， 因為全域變數能夠編寫於任何地方，所以相對危險。過量使用全域變數會令人難以找出錯誤，也會讓人覺得程式設計並沒經過深思熟慮。如果一定要使用全域變數，請記得指定一個描述性名稱 (descriptive name)，以防之後重複使用該名稱（以上例子中的 <code>$foo</code> 並不是好的示範）。</p>
+<p>全域變數其中一個優點就是能夠追蹤，每當變數的值改變後，你都能夠指出呼叫出的程序。</p>
+<p></p><div class="shell">ruby&gt;<font color="#ffff00"><B> trace_var :$x, Proc.new { puts &quot;$x is now #{$x}&quot; }</B></font><BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; nil</B></font><BR> ruby&gt;<font color="#ffff00"><B> $x = 5</B></font><BR> $x is now 5<BR>
+<font color="#50ffff"><B>&nbsp;&nbsp; 5</B></font></div>
+
+<p>當全域變數改變後，就會用作呼叫程序的觸發器 (trigger)，有時會稱之為<em>活躍變數 (active variable)</em>。例如，可用於為圖形使用者介面 (GUI) 保持最新狀態。</p>
+<p>以下是一系列由 <code>$</code> 開頭的特別變數， 例如 <code>$$</code> 包含 Ruby 直譯器的進程識別字 (process id)，只能讀取。這些都是主要的系統變數：</p>
+<p></p><table border="1"><tbody><tr><td><code>$!</code> </td><td> 最新的錯誤訊息 </td></tr>
+<tr><td>
+<code>$@</code> </td><td> 錯誤的位置 </td></tr>
+<tr><td>
+<code>$_</code> </td><td> <code>gets</code> 最後讀取的子串 </td></tr>
+<tr><td>
+<code>$.</code> </td><td> 直譯器最後讀取的行<em>數</em> </td></tr>
+<tr><td>
+<code>$&amp;</code> </td><td> 正規表示式 (regexp) 最後符合的字串 </td></tr>
+<tr><td>
+<code>$~</code> </td><td> 最後的正規表示式符合內容，子表示式 (subexpression) 的陣列 </td></tr>
+<tr><td>
+<code>$</code><em>n</em> </td><td> 最後符合內容的第 <em>n</em> 項子表示式（同 <code>$~[</code><em>n</em><code>]</code>）。</td></tr>
+<tr><td>
+<code>$=</code> </td><td> 不區分大小寫旗標 </td></tr>
+<tr><td>
+<code>$/</code> </td><td> 輸入記錄分隔字元 </td></tr>
+<tr><td>
+<code>$\</code> </td><td> 輸出記錄分隔字元 </td></tr>
+<tr><td>
+<code>\$0</code> </td><td> Ruby 腳本檔案的名稱 </td></tr>
+<tr><td>
+<code>$*</code> </td><td> 命令列引數 </td></tr>
+<tr><td>
+<code>$$</code> </td><td> 直譯器的進程識別字 (process id) </td></tr>
+<tr><td>
+<code>$?</code> </td><td> 離開最後執行的子進程 (child process) 狀態</td></tr></tbody></table>
+<p>以上的 <code>$_</code> 與 <code>$~</code> 具有區域作用域 (local scope)， 他們的名稱看起來是全域變數，但這樣比較有用，而且使用這樣的名稱也有其歷史因素。</p>
+
+</div>
+<div id=bottom>
+<table class=noborder width=100%><tr>
+       <td>
+  <div class=rubygray>
+    <p>Copyright (c) 2005-2008 Mark Slagell，中文翻譯 <a href="http://ruby.tw">Ruby Taiwan</a> 社群</p>
+    <p>Permission is granted to copy, distribute and/or modify
+    this document under the terms of the GNU Free Documentation
+    License, Version 1.2 or any later version published by the Free
+    Software Foundation; with no Invariant Sections, no Front-Cover
+    Texts, and no Back-Cover Texts.</p>
+
+    <p>A copy of the license is included in the section entitled "<a href="documentation_license.html">GNU Free Documentation License</a>."</p>
+
+ </div>
+       </td>
+        <td width=82>
+        <table class=noborder width=100%>
+         <tr>
+          <td>
+            <a title="previous: Variables" href=variables.html>
+            <img border=0 src="la-plexi.png" /></a></td>
+          <td>
+            <a title="next: Instance variables" href=instancevars.html>
+            <img border=0 src="ra-plexi.png" /></a></td>
+         </tr>
+        </table>
+       </td>
+     </tr></table>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-145330-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</BODY></HTML>
