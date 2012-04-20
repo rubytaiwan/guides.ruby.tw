@@ -1,0 +1,2304 @@
+<!DOCTYPE html><html lang="zhTW"><head><title>Ruby ＆ Rails 風格指南 繁體中文</title><meta charset="utf-8"><meta name="description" content="Ruby 及 Rails 風格指南"><link rel="stylesheet" href="style/garden.css" media="all"><link rel="stylesheet" href="style/print.css" media="print"><link rel="shortcut icon" href="image/ruby-taiwan.png"><!--[if lt IE 9]>
+<script src="javascript/html5.js"></script>
+<![endif]-->
+</head><body><!-- Navigation--><nav id="nav_main"><div><ul><li><a href="/ruby-rails-style-guides/zhCN" title="Ruby ＆ Rails 风格指导">zhCN</a></li><li class="active"><a href="/ruby-rails-style-guides/" title="Ruby ＆ Rails 風格指南">zhTW</a></li></ul><a id="top" href="#intro" title="Back to top">#top</a><a id="hide_menu" class="tablet">Hide Menu</a></div><ul><li class="nav_intro"><h1><a href="#intro">簡介</a></h1><ul><li><a href="#intro.authors">﻿Ruby Taiwan : ) <a href="http://ruby-taiwan.org"><img src="image/ruby-taiwan.png" alt="Ruby Taiwan" title="" /></a></a></li><li><a href="#intro.license">﻿內容許可</a></li></ul></li><li class="nav_ruby"><h1><a href="#ruby">Ruby 風格指南</a></h1><ul><li><a href="#ruby.prelude">序幕</a></li><li><a href="#ruby.ruby-style-guide">Ruby 風格指南</a></li><li><a href="#ruby.source-formatting">原始碼排版</a></li><li><a href="#ruby.syntax">語法</a></li><li><a href="#ruby.naming">命名</a></li><li><a href="#ruby.comments">註解 (Comment)</a></li><li><a href="#ruby.annotations">註釋 (Annotation)</a></li><li><a href="#ruby.class">類別</a></li><li><a href="#ruby.exceptions">異常</a></li><li><a href="#ruby.collections">集合</a></li><li><a href="#ruby.string">字串</a></li><li><a href="#ruby.regexp">正規表示法</a></li><li><a href="#ruby.percent-literals">百分比字面</a></li><li><a href="#ruby.metaprog">元程式設計</a></li><li><a href="#ruby.misc">其它</a></li><li><a href="#ruby.contr">貢獻</a></li><li><a href="#ruby.stw">口耳相傳</a></li></ul></li><li class="nav_rails"><h1><a href="#rails">Rails 風格指南</a></h1><ul><li><a href="#rails.dev-rails-app">序幕</a></li><li><a href="#rails.config">配置</a></li><li><a href="#rails.routing">路由</a></li><li><a href="#rails.controllers">控制器</a></li><li><a href="#rails.models">模型</a></li><li><a href="#rails.migrations">遷移</a></li><li><a href="#rails.views">視圖</a></li><li><a href="#rails.internalization">國際化</a></li><li><a href="#rails.assets">Assets</a></li><li><a href="#rails.mailers">Mailers</a></li><li><a href="#rails.bundler">Bundler</a></li><li><a href="#rails.manage-process">管理進程</a></li><li><a href="#rails.testing-rails-app">測試 Rails 應用</a></li><li><a href="#rails.further">延伸閱讀</a></li></ul></li></ul></nav><!-- Mobile navigation--><nav id="nav_mobile"><a id="nav_prev_section" href="#">prev section<span class="nav_section_name">section name</span></a><a id="nav_next_section" href="#">next section<span class="nav_section_name">section name</span></a><a id="show_menu">show menu</a></nav><!-- Sections--><section id="intro"><!-- Introduction--><header id="intro.intro"><h1>簡介</h1></header><!-- Articles--><article id="intro.authors"><h2>﻿Ruby Taiwan : ) <a href="http://ruby-taiwan.org"><img src="image/ruby-taiwan.png" alt="Ruby Taiwan" title="" /></a></h2><div><h2>關於作者</h2>
+
+<p>這篇文章翻譯自 bbatsov 所寫的 <a href="https://github.com/bbatsov/ruby-style-guide">Ruby Style Guide</a> 及 <a href="https://github.com/bbatsov/rails-style-guide">Rails Style Guide</a>。</p>
+
+<h2>關於譯者</h2>
+
+<p>Juanito Fatas，你可以在 twitter、ruby-taiwan 找到我。</p>
+
+<p>不好意思，我剛學習 Ruby 及Rails，翻譯的品質可能不太好，</p>
+
+<p>有錯誤不好的地方，麻煩去 github 開任務給我。</p>
+
+</div><div><h3>提交建議</h3>
+
+<p><a href="https://github.com/JuanitoFatas/ruby-style-guide">Ruby Style Guide 建議</a></p>
+
+<p><a href="https://github.com/JuanitoFatas/rails-style-guide">Rails Style Guide 建議</a></p>
+
+<h2>為什麼翻譯此文</h2>
+
+<p>幾個禮拜前我開始學習 Ruby 及 Rails。我剛好看到了這兩個指導，我覺得這可以讓我有全觀的理解及避免可能犯的錯誤，這樣子再去學習會更有方向，這是我翻譯的原因。</p>
+
+<p>而關於風格，我看過一本書，有一段文字，詮釋的很好：</p>
+
+<p>Style is necessary only where understanding is missing. A corollary to this is that sometimes the only way to effectively use something you don&#39;t understand is to copy styles observed elsewhere.
+– <a href="http://letoverlambda.com/">From Let Over Lambda</a></p>
+
+<p>我希望你讀的愉快。</p></div></article><article id="intro.license"><h2>﻿內容許可</h2><div><p><a href="http://creativecommons.org/licenses/by-nc-sa/3.0/tw/">內容採用創用 CC 授權釋出</a></p>
+
+<p><img src="http://i.creativecommons.org/l/by-nc-sa/3.0/tw/88x31.png" alt="Creative Commons License" title="" /></p></div></article></section><section id="ruby"><!-- Introduction--><header id="ruby.intro"><h1>Ruby 風格指南</h1></header><!-- Articles--><article id="ruby.prelude"><h2>序幕</h2><div><aside>
+  <p>風格是從偉大事物中分離出的美好事物。 <br/>
+  -- Bozhidar Batsov</p>
+</aside>
+
+<p>作為 Ruby 開發者，有一件總是令我煩心的事 &mdash; Python 開發者有一份好的程式風格參考指南(<a href="http://www.python.org/dev/peps/pep-0008/">PEP-8</a>) 而我們永遠沒有一份官方指南，一份記錄 Ruby 程式風格及最佳實踐的指南。而我們確信風格很重要。我也相信這些好傢伙們，像我們是 Ruby 開發者，應該可以自己產生一份這夢寐以求的文件。</p>
+
+<p>這份指南開始是作為我們公司內部 Ruby 程式指南(由我所寫的)。進行到某個部分時，我決定要把我的成果貢獻給廣大的 Ruby 社群，而且這個世界需要來自另一個公司內部的一點幫助。然而這個世界也可以從由社群制定及驅動的一系列 Ruby 程式慣例、實踐及風格中受益。</p>
+
+<p>在開始寫這份指南時，我收到世界上很多優秀 Ruby 社群用戶們的反饋。感謝所有的建議及幫助！我們同心協力創造一個能夠讓每一個 Ruby 開發者受益的資源。</p>
+
+<p>順道一提，如果你對 Rails 有興趣，你可以看看這份與之互補的 <a href="https://github.com/bbatsov/rails-style-guide">Ruby on Rails 3 風格指南</a>。</p></div></article><article id="ruby.ruby-style-guide"><h2>Ruby 風格指南</h2><div><p>這份 Ruby 風格指南向你推薦現實世界中，Ruby 程式設計師如何寫出可被別的 Ruby 程式設計師維護的程式碼。一份風格指南，反映出現實世界中的用法，並有一個理想，幫助人們避免使用危險的程式碼 &mdash; 不管它看起來有多好。</p>
+
+<p>本指南分成數個相關規則的小節。我試著在每個規則後說明理由（如果省略的話，我相信理由相當明顯）。</p>
+
+<p>我沒有想到所有的規則 &mdash; 他們大致上是基於，我作為一個專業軟體工程師的廣泛生涯，從 Ruby 社群成員所得到的反饋及建議，和數個高度評價的 Ruby 程式設計資源，像是 <a href="http://pragprog.com/book/ruby3/programming-ruby-1-9">"Programming Ruby 1.9"</a> 以及 <a href="http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/0596516177">"The Ruby Programming Language"</a>。</p>
+
+<p>本指南仍在進行改善中 &mdash; 某些規則缺乏實例，某些規則沒有例子來清楚地展示它們。在最後交付時，這些議題會被解決 &mdash; 就先把它們記在心理吧。</p>
+
+<p>你可以使用 <a href="https://github.com/TechnoGate/transmuter">Transmuter</a> 來產生本指南的一份 PDF 或 HTML 副本。</p></div></article><article id="ruby.source-formatting"><h2>原始碼排版</h2><div><aside>
+  <p>幾乎每人都深信，每一個除了自己的風格都又醜又難讀。把 "除了自己的" 拿掉，他們或許是對的...<br/>
+  -- Jerry Coffin (論縮排)</p>
+</aside>
+
+<p>使用 <code>UTF-8</code> 作為原始檔案的編碼。
+每個縮排層級使用兩個<strong>空格</strong>。</p>
+
+<pre><code># 好
+def some_method
+  do_something
+end
+
+# 不好 - 四個空格
+def some_method
+    do_something
+end
+</code></pre>
+
+<p>使用 Unix 風格的行編碼 (預設包含 BSD/Solaris/Linux/OSX 的使用者，Windows 使用者要特別小心。)
+    如果你使用 Git ，你也許會想加入下面這個配置設定，來保護你的專案被 Windows 的行編碼侵入：</p>
+
+<p><code>$ git config --global core.autocrlf true</code></p>
+
+<p>使用空格來圍繞運算元，逗點 <code>,</code> 、冒號 <code>:</code> 及分號 <code>;</code> 之後，圍繞 <code>{</code> 和 <code>}</code> 之前。
+  空格可能對（大部分）Ruby 直譯器來說是無關緊要的，但正確的使用是寫出可讀性高的程式碼的關鍵。</p>
+
+<pre><code>sum = 1 + 2
+a, b = 1, 2
+1 &gt; 2 ? true : false; puts &#39;Hi&#39;
+[1, 2, 3].each { |e| puts e }
+
+唯一的例外是當使用指數運算元時：
+
+# 不好
+e = M * c ** 2
+
+# 好
+e = M * c**2
+</code></pre>
+
+<p>不要有空格在 <code>(</code> 、 <code>[</code> 之後，或 <code>]</code> 、 <code>)</code> 之前。</p>
+
+<pre><code>some(arg).other
+[1, 2, 3].length
+</code></pre>
+
+<p>把 <code>when</code> 跟 <code>case</code> 縮排在同一層。我知道很多人不同意這一點，但這是“The Ruby Programming Language”及“Programming Ruby”所設立的風格。</p>
+
+<pre><code>case
+when song.name == &#39;Misty&#39;
+  puts &#39;Not again!&#39;
+when song.duration &gt; 120
+  puts &#39;Too long!&#39;
+when Time.now.hour &gt; 21
+  puts "It&#39;s too late"
+else
+  song.play
+end
+
+kind = case year
+       when 1850..1889 then &#39;Blues&#39;
+       when 1890..1909 then &#39;Ragtime&#39;
+       when 1910..1929 then &#39;New Orleans Jazz&#39;
+       when 1930..1939 then &#39;Swing&#39;
+       when 1940..1950 then &#39;Bebop&#39;
+       else &#39;Jazz&#39;
+       end
+</code></pre>
+
+<p>在 <code>def</code> 之間使用空行，並且把方法分成合乎邏輯的段落。</p>
+
+<pre><code>def some_method
+  data = initialize(options)
+
+  data.manipulate!
+
+  data.result
+end
+
+def some_method
+  result
+end
+</code></pre>
+
+<p>當一個方法呼叫的參數擴展至多行時，排列它們。</p>
+
+<pre><code># 一開始（一行太長）
+def send_mail(source)
+  Mailer.deliver(to: &#39;bob@example.com&#39;, from: &#39;us@example.com&#39;, subject: &#39;Important message&#39;, body: source.text)
+end
+
+# 不好（一般的縮排）
+def send_mail(source)
+  Mailer.deliver(
+    to: &#39;bob@example.com&#39;,
+    from: &#39;us@example.com&#39;,
+    subject: &#39;Important message&#39;,
+    body: source.text)
+end
+
+# 不好（兩倍縮排）
+def send_mail(source)
+  Mailer.deliver(
+      to: &#39;bob@example.com&#39;,
+      from: &#39;us@example.com&#39;,
+      subject: &#39;Important message&#39;,
+      body: source.text)
+end
+
+# 好
+def send_mail(source)
+  Mailer.deliver(to: &#39;bob@example.com&#39;,
+                 from: &#39;us@example.com&#39;,
+                 subject: &#39;Important message&#39;,
+                 body: source.text)
+end
+</code></pre>
+
+<p>使用 RDoc 以及它的慣例來撰寫 API 文件。不要在註解區塊及 <code>def</code> 之前放一個空行。
+讓每一行保持在少於 80 個字元。
+避免尾隨的空白（trailing whitesapce）。</p></div></article><article id="ruby.syntax"><h2>語法</h2><div><p>使用 <code>def</code> 時，當有參數時使用括號。當方法不接受任何參數時，省略括號。</p>
+
+<pre><code>def some_method
+# 省略主體
+end
+
+def some_method_with_arguments(arg1, arg2)
+# 省略主體
+end
+</code></pre>
+
+<p>永遠不要使用 <code>for</code> ，除非你很清楚為什麼。大部分情況應該使用迭代器來取代。<code>for</code> 是由 <code>each</code> 所實作的（所以你加入了一層的迂迴），但出乎意料的是 — <code>for</code> 並沒有包含一個新的視野 (不像是 <code>each</code>）而在這個區塊中定義的變數將會被外部所看到。</p>
+
+<pre><code>arr = [1, 2, 3]
+
+# 不好
+for elem in arr do
+  puts elem
+end
+
+# 好
+arr.each { |elem| puts elem }
+</code></pre>
+
+<p>永遠不要在多行的 <code>if/unless</code> 使用 <code>then</code></p>
+
+<pre><code># 不好
+if some_condition then
+  # 省略主體
+end
+
+# 好
+if some_condition
+  # 省略主體
+end
+</code></pre>
+
+<p>偏愛三元運算元 <code>? :</code> 勝於 <code>if/then/else/end</code> 結構。它更為常見及更精準。</p>
+
+<pre><code># 不好
+result = if some_condition then something else something_else end
+
+# 好
+result = some_condition ? something : something_else
+</code></pre>
+
+<p>使用一個表達式給一個三元運算元的分支。這也意味著三元運算符不要寫成巢狀式。巢狀情況使用 <code>if/else</code> 結構。</p>
+
+<pre><code># 不好
+some_condition ? (nested_condition ? nested_something : nested_something_else) : something_else
+
+# 好
+if some_condition
+  nested_condition ? nested_something : nested_something_else
+else
+  something_else
+end
+</code></pre>
+
+<p>永遠不要使用 <code>if x: ...</code> — 它已經在 Ruby 1.9 被移除了。使用三元運算元來取代。</p>
+
+<pre><code># 不好
+result = if some_condition: something else something_else end
+
+# 好
+result = some_condition ? something : something_else
+</code></pre>
+
+<p>永遠不要使用 <code>if x; ...</code> 使用三元運算元來取代。</p>
+
+<p>一行的情況使用 <code>when x then ...</code> 。替代方案的語法 <code>when x: ...</code> 在 Ruby 1.9 被移除了。</p>
+
+<p>永遠不要使用 <code>when x; ...</code> 。參考前一個規則。</p>
+
+<p>布林表達式使用 <code>&amp;&amp;/||</code>，控制流程使用 <code>and/or</code>。</p>
+
+<p>（經驗法則：如果你需要使用外部括號，你正在使用錯誤的運算元。）</p>
+
+<pre><code># 布林表達式
+if some_condition &amp;&amp; some_other_condition
+  do_something
+end
+
+# 控制流程
+document.saved? or document.save!
+</code></pre>
+
+<p>避免多行的 <code>? :</code>（三元運算元），使用 <code>if/unless</code> 來取代。</p>
+
+<p>當你有單行的主體時，偏愛 <code>if/unless</code> 修飾符。</p>
+
+<p>另一個好的方法是使用控制流程的 <code>and/or</code> 。</p>
+
+<pre><code># 不好
+if some_condition
+  do_something
+end
+
+# 好
+do_something if some_condition
+
+# 另一個好方法
+some_condition and do_something
+</code></pre>
+
+<p>否定條件偏愛 <code>unless</code> 優於 <code>if</code>  （或是控制流程 <code>or</code>）。</p>
+
+<pre><code># 不好
+do_something if !some_condition
+
+# 好
+do_something unless some_condition
+
+# 另一個好方法
+some_condition or do_something
+</code></pre>
+
+<p>永遠不要使用 <code>unless</code> 搭配 <code>else</code>。 將它們改寫成肯定條件。</p>
+
+<pre><code># 不好
+unless success?
+  puts &#39;failure&#39;
+else
+  puts &#39;success&#39;
+end
+
+# 好
+if success?
+  puts &#39;success&#39;
+else
+  puts &#39;failure&#39;
+end
+</code></pre>
+
+<p>不要使用括號圍繞 <code>if/unless/while</code> 的條件式，除非這條件包含了一個賦值（見下面使用 <code>=</code> （一個賦值）的回傳值）。</p>
+
+<pre><code># 不好
+if (x &gt; 10)
+  # 省略主體
+end
+
+# 好
+if x &gt; 10
+  # 省略主體
+end
+
+# 好
+if (x = self.next_value)
+  # 省略主體
+end
+</code></pre>
+
+<p>忽略圍繞方法參數的括號，如內部 DSL (如：Rake, Rails, RSpec)，Ruby 中帶有“關鍵字”狀態的方法（如：<code>attr_reader</code>, <code>puts</code>）以及屬性存取方法。</p>
+
+<p>所有其他的方法呼叫，使用括號圍繞參數。</p>
+
+<pre><code>class Person
+  attr_reader :name, :age
+
+  # 忽略
+end
+
+temperance = Person.new(&#39;Temperance&#39;, 30)
+temperance.name
+
+puts temperance.age
+
+x = Math.sin(y)
+array.delete(e)
+</code></pre>
+
+<p>單行區塊喜好 <code>{...}</code> 勝於 <code>do..end</code>。多行區塊避免使用 <code>{...}</code>（多行串連總是醜陋）。在 <code>do...end</code> 、“控制流程”及“方法定義”，永遠使用 <code>do...end</code> （如 Rakefile 及某些 DSL）。串連時避免使用 <code>do...end</code>。</p>
+
+<pre><code>names = ["Bozhidar", "Steve", "Sarah"]
+
+# 好
+names.each { |name| puts name }
+
+# 不好
+names.each do |name|
+  puts name
+end
+
+# 好
+names.select { |name| name.start_with?("S") }.map { |name| name.upcase }
+
+# 不好
+names.select do |name|
+  name.start_with?("S")
+end.map { |name| name.upcase }
+某些人會爭論多行串連時，使用 {...} 看起來還可以，
+但他們應該問問自己 — 這樣程式碼真的可讀嗎
+以及不能把區塊內容取出來放到絕妙的方法中嗎。
+</code></pre>
+
+<p>避免在不需要的場合時使用 <code>return</code> 。</p>
+
+<pre><code># 不好
+def some_method(some_arr)
+  return some_arr.size
+end
+
+# 好
+def some_method(some_arr)
+  some_arr.size
+end
+</code></pre>
+
+<p>當賦予預設值給方法參數時，使用空格圍繞 <code>=</code> 運算元。</p>
+
+<pre><code># 不好
+def some_method(arg1=:default, arg2=nil, arg3=[])
+  # 做些事情...
+end
+
+# 好
+def some_method(arg1 = :default, arg2 = nil, arg3 = [])
+  # 做些事情...
+end
+
+然而幾本 Ruby 書建議第一個風格，
+第二個風格在實踐中更為常見（並可爭議地可讀性更高一點）。
+</code></pre>
+
+<p>避免在不需要的場合使用續行 <code>\</code> 。在實踐中，盡量避免使用續行。</p>
+
+<pre><code># 不好
+result = 1 - \
+         2
+
+# 好 (但仍然醜的跟地獄一樣）
+result = 1 \
+         - 2
+</code></pre>
+
+<p>使用 <code>=</code>（一個賦值）的回傳值是好的，但用括號環繞賦值。</p>
+
+<pre><code># 好 — 演示賦值的目標用途
+if (v = array.grep(/foo/)) ...
+
+# 不好
+if v = array.grep(/foo/) ...
+
+# 也很好 — 演示賦值的目標用途及有正確的優先順序
+if (v = self.next_value) == "hello" ...
+</code></pre>
+
+<p>隨意使用 <code>||=</code> 來初始化變數</p>
+
+<pre><code># 僅在name為nil或false時，把名字設為 Bozhidar。
+name ||= &#39;Bozhidar&#39;
+</code></pre>
+
+<p>不要使用 <code>||=</code> 來初始化布林變數。</p>
+
+<p>（想看看如果現在的值剛好是 <code>false</code> 時會發生什麼。）</p>
+
+<pre><code># 不好 — 會把 enabled 設成真，即便它本來是假。
+enabled ||= true
+
+# 好
+enabled = true if enabled.nil?
+</code></pre>
+
+<p>避免使用 Perl 風格的特別變數（像是 <code>$0-9</code>, <code>$`</code>, 等等）。它們看起來非常神祕以及不鼓勵使用一行的腳本。</p>
+
+<p>避免在方法名與左括號之間放一個空格。</p>
+
+<pre><code># 不好
+f (3 + 2) + 1
+
+# 好
+f(3 + 2) + 1
+</code></pre>
+
+<p>如果方法的第一個參數由左括號開始，永遠在這個方法呼叫裡使用括號。</p>
+
+<p>舉個例子： <code>f((3+2) + 1)</code>。</p>
+
+<p>總是使用 <code>-w</code> 來執行 Ruby 直譯器，如果你忘了某個上述的規則，它就會警告你！</p>
+
+<p>當你的雜湊鍵是符號時，使用 Ruby 1.9 雜湊字面語法。</p>
+
+<pre><code># 不好
+hash = { :one =&gt; 1, :two =&gt; 2 }
+
+# 好
+hash = { one: 1, two: 2 }
+</code></pre>
+
+<p>使用新的 lambda 字面語法。</p>
+
+<pre><code># 不好
+lambda = lambda { |a, b| a + b }
+lambda.call(1, 2)
+
+# 好
+lambda = -&gt;(a, b) { a + b }
+lambda.(1, 2)
+</code></pre>
+
+<p>未使用的區塊參數使用 <code>_</code> 。</p>
+
+<pre><code># 不好
+result = hash.map { |k, v| v + 1 }
+
+# 好
+result = hash.map { |_, v| v + 1 }
+</code></pre></div></article><article id="ruby.naming"><h2>命名</h2><div><aside>
+  <p>程式設計的真正難題是替事物命名及無效的快取。<br/>
+  -- Phil Karlton</p>
+</aside>
+
+<p>方法與變數使用蛇底式小寫（ <code>snake_case</code>）。</p>
+
+<p>類別與模組使用駝峰式大小寫（ <code>CamelCase</code> ）。（保留像是 HTTP、RFC、XML 這種縮寫為大寫）</p>
+
+<p>其他常數使用尖叫蛇底式大寫（ <code>SCREAMING_SNAKE__CASE</code> ）。</p>
+
+<p>判斷式（predicate）方法的名字（回傳布林值的方法）應以問號結尾。(即 <code>Array#empty?</code> )</p>
+
+<p>有潛在“危險性”的方法，若此<em>危險</em>方法有安全版本存在時，應以驚嘆號結尾（即：改動 <code>self</code> 或參數、 <code>exit!</code> 等等方法）。</p>
+
+<pre><code># 不好 - 沒有對應的安全方法
+class Person
+  def update!
+  end
+end
+
+# 好
+class Person
+  def update
+  end
+end
+
+# 好
+class Person
+  def update!
+  end
+
+  def update
+  end
+end
+</code></pre>
+
+<p>如果可能的話，從危險方法（bang）的角度來定義對應的安全方法（non-bang）。 </p>
+
+<pre><code>class Array
+  def flatten_once!
+    res = []
+
+    each do |e|
+      [*e].each { |f| res &lt;&lt; f }
+    end
+
+    replace(res)
+  end
+
+  def flatten_once
+    dup.flatten_once!
+  end
+end
+</code></pre>
+
+<p>在短的區塊使用 <code>reduce</code> 時，把參數命名為 <code>|a, e|</code> (累加器，元素)。</p>
+
+<p>當定義二元運算元時，把參數命名為 <code>other</code> 。</p>
+
+<pre><code>def +(other)
+  # 省略主體
+end
+</code></pre>
+
+<p>偏好 <code>map</code> 勝於 <code>collect</code> ， <code>find</code> 勝於 <code>detect</code> ， <code>select</code> 勝於 <code>find_all</code> ， <code>reduce</code> 勝於 <code>inject</code> 以及 <code>size</code> 勝於 <code>length</code> 。這不是一個硬性要求；如果使用別名增加了可讀性，使用它沒關係。</p>
+
+<p>這些有押韻的方法名是從 Smalltalk 繼承而來，在別的語言不常見。鼓勵使用 <code>select</code> 而不是 <code>find_all</code> 的理由是它跟 <code>reject</code> 搭配起來是一目了然的。</p></div></article><article id="ruby.comments"><h2>註解 (Comment)</h2><div><aside>
+  <p>良好的程式碼是最佳的文件。當你要加一個註解時，捫心自問，<br/>
+  "如何改善程式碼讓它不需要註解？" 改善程式碼然後記錄下來使它更簡潔。 <br/>
+  -- Steve McConnell</p>
+</aside>
+
+<p>撰寫自我記錄的程式碼並忽略之後的小節。我是認真的！</p>
+
+<p>比一個單字長的註解要大寫及使用標點符號。</p>
+
+<p>句號後使用<a href="http://en.wikipedia.org/wiki/Sentence_spacing">一個空格</a>。</p>
+
+<p>避免多餘的註解</p>
+
+<pre><code># 不好
+counter += 1 # 把計數器加一
+</code></pre>
+
+<p>保持現有的註解是最新的。過時的註解比沒有註解還差。</p>
+
+<p>避免替爛程式碼寫註解。重構程式碼讓它們看起來一目了然。</p>
+
+<p>（要嘛就做，要嘛不做 ― 不要只是試試看。）</p></div></article><article id="ruby.annotations"><h2>註釋 (Annotation)</h2><div><p>註釋應該直接寫在相關程式碼那行之後。</p>
+
+<p>註釋關鍵字後方伴隨著一個冒號及空白，接著一個描述問題的記錄。</p>
+
+<p>如果需要用多行來描述問題，之後的行要放在 <code>#</code> 號後面並縮排兩個空白。</p>
+
+<pre><code>def bar
+  # FIXME: 這在 v3.2.1 版本之後會異常當掉，或許與
+  #   BarBazUtil 的版本更新有關
+  baz(:quux)
+end
+</code></pre>
+
+<p>在問題是顯而易見的情況下，任何的文件會是多餘的，註釋應該要留在可能有問題的那行。這個用法是例外而不是規則。</p>
+
+<pre><code>def bar
+  sleep 100 # OPTIMIZE
+end
+</code></pre>
+
+<p>使用 <code>TODO</code> 來標記之後應被加入的未實現功能或特色。</p>
+
+<p>使用 <code>FIXME</code> 來標記一個需要修復的程式碼。</p>
+
+<p>使用 <code>OPTIMIZE</code> 來標記可能影響效能的緩慢或效率低落的程式碼。</p>
+
+<p>使用 <code>HACK</code> 來標記代碼異味，其中包含了可疑的編碼實踐以及應該需要重構。</p>
+
+<p>使用 <code>REVIEW</code> 來標記任何需要審視及確認正常動作的地方。</p>
+
+<p>舉例來說：</p>
+
+<p><code>REVIEW: 我們確定用戶現在是這麼做的嗎？</code> </p>
+
+<p>如果你覺得適當的話，使用其他你習慣的註釋關鍵字，但記得把它們記錄在專案的 <code>README</code> 或類似的地方。</p></div></article><article id="ruby.class"><h2>類別</h2><div><p>當設計類別階層時，確認它們符合 <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov 代換原則</a>。
+盡可能讓你的類別越<a href="http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">堅固</a>越好。
+永遠替類別提供一個適當的 <code>to_s</code> 方法來表示領域模型（domain model）。</p>
+
+<pre><code>class Person
+  attr_reader :first_name, :last_name
+
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+
+  def to_s
+    "#@first_name #@last_name"
+  end
+end
+</code></pre>
+
+<p>使用 <code>attr</code> 這類函數來定義瑣碎的 accessor 或 mutators。</p>
+
+<pre><code># 不好
+class Person
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+
+  def first_name
+    @first_name
+  end
+
+  def last_name
+    @last_name
+  end
+end
+
+# 好
+class Person
+  attr_reader :first_name, :last_name
+
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+end
+</code></pre>
+
+<p>考慮使用 <code>Struct.new</code>，它替你定義了那些瑣碎的存取器（accessors），建構式（constructor）以及比較運算元（comparison operators）。</p>
+
+<pre><code># 好
+class Person
+  attr_reader :first_name, :last_name
+
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+end
+
+# 較佳
+class Person &lt; Struct.new (:first_name, :last_name)
+end
+</code></pre>
+
+<p>考慮加入工廠方法來提供額外合理的方式，來創造一個特定類別的實體。</p>
+
+<pre><code>class Person
+  def self.create(options_hash)
+    # 省略主體
+  end
+end
+</code></pre>
+
+<p>偏好<a href="http://en.wikipedia.org/wiki/Duck_typing">鴨子類型</a>勝於繼承。</p>
+
+<pre><code># 不好
+class Animal
+  # 抽象方法
+  def speak
+  end
+end
+
+# 繼承高層次的類別 (superclass)
+class Duck &lt; Animal
+  def speak
+    puts &#39;Quack! Quack&#39;
+  end
+end
+
+# 繼承高層次的類別 (superclass)
+class Dog &lt; Animal
+  def speak
+    puts &#39;Bau! Bau!&#39;
+  end
+end
+
+# 好
+class Duck
+  def speak
+    puts &#39;Quack! Quack&#39;
+  end
+end
+
+class Dog
+  def speak
+    puts &#39;Bau! Bau!&#39;
+  end
+end
+</code></pre>
+
+<p>由於繼承中“討厭的”行為，避免使用類別變數 (<code>@@</code>)。</p>
+
+<pre><code>class Parent
+  @@class_var = &#39;parent&#39;
+
+  def self.print_class_var
+    puts @@class_var
+  end
+end
+
+class Child &lt; Parent
+  @@class_var = &#39;child&#39;
+end
+
+Parent.print_class_var # =&gt; will print "child"
+
+如同你所看到的，在類別階級中的所有類別其實都共享一個類別變數。
+應該通常偏好使用實體變數而不是類別變數。
+</code></pre>
+
+<p>依據方法的目的用途指定適當的可視層級 (<code>private</code> , <code>protected</code> )。</p>
+
+<p>別把所有方法都設為 <code>public</code> （方法的預設值）。</p>
+
+<p>我們現在是在寫 <em>Ruby</em> ，不是 <em>Python</em> 。</p>
+
+<p><code>public</code>, <code>protected</code>, <code>private</code> 和方法定義有一樣的縮排。</p>
+
+<p>在每一個上方留一個空行。</p>
+
+<pre><code>class SomeClass
+  def public_method
+    # ...
+  end
+
+  private
+  def private_method
+    # ...
+  end
+end
+</code></pre>
+
+<p>使用 <code>def self.method</code> 來定義 singleton 方法。這讓方法更能抵抗重構帶來的變化。</p>
+
+<pre><code>class TestClass
+  # 不好
+  def TestClass.some_method
+    # 省略主體
+  end
+
+  # 好
+  def self.some_other_method
+    # 省略主體
+  end
+
+  # 也有可能且當你要定義多個
+  # singleton時的便利方法
+  class &lt;&lt; self
+    def first_method
+      # 省略主體
+    end
+
+    def second_method_etc
+      # 省略主體
+    end
+  end
+end
+</code></pre></div></article><article id="ruby.exceptions"><h2>異常</h2><div><p>不要封鎖異常。</p>
+
+<pre><code>begin
+  # 這裡發生了一個異常
+rescue SomeError
+  # 救援子句完全沒有做事
+end
+</code></pre>
+
+<p>不要為了控制流程而使用異常。</p>
+
+<pre><code># 不好
+begin
+  n / d
+rescue ZeroDivisionError
+  puts "Cannot divide by 0!"
+end
+
+# 好
+if d.zero?
+  puts "Cannot divide by 0!"
+else
+  n / d
+end
+</code></pre>
+
+<p>避免救援 <code>Exception</code> 類別。這會把信號困住，並呼叫 <code>exit</code>，導致你需要 <code>kill -9</code> 進程。</p>
+
+<pre><code># 不好
+begin
+  # 呼叫 exit 及殺掉信號會被捕捉（除了 kill -9）
+  exit
+rescue Exception
+  puts "you didn&#39;t really want to exit, right?"
+  # 異常處理
+end
+
+# 好
+begin
+  # 從 StandardError 中救援一個救援子句，
+  # 不是許多程式設計師所假定的異常。
+rescue =&gt; e
+  # 異常處理
+end
+
+# 也很好
+begin
+  # 這裡發生一個異常
+
+rescue StandardError =&gt; e
+  # 異常處理
+end
+</code></pre>
+
+<p>把較具體的異常放在救援串連的較上層，不然它們永遠不會被救援。</p>
+
+<pre><code># 不好
+begin
+  # 一些程式碼
+rescue Exception =&gt; e
+  # 一些處理
+rescue StandardError =&gt; e
+  # 一些處理
+end
+
+# 好
+begin
+  # 一些程式碼
+rescue StandardError =&gt; e
+  # 一些處理
+rescue Exception =&gt; e
+  # 一些處理
+end
+</code></pre>
+
+<p>在 ensure 區塊中釋放你程式的外部資源。</p>
+
+<pre><code>f = File.open("testfile")
+begin
+  # .. 處理
+rescue
+  # .. 錯誤處理
+ensure
+  f.close unless f.nil?
+end
+</code></pre>
+
+<p>偏愛使用標準函式庫的異常處理勝於導入新的異常類別。</p></div></article><article id="ruby.collections"><h2>集合</h2><div><p>當你需要使用一個字串的陣列時，偏好使用 <code>%w</code> 的字面陣列語法。</p>
+
+<pre><code># 不好
+STATES = [&#39;draft&#39;, &#39;open&#39;, &#39;closed&#39;]
+
+# 好
+STATES = %w(draft open closed)
+</code></pre>
+
+<p>避免在陣列中創造巨大的間隔。</p>
+
+<pre><code>arr = []
+arr[100] = 1 # 現在你有一個很多 nil 的陣列
+</code></pre>
+
+<p>當處理獨一無二的元素時，使用 <code>Set</code> 來替代 <code>Array</code> 。<code>Set</code> 實現了不重複的無序數值集合。<code>Set</code> 是陣列直觀的內部操作功能與雜湊的快速存取的混合體。
+使用符號取代字串作為雜湊鍵。 </p>
+
+<pre><code># 不好
+hash = { &#39;one&#39; =&gt; 1, &#39;two&#39; =&gt; 2, &#39;three&#39; =&gt; 3 }
+
+# 好
+hash = { one: 1, two: 2, three: 3 }
+</code></pre>
+
+<p>避免使用可變的物件作為鍵值。</p>
+
+<p>優先使用新的 1.9 字面雜湊語法而不是 => (hashrocket) 語法。</p>
+
+<pre><code># 不好
+hash = { :one =&gt; 1, :two =&gt; 2, :three =&gt; 3 }
+
+# 好
+hash = { one: 1, two: 2, three: 3 }
+</code></pre>
+
+<p>相信這個事實吧， 1.9 的雜湊是有序的。</p>
+
+<p>在遍歷一個集合時，不要改動它。</p></div></article><article id="ruby.string"><h2>字串</h2><div><p>偏好字串插值 (interpolation)，而不是字串串接 (concatenation)。</p>
+
+<pre><code># 不好
+email_with_name = user.name + &#39; &lt;&#39; + user.email + &#39;&gt;&#39;
+
+# 好
+email_with_name = "#{user.name} &lt;#{user.email}&gt;"
+</code></pre>
+
+<p>當你不需要插入特殊符號如 <code>\t</code>, <code>\n</code>, <code>&#39;</code>, 等等時，偏好單引號的字串。</p>
+
+<pre><code># 不好
+name = "Bozhidar"
+
+# 好
+name = &#39;Bozhidar&#39;
+</code></pre>
+
+<p>不要使用 <code>{}</code> 圍繞要被插入字串的實體變數。</p>
+
+<pre><code>class Person
+  attr_reader :first_name, :last_name
+
+  def initialize(first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
+  end
+
+  # 不好
+  def to_s
+    "#{@first_name} #{@last_name}"
+  end
+
+  # 好
+  def to_s
+    "#@first_name #@last_name"
+  end
+end
+</code></pre>
+
+<p>當你需要建構龐大的資料區段（chunk）時，避免使用 <code>String#+</code> 。使用 <code>String#&lt;&lt;</code> 來替代。字串串接在對的地方改變字串實體，並且永遠比 <code>String#+</code> 來得快，<code>String#+</code> 創造了一堆新的字串物件。</p>
+
+<pre><code># 好也比較快
+html = &#39;&#39;
+html &lt;&lt; &#39;&lt;h1&gt;Page title&lt;/h1&gt;&#39;
+
+paragraphs.each do |paragraph|
+  html &lt;&lt; "&lt;p&gt;#{paragraph}&lt;/p&gt;"
+end
+</code></pre></div></article><article id="ruby.regexp"><h2>正規表示法</h2><div><p>如果你只需要在字串中簡單的搜索文字，不要使用正規表示法：<code>string[&#39;text&#39;]</code></p>
+
+<p>針對簡單的字串查詢，你可以直接在字串索引中直接使用正規表示法。</p>
+
+<pre><code>match = string[/regexp/]             # 獲得匹配正規表示法的內容
+first_group = string[/text(grp)/, 1] # 或得分組的內容
+string[/text (grp)/, 1] = &#39;replace&#39;  # string =&gt; &#39;text replace&#39;
+</code></pre>
+
+<p>當你不需要替結果分組時，使用非分組的群組。</p>
+
+<pre><code>/(first|second)/   # 不好
+/(?:first|second)/ # 好
+</code></pre>
+
+<p>避免使用 <code>$1-9</code>，因為它們很難追蹤它們包含什麼。可以使用命名群組來替代。</p>
+
+<pre><code># 不好
+/(regexp)/ =~ string
+...
+process $1
+
+# 好
+/(?&lt;meaningful_var&gt;regexp)/ =~ string
+...
+process meaningful_var
+</code></pre>
+
+<p>字元類別只有幾個你需要關心的特殊字元：<code>^</code>, <code>-</code>, <code>\</code>, <code>]</code>，所以你不用逃脫字元 <code>.</code> 或在 <code>[]</code> 的中括號。
+小心使用 <code>^</code> 與 <code>$</code> ，它們匹配的是一行的開始與結束，不是字串的開始與結束。如果你想要匹配整個字串，使用 <code>\A</code> 與 <code>\z</code>。</p>
+
+<p>(譯註：<code>\Z</code> 實為 <code>/\n?\z/</code>，使用 <code>\z</code> 才能匹配到有含新行的字串的結束)</p>
+
+<pre><code>string = "some injection\nusername"
+string[/^username$/]   # 匹配
+string[/\Ausername\z/] # 無匹配
+</code></pre>
+
+<p>針對複雜的正規表示法，使用 <code>x</code> 修飾符。這讓它們的可讀性更高並且你可以加入有用的註解。只是要小心忽略的空白。</p>
+
+<pre><code>regexp = %r{
+  start         # 一些文字
+  \s            # 空白字元
+  (group)       # 第一組
+  (?:alt1|alt2) # 一些替代方案
+  end
+}x
+</code></pre>
+
+<p>針對複雜的替換，<code>sub</code> 或 <code>gsub</code> 可以與區塊或雜湊來使用。</p></div></article><article id="ruby.percent-literals"><h2>百分比字面</h2><div><p>隨意使用 <code>%w</code> 。</p>
+
+<pre><code>STATES = %w(draft open closed)
+</code></pre>
+
+<p>使用 <code>%()</code> 給需要插值與嵌入雙引號的單行字串。多行字串，偏好使用 heredocs 。</p>
+
+<pre><code># 不好（不需要插值）
+%(&lt;div class="text"&gt;Some text&lt;/div&gt;)
+# 應該使用 &#39;&lt;div class="text"&gt;Some text&lt;/div&gt;&#39;
+
+# 不好（沒有雙引號）
+%(This is #{quality} style)
+# 應該使用 "This is #{quality} style"
+
+# 不好（多行）
+%(&lt;div&gt;\n&lt;span class="big"&gt;#{exclamation}&lt;/span&gt;\n&lt;/div&gt;)
+# 應該是一個 heredoc
+
+# 好（需要插值、有雙引號以及單行）
+%(&lt;tr&gt;&lt;td class="name"&gt;#{name}&lt;/td&gt;)
+</code></pre>
+
+<p>正規表示法要匹配多於一個的 <code>/</code> 字元時，使用 <code>%r</code>。</p>
+
+<pre><code># 不好
+%r(\s+)
+
+# 仍不好
+%r(^/(.*)$)
+# 應當是 /^\/(.*)$/
+
+# 好
+%r(^/blog/2011/(.*)$)
+</code></pre>
+
+<p>避免 <code>%q</code>, <code>%Q</code>, <code>%x</code>, <code>%s</code> 以及 <code>%W</code>。
+偏好 <code>()</code> 作為所有 <code>%</code> 字面的分隔符。</p></div></article><article id="ruby.metaprog"><h2>元程式設計</h2><div><p>寫一個函式庫時不要在核心類別搗亂（不要替它們加 monkey patch）</p>
+
+<p>偏好區塊形式的 <code>class_eval</code> 勝於字串插值 (string-interpolated)的形式。 </p>
+
+<p>當你使用字串插值形式時，總是提供 <code>__FILE__</code> 及 <code>__LINE__</code>，使你的 backtrace 看起來有意義：</p>
+
+<p><code>class_eval "def use_relative_model_naming?; true; end", __FILE__, __LINE__</code></p>
+
+<p>偏好 <code>define_method</code> 勝於 <code>class_eval{ def ... }</code></p>
+
+<p>當使用 <code>class_eval</code> （或其它的 <code>eval</code>）搭配字串插值時，添加一個註解區塊，來顯示如果做了插值的樣子（我從 Rails 程式碼學來的一個實踐）： </p>
+
+<pre><code># 從 activesupport/lib/active_support/core_ext/string/output_safety.rb
+UNSAFE_STRING_METHODS.each do |unsafe_method|
+  if &#39;String&#39;.respond_to?(unsafe_method)
+    class_eval &lt;&lt;-EOT, __FILE__, __LINE__ + 1
+      def #{unsafe_method}(*args, &amp;block)       # def capitalize(*args, &amp;block)
+        to_str.#{unsafe_method}(*args, &amp;block)  #   to_str.capitalize(*args, &amp;block)
+      end                                       # end
+
+      def #{unsafe_method}!(*args)              # def capitalize!(*args)
+        @dirty = true                           #   @dirty = true
+        super                                   #   super
+      end                                       # end
+    EOT
+  end
+end
+</code></pre>
+
+<p>元程式設計避免使用 <code>method_missing</code>。會讓 Backtraces 變得很凌亂；行為沒有列在 <code>#methods</code> 裡；拼錯的方法呼叫可能默默的工作（<code>nukes.luanch_state = false</code>)。考慮使用 delegation, proxy, 或是 <code>define_method</code> 來取代。如果你必須使用 <code>method_missing</code>。
+確保<a href="http://devblog.avdi.org/2011/12/07/defining-method_missing-and-respond_to-at-the-same-time/">也定義了 <code>respond_to?</code></a>。</p>
+
+<p>僅捕捉字首定義良好的方法，像是 <code>find_by_*</code> ― 讓你的程式碼愈肯定(assertive)愈好。</p>
+
+<p>在最後的敘述句(statement)呼叫 <code>super</code> 。</p>
+
+<p>從 delegate 到 assertive, 不神奇的(non-magical)方法：</p>
+
+<pre><code># 不好
+def method_missing?(meth, *args, &amp;block)
+  if /^find_by_(?&lt;prop&gt;.*)/ =~ meth
+    # ... lots of code to do a find_by
+  else
+    super
+  end
+end
+
+# 好
+def method_missing?(meth, *args, &amp;block)
+  if /^find_by_(?&lt;prop&gt;.*)/ =~ meth
+    find_by(prop, *args, &amp;block)
+  else
+    super
+  end
+end
+
+# 而最好是在每個可找到的屬性被宣告時，使用 define_method 。
+</code></pre></div></article><article id="ruby.misc"><h2>其它</h2><div><p><code>ruby -w</code> 寫出安全的程式碼。</p>
+
+<p>避免使用雜湊作為選擇性參數。這個方法是不是做太多事情了？</p>
+
+<p>避免方法長於 10 行程式碼（LOC）。理想上，大部分的方法會小於 5 行。空行不算進 LOC 裡。</p>
+
+<p>避免參數列表長於三或四個參數。</p>
+
+<p>如果你真的需要，加入“全域”變數到核心以及把它們設為私有的。</p>
+
+<p>使用實體變數而不是全域變數。</p>
+
+<pre><code># 不好
+$foo_bar = 1
+
+# 好
+class Foo
+  class &lt;&lt; self
+    attr_accessor :bar
+  end
+end
+
+Foo.bar = 1
+</code></pre>
+
+<p>當 <code>alias_method</code> 可以做到時，避免使用 <code>alias</code> 。</p>
+
+<p>使用 <code>OptionParser</code> 來解析複雜的命令行選項及 <code>ruby -s</code> 來處理瑣碎的命令行選項。</p>
+
+<p>用函數式的方法寫程式，在有意義的情況下避免賦值。</p>
+
+<p>避免不需要的元程式設計。</p>
+
+<p>不要變動參數，除非那是方法的目的。</p>
+
+<p>避免超過三行的巢狀區塊。</p>
+
+<p>保持一致性。在理想的世界裡，遵循這些準則。
+使用常識。</p></div></article><article id="ruby.contr"><h2>貢獻</h2><div><p>在本指南所寫的每個東西都不是定案。這只是我渴望想與同樣對 Ruby 程式設計風格有興趣的大家一起工作，以致於最終我們可以替整個 Ruby 社群創造一個有益的資源。</p>
+
+<p>歡迎開票或發送一個帶有改進的更新請求。在此提前感謝你的幫助！</p></div></article><article id="ruby.stw"><h2>口耳相傳</h2><div><p>一份社群策動的風格指南，對一個社群來說，只是讓人知道有這個社群。推特這個指南，分享給你的朋友或同事。我們得到的每個註解、建議或意見都可以讓這份指南變得更好一點。而我們想要擁有的是最好的指南，不是嗎？</p></div></article></section><section id="rails"><!-- Introduction--><header id="rails.intro"><h1>Rails 風格指南</h1></header><!-- Articles--><article id="rails.dev-rails-app"><h2>序幕</h2><div><aside>
+  <p>風格是從偉大事物中分離出的美好事物。 <br/>
+  -- Bozhidar Batsov</p>
+</aside>
+
+<p>這份指南目的於演示一整套 Rails 3 開發的風格慣例及最佳實踐。這是一份與由現存社群所驅動的 <a href="https://github.com/bbatsov/ruby-style-guide">Ruby 編碼風格指南</a>互補的指南。</p>
+
+<p>而本指南中<a href="#testing">測試 Rails 應用</a>小節擺在<a href="#developing">開發 Rails 應用</a>之後，因為我相信<a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">行為驅動開發</a>
+(BDD) 是最佳的軟體開發之道。銘記在心吧。</p>
+
+<p>Rails 是一個堅持己見的框架，而這也是一份堅持己見的指南。在我的心裡，我堅信 <a href="https://www.relishapp.com/rspec">RSpec</a> 優於 Test::Unit，<a href="http://sass-lang.com/">Sass</a> 優於 CSS 以及
+<a href="http://haml-lang.com/">Haml</a>，(<a href="http://slim-lang.com/">Slim</a>) 優於 Erb。所以不要期望在這裡找到 Test::Unit, CSS 及 Erb 的忠告。</p>
+
+<p>某些忠告僅適用於 Rails 3.1+ 以上版本。</p>
+
+<p>你可以使用 <a href="https://github.com/TechnoGate/transmuter">Transmuter</a> 來產生本指南的一份 PDF 或 HTML 複本。</p>
+
+<h1>開發 Rails 應用程式</h1></div></article><article id="rails.config"><h2>配置</h2><div><p>把慣用的初始化程式碼放在 <code>config/initializers</code>。在 initializers 內的程式碼於應用啟動時執行。</p>
+
+<p>每一個 gem 相關的初始化程式碼應當使用同樣的名稱，放在不同的文件裡，如： <code>carrierwave.rb</code>, <code>active_admin.rb</code>, 等等。</p>
+
+<p>相應調整配置開發、測試及生產環境（在 <code>config/environments/</code> 下對應的文件）</p>
+
+<p>標記額外的資產給（如有任何）預編譯：</p>
+
+<pre><code># config/environments/production.rb
+# 預編譯額外的資產(application.js, application.css, 以及所有非 JS 或 CSS 的檔案)
+config.assets.precompile += %w( rails_admin/rails_admin.css rails_admin/rails_admin.js )
+</code></pre>
+
+<p>創立一個與生產環境(production enviroment)相似的額外 <code>staging</code> 環境。</p></div></article><article id="rails.routing"><h2>路由</h2><div><p>當你需要加入一個或多個動作至一個 RESTful 資源時（你真的需要嗎？），使用 <code>member</code> and <code>collection</code> 路由。</p>
+
+<pre><code># 差
+get &#39;subscriptions/:id/unsubscribe&#39;
+resources :subscriptions
+
+# 好
+resources :subscriptions do
+  get &#39;unsubscribe&#39;, :on =&gt; :member
+end
+
+# 差
+get &#39;photos/search&#39;
+resources :photos
+
+# 好
+resources :photos do
+  get &#39;search&#39;, :on =&gt; :collection
+end
+</code></pre>
+
+<p>若你需要定義多個 <code>member/collection</code> 路由時，使用替代的區塊語法(block syntax)。</p>
+
+<pre><code>resources :subscriptions do
+  member do
+    get &#39;unsubscribe&#39;
+    # 更多路由
+  end
+end
+
+resources :photos do
+  collection do
+    get &#39;search&#39;
+    # 更多路由
+  end
+end
+</code></pre>
+
+<p>使用巢狀路由(nested routes)來更佳地表達與 ActiveRecord 模型的關係。</p>
+
+<pre><code>class Post &lt; ActiveRecord::Base
+  has_many :comments
+end
+
+class Comments &lt; ActiveRecord::Base
+  belongs_to :post
+end
+
+# routes.rb
+resources :posts do
+  resources :comments
+end
+</code></pre>
+
+<p>使用命名空間路由來分類相關的行為。</p>
+
+<pre><code>namespace :admin do
+  # Directs /admin/products/to Admin::ProductsController
+  # (app/controllers/admin/products_controller.rb)
+  resources :products
+end
+</code></pre>
+
+<p>不要在控制器裡使用留給後人般的瘋狂路由(legacy wild controller route)。這種路由會讓每個控制器的動作透過 GET 請求存取。</p>
+
+<pre><code># 非常差
+match &#39;:controller(/:action(/:id(.:format)))&#39;
+</code></pre></div></article><article id="rails.controllers"><h2>控制器</h2><div><p>讓你的控制器保持苗條 ― 它們應該只替視圖層取出資料且不包含任何業務邏輯（所有業務邏輯應當放在模型裡）。</p>
+
+<p>每個控制器的行動應當（理想上）只調用一個除了初始的 <code>find</code> 或 <code>new</code> 方法。</p>
+
+<p>控制器與視圖之間共享不超過兩個實體變數(instance variable)。</p></div></article><article id="rails.models"><h2>模型</h2><div><p>自由地引入不是 ActiveRecord 的類別吧。</p>
+
+<p>替模型命名有意義（但簡短）且不帶縮寫的名字。</p>
+
+<p>如果你需要支援 ActiveRecord 像是驗證行為的模型物件，使用 <a href="https://github.com/cgriego/active_attr">ActiveAttr</a> gem。</p>
+
+<pre><code>class Message
+  include ActiveAttr::Model
+
+  attribute :name
+  attribute :email
+  attribute :content
+  attribute :priority
+
+  attr_accessible :name, :email, :content
+
+  validates_presence_of :name
+  validates_format_of :email, :with =&gt; /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4} $/i
+  validates_length_of :content, :maximum =&gt; 500
+end
+
+更完整的範例，參考 [RailsCast on the subject](http://railscasts.com/episodes/326-activeattr)。
+</code></pre>
+
+</div><div><h3>ActiveRecord</h3>
+
+<p>避免改動預設的 ActiveRecord（表的名字、主鍵，等等），除非你有一個非常好的理由（像是不受你控制的資料庫）。</p>
+
+<p>把巨集風格的方法放在類別定義的前面（<code>has_many</code>, <code>validates</code>, 等等）。</p>
+
+<p>偏好 <code>has_many :through</code> 勝於 <code>has_and_belongs_to_many</code>。</p>
+
+<p>使用 <code>has_many :through</code> 允許在 join 模型有附加的屬性及驗證。</p>
+
+<pre><code># 使用 has_​​and_belongs_to_many
+class User &lt; ActiveRecord::Base
+  has_and_belongs_to_many :groups
+end
+
+class Group &lt; ActiveRecord::Base
+  has_and_belongs_to_many :users
+end
+
+# 偏好方式 - using has_​​many :through
+class User &lt; ActiveRecord::Base
+  has_many :memberships
+  has_many :groups, through: :memberships
+end
+
+class Membership &lt; ActiveRecord::Base
+  belongs_to :user
+  belongs_to :group
+end
+
+class Group &lt; ActiveRecord::Base
+  has_many :memberships
+  has_many :users, through: :memberships
+end
+</code></pre>
+
+<p>使用新的 <a href="http://thelucid.com/2010/01/08/sexy-validation-in-edge-rails-rails-3/">“sexy” validation</a>。</p>
+
+<p>當一個慣用的驗證使用超過一次或驗證是某個正則表達映射時，創建一個慣用的 validator 文件。</p>
+
+<pre><code># 差
+class Person
+  validates :email, format: { with: /^([^@\s]+)@((?:[-a-z0-9]+\.)+[az]{2,})$/i }
+end
+
+# 好
+class EmailValidator &lt; ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    record.errors[attribute] &lt;&lt; (options[:message] || &#39;is not a valid email&#39;) unless value =~ /^([^@\s]+)@((?:[-a-z0- 9]+\.)+[az]{2,})$/i
+  end
+end
+
+class Person
+  validates :email, email: true
+end
+</code></pre>
+
+<p>所有慣用的驗證器應放在一個共享的 gem 。</p>
+
+<p>自由地使用命名的作用域(scope)。</p>
+
+<p>當一個由 lambda 及參數定義的作用域變得過於復雜時，更好的方式是建一個作為同樣用途的類別方法，並返回 <code>ActiveRecord::Relation</code> 物件。</p>
+
+<p>注意 <code>update_attribute</code> 方法的行為。</p>
+
+<p>它不運行模型驗證（不同於 <code>update_attributes</code> ）並且可能把模型狀態給搞砸。</p>
+
+<p>使用用戶友好的網址。在網址顯示具描述性的模型屬性，而不只是 <code>id</code> 。</p>
+
+<p>有不止一種方法可以達成：</p>
+
+<p>覆寫模型的 <code>to_param</code> 方法。這是 Rails 用來給物件建構網址的方法。</p>
+
+<p>預設的實作會以字串形式返回該 <code>id</code> 的記錄。它可被另一個具人類可讀的屬性覆寫。</p>
+
+<pre><code>class Person
+  def to_param
+    "#{id} #{name}".parameterize
+  end
+end
+
+為了要轉換成對網址友好(URL-friendly)的數值，字串應當調用 parameterize 。
+物件的 id 要放在開頭，以便給 ActiveRecord 的 find 方法查找。
+</code></pre>
+
+<p>使用此 <code>friendly_id</code> gem。它允許藉由某些具描述性的模型屬性，而不是用 <code>id</code> 來創建人類可讀的網址。</p>
+
+<pre><code>class Person
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+end
+</code></pre>
+
+<p>查看 <a href="https://github.com/norman/friendly_id">gem 說明文件</a>獲得更多關於使用的訊息。</p>
+
+</div><div><h3>ActiveResource</h3>
+
+<p>當 HTTP 響應是一個與存在的格式不同的格式時（XML 和 JSON），需要某些額外的格式解析，創一個你慣用的格式，並在類別中使用它。</p>
+
+<p>慣用的格式應當實作下列方法：<code>extension</code>, <code>mime_type</code>, <code>encode</code> 以及 <code>decode</code>。</p>
+
+<pre><code>module ActiveResource
+  module Formats
+    module Extend
+      module CSVFormat
+        extend self
+
+        def extension
+          &#39;csv&#39;
+        end
+
+        def mime_type
+          &#39;text/csv&#39;
+        end
+
+        def encode(hash, options = nil)
+          # 資料以新格式編碼並返回
+        end
+
+        def decode(csv)
+          # 資料以新格式解碼並返回
+        end
+      end
+    end
+  end
+end
+
+class User &lt; ActiveResource::Base
+  self.format = ActiveResource::Formats::Extend::CSVFormat
+
+  ...
+end
+</code></pre>
+
+<p>若 HTTP 請求應當不擴展發送時，覆寫 <code>ActiveResource::Base</code> 的 <code>element_path</code> 及 <code>collection_path</code> 方法，並移除擴展的部份。</p>
+
+<pre><code>class User &lt; ActiveResource::Base
+  ...
+
+  def self.collection_path(prefix_options = {}, query_options = nil)
+    prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+    "#{prefix(prefix_options)}#{collection_name}#{query_string(query_options)}"
+  end
+
+  def self.element_path(id, prefix_options = {}, query_options = nil)
+    prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+    "#{prefix(prefix_options)}#{collection_name}/#{URI.parser.escape id.to_s}#{query_string(query_options)}"
+  end
+end
+
+如有任何改動網址的需求時，這些方法也可以被覆寫。
+</code></pre></div></article><article id="rails.migrations"><h2>遷移</h2><div><p>把 <code>schema.rb</code> 保存在版本管控之下。</p>
+
+<p>使用 <code>rake db:scheme:load</code> 取代 <code>rake db:migrate</code> 來初始化空的資料庫。</p>
+
+<p>使用 <code>rake db:test:prepare</code> 來更新測試資料庫的 schema。</p>
+
+<p>避免在表裡設置預設資料。使用模型層來取代。</p>
+
+<pre><code>def amount
+  self[:amount] or 0
+end
+
+然而 self[:attr_name] 的使用被視為相當常見的，你也可以考慮使用
+更繁瑣的（爭議地可讀性更高的） read_attribute 來取代：
+
+def amount
+  read_attribute(:amount) or 0
+end
+</code></pre>
+
+<p>當編寫建設性的遷移時（加入表或欄位），使用 Rails 3.1 的新方式來遷移 - 使用 <code>change</code> 方法取代 <code>up</code> 與 <code>down</code> 方法。</p>
+
+<pre><code># 過去的方式
+class AddNameToPerson &lt; ActiveRecord::Migration
+  def up
+    add_column :persons, :name, :string
+  end
+
+  def down
+    remove_column :person, :name
+  end
+end
+
+# 新的偏好方式
+class AddNameToPerson &lt; ActiveRecord::Migration
+  def change
+    add_column :persons, :name, :string
+  end
+end
+</code></pre></div></article><article id="rails.views"><h2>視圖</h2><div><p>不要直接從視圖調用模型層。</p>
+
+<p>不要在視圖構造複雜的格式，把它們輸出到視圖 helper 的一個方法或是模型。</p>
+
+<p>使用 partial 模版與佈局來減少重複的程式碼。</p>
+
+<p>加入 <a href="https://github.com/bcardarella/client_side_validations">client side validation</a> 至慣用的 validators。</p>
+
+<p>要做的步驟有：</p>
+
+<p>聲明一個由 <code>ClientSideValidations::Middleware::Base</code> 而來的自定 validator</p>
+
+<pre><code>module ClientSideValidations::Middleware
+  class Email &lt; Base
+    def response
+      if request.params[:email] =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[az]{2,})$/i
+        self.status = 200
+      else
+        self.status = 404
+      end
+      super
+    end
+  end
+end
+</code></pre>
+
+<p>建立一個新文件 <code>public/javascripts/rails.validations.custom.js.coffee</code> 並在你的 <code>application.js.coffee</code> 文件加入一個它的參照：</p>
+
+<pre><code>    # app/assets/javascripts/application.js.coffee
+    #= require rails.validations.custom
+</code></pre>
+
+<p>添加你的用戶端 validator：</p>
+
+<pre><code>#public/javascripts/rails.validations.custom.js.coffee
+clientSideValidations.validators.remote[&#39;email&#39;] = (element, options) -&gt;
+  if $.ajax({
+    url: &#39;/validators/email.json&#39;,
+    data: { email: element.val() },
+    async: false
+  }).status == 404
+    return options.message || &#39;invalid e-mail format&#39;
+</code></pre></div></article><article id="rails.internalization"><h2>國際化</h2><div><p>視圖、模型與控制器裡不應使用語言相關設置與字串。這些文字應搬到在 <code>config/locales</code> 下的語言文件裡。
+當 ActiveRecord 模型的標籤需要被翻譯時，使用 <code>activerecord</code> 作用域:</p>
+
+<pre><code>en:
+  activerecord:
+    models:
+      user: Member
+    attributes:
+      user:
+        name: "Full name"
+
+然後 User.model_name.human 會返回 "Member" ，
+而 User.human_attribute_name("name") 會返回 "Full name"。
+這些屬性的翻譯會被視圖作為標籤使用。
+</code></pre>
+
+<p>把在視圖使用的文字與 ActiveRecord 的屬性翻譯分開。把給模型使用的語言文件放在名為 <code>models</code> 的文件夾，給視圖使用的文字放在名為 <code>views</code> 的文件夾。</p>
+
+<p>當使用額外目錄的語言文件組織完成時，為了要載入這些目錄，要在 <code>application.rb</code> 文件裡描述這些目錄。</p>
+
+<pre><code># config/application.rb
+config.i18n.load_path += Dir[Rails.root.join(&#39;config&#39;, &#39;locales&#39;, &#39;**&#39;, &#39;*.{rb,ym​​l}&#39;)]
+</code></pre>
+
+<p>把共享的本土化選項，像是日期或​​貨幣格式，放在 <code>locales</code> 的根目錄下。
+使用精簡形式的 I18n 方法： <code>I18n.t</code> 來取代 <code>I18n.translate</code> 以及使用 <code>I18n.l</code> 取代 <code>I18n.localize</code>。
+使用 “惰性” 查詢視圖中使用的文字。假設我們有以下結構：</p>
+
+<pre><code>en:
+  users:
+    show:
+      title: "User details page"
+</code></pre>
+
+<p><code>users.show.title</code> 的數值能這樣被<code>app/views/users/show.html.haml</code> 查詢：</p>
+
+<pre><code>= t &#39;.title&#39;
+</code></pre>
+
+<p>在控制器與模型使用點分隔的鍵，來取代指定 <code>:scope</code> 選項。點分隔的調用更容易閱讀及追踪層級。</p>
+
+<pre><code># 這樣子調用
+I18n.t &#39;activerecord.errors.messages.record_invalid&#39;
+
+# 而不是這樣
+I18n.t :record_invalid, :scope =&gt; [:activerecord, :errors, :messages]
+</code></pre>
+
+<p>關於 Rails i18n 更詳細的訊息可以在這裡找到 <a href="http://guides.rubyonrails.org/i18n.html">Rails Guides</a>。</p></div></article><article id="rails.assets"><h2>Assets</h2><div><p>利用這個 <a href="http://guides.rubyonrails.org/asset_pipeline.html">assets pipeline</a> 來管理應用的結構。</p>
+
+<p>保留 <code>app/assets</code> 給自定的樣式表, javascripts, 或圖片。</p>
+
+<p>第三方程式碼如： <a href="http://jquery.com/">jQuery</a> 或 <a href="http://twitter.github.com/bootstrap/">bootstrap</a> 應放置在<code>vendor/assets</code>。</p>
+
+<p>當可能的時候，使用 gem 化的 assets 版本。 (如： <a href="https://github.com/rails/jquery-rails">jquery-rails</a>)。</p></div></article><article id="rails.mailers"><h2>Mailers</h2><div><p>把 mails 命名為 <code>SomethingMailer</code>。沒有 Mailer 字根的話，不能立即顯現哪個是一個 Mailer，以及哪個視圖與它有關。</p>
+
+<p>提供 HTML 與純文本視圖模版。</p>
+
+<p>在你的開發環境啟用信件失敗發送錯誤。這些錯誤預設是被停用的。</p>
+
+<pre><code># config/environments/development.rb
+
+config.action_mailer.raise_delivery_errors = true
+</code></pre>
+
+<p>在開發模式使用 <code>smtp.gmail.com</code> 設置 SMTP 服務器</p>
+
+<p>（當然了，除非你自己有本機 SMTP 服務器）。</p>
+
+<pre><code># config/environments/development.rb
+
+config.action_mailer.smtp_settings = {
+  address: &#39;smt​​p.gmail.com&#39;,
+  # 更多設置
+}
+</code></pre>
+
+<p>提供預設的配置給主機名。</p>
+
+<pre><code># config/environments/development.rb
+config.action_mailer.default_url_options = {host: "#{local_ip}:3000"}
+
+
+# config/environments/production.rb
+config.action_mailer.default_url_options = {host: &#39;your_site.com&#39;}
+
+# 在你的 mailer 類
+default_url_options[:host] = &#39;your_site.com&#39;
+</code></pre>
+
+<p>如果你需要在你的網站使用一個 email 鏈結，總是使用 <code>_url</code> 方法，而不是 <code>_path</code> 方法。 <code>_url</code> 方法包含了主機名，而 <code>_path</code> 方法沒有。</p>
+
+<pre><code># 錯誤
+You can always find more info about this course
+= link_to &#39;here&#39;, url_for(course_path(@course))
+
+# 正確
+You can always find more info about this course
+= link_to &#39;here&#39;, url_for(course_url(@course))
+</code></pre>
+
+<p>正確地顯示寄與收件人地址的格式。使用下列格式：</p>
+
+<pre><code># 在你的 mailer 類別
+default from: &#39;Your Name &lt;info@your_site.com&gt;&#39;
+</code></pre>
+
+<p>確定測試環境的 email 發送方法設置為 <code>test</code> ：</p>
+
+<pre><code># config/environments/test.rb
+
+config.action_mailer.delivery_method = :test
+</code></pre>
+
+<p>開發與生產環境的發送方法應為 <code>smtp</code> ：</p>
+
+<pre><code># config/environments/development.rb, config/environments/production.rb
+
+config.action_mailer.delivery_method = :smtp
+</code></pre>
+
+<p>當發送 HTML email 時，所有樣式應為行內樣式，由於某些用戶有關於外部樣式的問題。某種程度上這使得更難管理及造成程式碼重用。有兩個相似的 gem 可以轉換樣式，以及將它們放在對應的html 標籤裡： <a href="https://github.com/fphilipe/premailer-rails3">premailer-rails3</a> 和 <a href="https:// github.com/Mange/roadie">roadie</a>。</p>
+
+<p>應避免頁面產生響應時寄送 email。若多個 email 寄送時，造成了頁面載入延遲，以及請求可能逾時。使用 <a href="https://github.com/tobi/dela​​yed_job">delayed_job</a> gem 的幫助來克服在背景處理寄送 email 的問題。</p></div></article><article id="rails.bundler"><h2>Bundler</h2><div><p>把只給開發環境或測試環境的 gem 適當地分組放在 Gemfile 文件中。</p>
+
+<p>在你的專案中只使用公認的 gem。如果你考慮引入某些顯為人所知的 gem ，你應該先仔細複查一下它的原始碼。</p>
+
+<p>關於多個開發者使用不同操作系統的專案，操作系統相關的 gem 預設會產生一個經常變動的 <code>Gemfile.lock</code> 。在 Gemfile 文件裡，所有與 OS X 相關的 gem 放在 <code>darwin</code> 群組，而所有 Linux 相關的 gem 放在 <code>linux</code> 群組：</p>
+
+<pre><code># Gemfile
+group :darwin do
+  gem &#39;rb-fsevent&#39;
+  gem &#39;growl&#39;
+end
+
+group :linux do
+  gem &#39;rb-inotify&#39;
+end
+
+要在對的環境獲得合適的 gem，添加以下程式碼至 config/application.rb ：
+
+platform = RUBY_PLATFORM.match(/(linux|darwin)/)[0].to_sym
+Bundler.require(platform)
+</code></pre>
+
+<p>不要把 <code>Gemfile.lock</code> 文件從版本控制裡移除。這不是隨機產生的文件 - 它確保你所有的成員執行<code>bundle install</code> 時，獲得相同版本的gem 。</p>
+
+<h2>無價的 Gems</h2>
+
+<p>一個最重要的編程理念是“不要重造輪子！”。若你遇到一個特定問題，你應該要在你開始前，看一下是否有存在的解決方案。下面是一些在很多 Rails 專案中 "無價的" gem 列表（全部相容 Rails 3.1）：</p>
+
+<p><a href="https://github.com/gregbell/active_admin">active_admin</a> - 有了 ActiveAdmin，創建 Rails 應用的管理介面就像兒戲。你會有一個很好的儀錶盤，圖形化 CRUD 介面以及更多東西。非常靈活且可客製化。</p>
+
+<p><a href="https://github.com/jnicklas/capybara">capybara</a> - Capybara 旨在簡化整合測試 Rack 應用的過程，像是 Rails、Sinatra 或 Merb。 Capybara 模擬了真實用戶使用 web 應用的互動。它與你測試在運行的驅動無關，並原生搭載 Rack::Test 及 Selenium 支持。透過外部 gem 支持 HtmlUnit、WebKit 及 env.js 。與 RSpec &amp; Cucumber 一起使用時工作良好。</p>
+
+<p><a href="https://github.com/jnicklas/carrierwave">carrierwave</a> - Rails 最後一個文件上傳解決方案。支持上傳檔案（及很多其它的酷玩意的）的本機儲存與雲端儲存。圖片後處理與 ImageMagick 整合得非常好。</p>
+
+<p><a href="https://github.com/bcardarella/client_side_validations">client<em>side</em>validations</a> -
+  一個美妙的 gem，替你從現有的服務器端模型驗證自動產生 Javascript 用戶端驗證。高度推薦！</p>
+
+<p><a href="https://github.com/chriseppstein/compass">compass-rails</a> - 一個優秀的 gem，添加了某些 css 框架的支持。包括了 sass mixin 的蒐集，讓你減少 css 文件的程式碼並幫你解決瀏覽器相容問題。</p>
+
+<p><a href="https://github.com/cucumber/cucumber-rails">cucumber-rails</a> - Cucumber 是一個由 Ruby 所寫，開發功能測試的頂級工具。 cucumber-rails 提供了 Cucumber 的 Rails 整合。</p>
+
+<p><a href="https://github.com/plataformatec/devise">devise</a> - Devise 是 Rails 應用的一個完整解決方案。多數情況偏好使用 devise 來開始你的客制驗證方案。</p>
+
+<p><a href="http://fabricationgem.org/">fabrication</a> - 一個很好的假資料產生器（編輯者的選擇）。</p>
+
+<p><a href="https://github.com/thoughtbot/factory_girl">factory_girl</a> - 另一個 Fabrication 的選擇。一個成熟的假資料產生器。 Fabrication 的精神領袖先驅。</p>
+
+<p><a href="http://faker.rubyforge.org/">faker</a> - 實用的 gem 來產生仿造的資料（名字、地址，等等）。</p>
+
+<p><a href="https://github.com/pauldix/feedzirra">feedzirra</a> - 非常快速及靈活的 RSS 或 Atom 種子解析器。</p>
+
+<p><a href="https://github.com/norman/friendly_id">friendly_id</a> - 透過使用某些具描述性的模型屬性，而不是使用 id，允許你創建人類可讀的網址。</p>
+
+<p><a href="https://github.com/guard/guard">guard</a> - 極佳的 gem 監控文件變化及任務的調用。搭載了很多實用的擴充。遠優於 autotest 與 watchr。</p>
+
+<p><a href="https://github.com/indirect/haml-rails">haml-rails</a> - haml-rails 提供了 Haml 的 Rails 整合。</p>
+
+<p><a href="http://haml-lang.com">haml</a> - Haml 是一個簡潔的模型語言，被很多人認為（包括我）遠優於Erb。</p>
+
+<p><a href="https://github.com/amatsuda/kaminari">kaminari</a> - 很棒的分頁解決方案。</p>
+
+<p><a href="https://github.com/notahat/machinist">machinist</a> - 假資料不好玩，Machinist 才好玩。</p>
+
+<p><a href="https://github.com/rspec/rspec-rails">rspec-rails</a> - RSpec 是 Test::MiniTest 的取代者。我不高度推薦 RSpec。 rspec-rails 提供了 RSpec 的 Rails 整合。</p>
+
+<p><a href="https://github.com/plataformatec/simple_form">simple<em>form</a> - 一旦用過 simple</em>form（或 formatastic），你就不想聽到關於 Rails 預設的表單。它是一個創造表單很棒的 DSL。</p>
+
+<p><a href="https://github.com/fguillen/simplecov-rcov">simplecov-rcov</a> - 為了 SimpleCov 打造的 RCov formatter。若你想使用 SimpleCov 搭配 Hudson 持續整合服務器，很有用。</p>
+
+<p><a href="https://github.com/colszowka/simplecov">simplecov</a> - 程式碼覆蓋率工具。不像 RCov，完全相容 Ruby 1.9。產生精美的報告。必須用！</p>
+
+<p><a href="http://slim-lang.com">slim</a> - Slim 是一個簡潔的模版語言，被視為是遠遠優於 HAML(Erb 就更不用說了)的語言。唯一會阻止我大規模地使用它的是，主流 IDE 及編輯器對它的支持不好。但它的效能是非凡的。</p>
+
+<p><a href="https://github.com/timcharper/spork">spork</a> - 一個給測試框架（RSpec 或現今 Cucumber）用的 DRb 服務器，每次運行前確保分支出一個乾淨的測試狀態。簡單的說，預載很多測試環境的結果是大幅降低你的測試啟動時間，絕對必須用！</p>
+
+<p><a href="https://github.com/sunspot/sunspot">sunspot</a> - 基於 SOLR 的全文檢索引擎。</p>
+
+<p>這不是完整的清單，以及其它的 gem 也可以在之後加進來。以上清單上的所有 gems 皆經測試，處於活躍開發階段，有社群以及程式碼的品質很高。</p>
+
+<h2>缺陷的 Gems</h2>
+
+<p>這是一個有問題的或被別的 gem 取代的 gem 清單。你應該在你的專案裡避免使用它們。</p>
+
+<p><a href="http://rmagick.rubyforge.org/">rmagick</a> - 這個 gem 因大量消耗記憶體而聲名狼藉。使用 <a href="https://github.com/probablycorey/mini_magick">minimagick</a> 來取代。</p>
+
+<p><a href="http://www.zenspider.com/ZSS/Products/ZenTest/">autotest</a> - 自動測試的老舊解決方案。遠不如 guard 及 <a href="https://github.com/mynyml/watchr">watchr</a>。</p>
+
+<p><a href="https://github.com/relevance/rcov">rcov</a> - 程式碼覆蓋率工具，不相容 Ruby 1.9。使用 <a href="https://github.com/colszowka/simplecov">SimpleCov</a> 來取代。</p>
+
+<p><a href="https://github.com/cowboyd/therubyracer">therubyracer</a> - 極度不鼓勵在生產模式使用這個gem，它消耗大量的記憶體。我會推薦使用 <a href="https://github.com/nu7hatch/mustang">Mustang</a> 來取代。</p>
+
+<p>這仍是一個完善中的清單。請告訴我受人歡迎但有缺陷的 gems 。</p></div></article><article id="rails.manage-process"><h2>管理進程</h2><div><p>若你的專案依賴各種外部的進程使用 <a href="https://github.com/ddollar/foreman">foreman</a> 來管理它們。</p></div></article><article id="rails.testing-rails-app"><h2>測試 Rails 應用</h2><div><p>也許 BDD 方法是實作一個新功能最好的方法。你從開始寫一些高階的測試（通常使用 Cucumber），然後使用這些測試來驅使你實作功能。一開始你給功能的視圖寫測試，並使用這些測試來創建相關的視圖。之後，你創建丟給視圖資料的控制器測試來實現控制器。最後你實作模型的測試以及模型自身。</p>
+
+<h2>Cucumber</h2>
+
+<p>用 <code>@wip</code> （工作進行中）標籤標記你未完成的場景。這些場景不納入考慮，且不標記為測試失敗。當完成一個未完成場景且功能測試通過時，為了把此場景加至測試套件裡，應該移除 <code>@wip</code> 標籤。</p>
+
+<p>配置你的預設配置文件，排除掉標記為 <code>@javascript</code> 的場景。它們使用瀏覽器來測試，推薦停用它們來增加一般場景的執行速度。
+替標記著 <code>@javascript</code> 的場景配置另一個配置文件。</p>
+
+<p>配置文件可在 <code>cucumber.yml</code> 文件裡配置。</p>
+
+<pre><code># 配置文件的定義：
+profile_name: --tags @tag_name
+</code></pre>
+
+<p>帶指令運行一個配置文件：</p>
+
+<pre><code>cucumber -p profile_name
+</code></pre>
+
+<p>若使用 <a href="http://fabricationgem.org/">fabrication</a> 來替換假資料(fixtures)，使用預定義的 <a href="http://fabricationgem.org/#!cucumber-steps">fabrication steps</a>。</p>
+
+<p>不要使用舊版的 <code>web_steps.rb</code> 步驟定義！<a href="http://aslakhellesoy.com/post/11055981222/the-training-wheels-came-off">最新版 Cucumber 已移除 web steps</a> ，使用它們導致冗贅的場景，而且它並沒有正確地反映出應用的領域。</p>
+
+<p>當檢查一元素的可視文字時，檢查元素的文字而不是檢查 id。這樣可以查出 i18n 的問題。</p>
+
+<p>給同種類物件創建不同的功能特色：</p>
+
+<pre><code># 差
+Feature: Articles
+# ... 功能實作 ...
+
+# 好
+Feature: Article Editing
+# ... 功能實作 ...
+
+Feature: Article Publishing
+# ... 功能實作 ...
+
+Feature: Article Search
+# ... 功能實作 ...
+</code></pre>
+
+<p>每一個功能有三個主要成分：</p>
+
+<p>Title 標題</p>
+
+<p>Narrative - 簡短說明這個特色關於什麼。</p>
+
+<p>Acceptance criteria - 每個由獨立步驟組成的一套場景。</p>
+
+<p>最常見的格式稱為 Connextra 格式。</p>
+
+<pre><code>In order to [benefit] ...
+A [stakeholder]...
+Wants to [feature] ...
+</code></pre>
+
+<p>這是最常見但不是要求的格式，敘述可以是依賴功能複雜度的任何文字。</p>
+
+<p>自由地使用場景概述使你的場景備作它用(keep your scenarios DRY)。</p>
+
+<pre><code>Scenario Outline: User cannot register with invalid e-mail
+  When I try to register with an email "&lt;email&gt;"
+  Then I should see the error message "&lt;error&gt;"
+
+Examples:
+  |email |error |
+  | |The e-mail is required|
+  |invalid email |is not a valid e-mail |
+</code></pre>
+
+<p>場景的步驟放在 <code>step_definitions</code> 目錄下的 <code>.rb</code> 文件。</p>
+
+<p>步驟文件命名慣例為 <code>[description]_steps.rb</code>。</p>
+
+<p>步驟根據不同的標準放在不同的文件裡。</p>
+
+<p>每一個功能可能有一個步驟文件( <code>home_page_steps.rb</code> )。</p>
+
+<p>也可能給每個特定物件的功能，建一個步驟文件( <code>articles_steps.rb</code> )。</p>
+
+<p>使用多行步驟參數來避免重複</p>
+
+<pre><code>場景: User profile
+  Given I am logged in as a user "John Doe" with an e-mail "user@test.com"
+  When I go to my profile
+  Then I should see the following information:
+    |First name|John |
+    |Last name |Doe |
+    |E-mail |user@test.com|
+
+# 步驟:
+Then /^I should see the following information:$/ do |table|
+  table.raw.each do |field, value|
+    find_field(field).value.should =~ /#{value}/
+  end
+end
+</code></pre>
+
+<p>使用複合​​步驟使場景備作它用(Keep your scenarios DRY)</p>
+
+<pre><code># ...
+When I subscribe for news from the category "Technical News"
+# ...
+
+# 步驟:
+When /^I subscribe for news from the category "([^"]*)"$/ do |category|
+  steps %Q{
+    When I go to the news categories page
+    And I select the category #{category}
+    And I click the button "Subscribe for this category"
+    And I confirm the subscription
+  }
+end
+</code></pre>
+
+<p>總是使用 Capybara 否定匹配來取代正面情況搭配 should_not，它們會在給定的超時時重試匹配，允許你測試 ajax 動作。見 <a href="https://github.com/jnicklas/capybara">Capybara 的讀我文件</a> 獲得更多說明。</p>
+
+<h2>RSpec</h2>
+
+<p>一個例子僅用一個期望值。</p>
+
+<pre><code># 差
+describe ArticlesController do
+  #...
+
+  describe &#39;GET new&#39; do
+    it &#39;assigns new article and renders the new article template&#39; do
+      get :new
+      assigns[:article].should be_a_new Article
+      response.should render_template :new
+    end
+  end
+
+  # ...
+end
+
+# 好
+describe ArticlesController do
+  #...
+
+  describe &#39;GET new&#39; do
+    it &#39;assigns a new article&#39; do
+      get :new
+      assigns[:article].should be_a_new Article
+    end
+
+    it &#39;renders the new article template&#39; do
+      get :new
+      response.should render_template :new
+    end
+  end
+
+end
+</code></pre>
+
+<p>大量使用 <code>descibe</code> 及 <code>context</code> 。</p>
+
+<p>如下地替 <code>describe</code> 區塊命名：</p>
+
+<p>非方法使用“description”</p>
+
+<p>實體方法使用井字號“#method”</p>
+
+<p>類別方法使用點“.method”</p>
+
+<pre><code>class Article
+  def summary
+    #...
+  end
+
+  def self.latest
+    #...
+  end
+end
+
+# the spec...
+describe Article
+  describe &#39;#summary&#39;
+    #...
+  end
+
+  describe &#39;.latest&#39;
+    #...
+  end
+end
+</code></pre>
+
+<p>使用 <a href="http://fabricationgem.org/">fabricators</a> 來創建測試物件。</p>
+
+<p>大量使用 mocks 與 stubs。</p>
+
+<pre><code># mocking 一個模型
+article = mock_model(Article)
+
+# stubbing 一個方法
+Article.stub(:find).with(article.id).and_return(article)
+</code></pre>
+
+<p>當 mocking 一個模型時，使用 <code>as_null_object</code> 方法。它告訴輸出僅監聽我們預期的訊息，並忽略其它的訊息。</p>
+
+<pre><code>article = mock_model(Article).as_null_object
+</code></pre>
+
+<p>使用 <code>let</code> 區塊而不是 <code>before(:all)</code> 區塊替 spec 例子創建資料。 <code>let</code> 區塊會被惰性求值。</p>
+
+<pre><code># 使用這個：
+let(:article) { Fabricate(:article) }
+
+# ... 而不是這個：
+before(:each) { @article = Fabricate(:article) }
+</code></pre>
+
+<p>當可能時，使用 <code>subject</code>。</p>
+
+<pre><code>describe Article do
+  subject { Fabricate(:article) }
+
+  it &#39;is not published on creation&#39; do
+    subject.should_not be_published
+  end
+end
+</code></pre>
+
+<p>如果可能的話，使用 <code>specify</code>。它是 <code>it</code> 的同義詞，但在沒 docstring 的情況下可讀性​​更高。</p>
+
+<pre><code># 差
+describe Article do
+  before { @article = Fabricate(:article) }
+
+  it &#39;is not published on creation&#39; do
+    @article.should_not be_published
+  end
+end
+
+# 好
+describe Article do
+  let(:article) { Fabricate(:article) }
+  specify { article.should_not be_published }
+end
+</code></pre>
+
+<p>當可能時，使用 <code>its</code> 。</p>
+
+<pre><code># 差
+describe Article do
+  subject { Fabricate(:article) }
+
+  it &#39;has the current date as creation date&#39; do
+    subject.creation_date.should == Date.today
+  end
+end
+
+# 好
+describe Article do
+  subject { Fabricate(:article) }
+  its(:creation_date) { should == Date.today }
+end
+</code></pre>
+
+</div><div><h3>視圖</h3>
+
+<p>視圖測試的目錄結構要與 <code>app/views</code> 之中的相符。</p>
+
+<p>舉例來說，在 <code>app/views/users</code> 視圖被放在 <code>spec/views/users</code>。</p>
+
+<p>視圖測試的命名慣例是添加<code>_spec.rb</code> 至視圖名字之後，舉例來說，視圖 <code>_form.html.haml</code> 有一個對應的測試叫做 <code>_form.html.haml_spec.rb</code>。</p>
+
+<p>每個視圖測試文件都需要<code>spec_helper.rb</code>。</p>
+
+<p>外部描述區塊使用不含 <code>app/views</code> 部分的視圖路徑。 <code>render</code> 方法沒有傳入參數時，是這麼使用的。</p>
+
+<pre><code># spec/views/articles/new.html.haml_spec.rb
+require &#39;spec_helper&#39;
+
+describe &#39;articles/new.html.haml&#39; do
+  # ...
+end
+</code></pre>
+
+<p>永遠在視圖測試來 mock 模型。視圖的目的只是顯示訊息。</p>
+
+<p><code>assign</code> 方法提供由控制器提供視圖使用的實體變數(instance variable)。</p>
+
+<pre><code># spec/views/articles/edit.html.haml_spec.rb
+describe &#39;articles/edit.html.haml&#39; do
+it &#39;renders the form for a new article creation&#39; do
+  assign(
+    :article,
+    mock_model(Article).as_new_record.as_null_object
+  )
+  render
+  rendered.should have_selector(&#39;form&#39;,
+    method: &#39;post&#39;,
+    action: articles_path
+  ) do |form|
+    form.should have_selector(&#39;input&#39;, type: &#39;submit&#39;)
+  end
+end
+</code></pre>
+
+<p>偏好 capybara 否定情況選擇器，勝於搭配正面情況的 should_not 。</p>
+
+<pre><code># 差
+page.should_not have_selector(&#39;input&#39;, type: &#39;submit&#39;)
+page.should_not have_xpath(&#39;tr&#39;)
+
+# 好
+page.should have_no_selector(&#39;input&#39;, type: &#39;submit&#39;)
+page.should have_no_xpath(&#39;tr&#39;)
+</code></pre>
+
+<p>當一個視圖使用 helper 方法時，這些方法需要被 stubbed。 Stubbing 這些 helper 方法是在 <code>template</code> 完成的：</p>
+
+<pre><code># app/helpers/articles_helper.rb
+class ArticlesHelper
+  def formatted_date(date)
+    # ...
+  end
+end
+
+# app/views/articles/show.html.haml
+= "Published at: #{formatted_date(@article.published_at)}"
+
+# spec/views/articles/show.html.haml_spec.rb
+describe &#39;articles/show.html.html&#39; do
+  it &#39;displays the formatted date of article publishing&#39;
+    article = mock_model(Article, published_at: Date.new(2012, 01, 01))
+    assign(:article, article)
+
+    template.stub(:formatted_date).with(article.published_at).and_return &#39;01.01.2012&#39;
+
+    render
+    rendered.should have_content(&#39;Published at: 01.01.2012&#39;)
+  end
+end
+</code></pre>
+
+<p>在 <code>spec/helpers</code> 目錄的 helper specs 是與視圖 specs 分開的。</p>
+
+</div><div><h3>控制器</h3>
+
+<p>Mock 模型及 stub 他們的方法。測試控制器時不應依賴建模。</p>
+
+<p>僅測試控制器需負責的行為：</p>
+
+<p>執行特定的方法</p>
+
+<p>從動作返回的資料 - assigns, 等等。</p>
+
+<p>從動作返回的結果 - template render, redirect, 等等。</p>
+
+<pre><code># 常用的控制器 spec 範例
+# spec/controllers/articles_controller_spec.rb
+# 我們只對控制器應執行的動作感興趣
+# 所以我們 mock 模型及 stub 它的方法
+# 並且專注在控制器該做的事情上
+
+describe ArticlesController do
+  # 模型將會在測試中被所有控制器的方法所使用
+  let(:article) { mock_model(Article) }
+
+  describe &#39;POST create&#39; do
+    before { Article.stub(:new).and_return(article) }
+
+    it &#39;creates a new article with the given attributes&#39; do
+      Article.should_receive(:new).with(title: &#39;The New Article Title&#39;).and_return(article)
+      post :create, message: { title: &#39;The New Article Title&#39; }
+    end
+
+    it &#39;saves the article&#39; do
+      article.should_receive(:save)
+      post :create
+    end
+
+    it &#39;redirects to the Articles index&#39; do
+      article.stub(:save)
+      post :create
+      response.should redirect_to(action: &#39;index&#39;)
+    end
+  end
+end
+</code></pre>
+
+<p>當控制器根據不同參數有不同行為時，使用 context。</p>
+
+<pre><code># 一個在控制器中使用 context 的典型例子是，物件正確保存時，使用創建，保存失敗時更新。
+
+describe ArticlesController do
+  let(:article) { mock_model(Article) }
+
+  describe &#39;POST create&#39; do
+    before { Article.stub(:new).and_return(article) }
+
+    it &#39;creates a new article with the given attributes&#39; do
+      Article.should_receive(:new).with(title: &#39;The New Article Title&#39;).and_return(article)
+      post :create, article: { title: &#39;The New Article Title&#39; }
+    end
+
+    it &#39;saves the article&#39; do
+      article.should_receive(:save)
+      post :create
+    end
+
+    context &#39;when the article saves successfully&#39; do
+      before { article.stub(:save).and_return(true) }
+
+      it &#39;sets a flash[:notice] message&#39; do
+        post :create
+        flash[:notice].should eq(&#39;The article was saved successfully.&#39;)
+      end
+
+      it &#39;redirects to the Articles index&#39; do
+        post :create
+        response.should redirect_to(action: &#39;index&#39;)
+      end
+    end
+
+    context &#39;when the article fails to save&#39; do
+      before { article.stub(:save).and_return(false) }
+
+      it &#39;assigns @article&#39; do
+        post :create
+        assigns[:article].should be_eql(article)
+      end
+
+      it &#39;re-renders the "new" template&#39; do
+        post :create
+        response.should render_template(&#39;new&#39;)
+      end
+    end
+  end
+end
+</code></pre>
+
+</div><div><h3>模型</h3>
+
+<p>不要在自己的測試裡 mock 模型。</p>
+
+<p>使用捏造的東西來創建真的物件。</p>
+
+<p>Mock 別的模型或子物件是可接受的。</p>
+
+<p>在測試裡建立所有例子的模型來避免重複。</p>
+
+<pre><code>describe Article
+  let(:article) { Fabricate(:article) }
+end
+</code></pre>
+
+<p>加入一個例子確保捏造的模型是可行的。</p>
+
+<pre><code>describe Article
+  it &#39;is valid with valid attributes&#39; do
+    article.should be_valid
+  end
+end
+</code></pre>
+
+<p>當測試驗證時，使用 <code>have(x).errors_on</code> 來指定要被驗證的屬性。使用 <code>be_valid</code> 不保證問題在目的的屬性。</p>
+
+<pre><code># 差
+describe &#39;#title&#39;
+  it &#39;is required&#39; do
+    article.title = nil
+    article.should_not be_valid
+  end
+end
+
+# 偏好
+describe &#39;#title&#39;
+  it &#39;is required&#39; do
+    article.title = nil
+    article.should have(1).error_on(:title)
+  end
+end
+</code></pre>
+
+<p>替每個有驗證的屬性加另一個 <code>describe</code>。</p>
+
+<pre><code>describe Article
+  describe &#39;#title&#39;
+    it &#39;is required&#39; do
+      article.title = nil
+      article.should have(1).error_on(:title)
+    end
+  end
+end
+</code></pre>
+
+<p>當測試模型屬性的獨立性時，把其它物件命名為 <code>another_object</code>。</p>
+
+<pre><code>describe Article
+  describe &#39;#title&#39;
+    it &#39;is unique&#39; do
+      another_article = Fabricate.build(:article, title: article.title)
+      article.should have(1).error_on(:title)
+    end
+  end
+end
+</code></pre>
+
+</div><div><h3>Mailers</h3>
+
+<p>在 Mailer 測試的模型應該要被 mock。 Mailer 不應依賴建模。</p>
+
+<p>Mailer 的測試應該確認如下：</p>
+
+<p>這個 subject 是正確的</p>
+
+<p>這個 receiver e-mail 是正確的</p>
+
+<p>這個 e-mail 寄送至對的郵件地址</p>
+
+<p>這個 e-mail 包含了需要的訊息</p>
+
+<pre><code>describe SubscriberMailer
+  let(:subscriber) { mock_model(Subscription, email: &#39;johndoe@test.com&#39;, name: &#39;John Doe&#39;) }
+
+  describe &#39;successful registration email&#39;
+    subject { SubscriptionMailer.successful_registration_email(subscriber) }
+
+    its(:subject) { should == &#39;Successful Registration!&#39; }
+    its(:from) { should == [&#39;info@your_site.com&#39;] }
+    its(:to) { should == [subscriber.email] }
+
+    it &#39;contains the subscriber name&#39; do
+      subject.body.encoded.should match(subscriber.name)
+    end
+  end
+end
+</code></pre>
+
+</div><div><h3>Uploaders</h3>
+
+<p>我們如何測試上傳器是否正確地調整大小。這裡是一個 <a href="https://github.com/jnicklas/carrierwave">carrierwave</a> 圖片上傳器的範例 spec：</p>
+
+<pre><code># rspec/uploaders/person_avatar_uploader_spec.rb
+require &#39;spec_helper&#39;
+require &#39;carrierwave/test/matchers&#39;
+
+describe PersonAvatarUploader do
+  include CarrierWave::Test::Matchers
+
+  # 在執行例子前啟用圖片處理
+  before(:all) do
+    UserAvatarUploader.enable_processing = true
+  end
+
+  # 創建一個新的 uploader。模型被模仿為不依賴建模時的上傳及調整圖片。
+  before(:each) do
+    @uploader = PersonAvatarUploader.new(mock_model(Person).as_null_object)
+    @uploader.store!(File.open(path_to_file))
+  end
+
+  # 執行完例子時停用圖片處理
+  after(:all) do
+    UserAvatarUploader.enable_processing = false
+  end
+
+  # 測試圖片是否不比給定的維度長
+  context &#39;the default version&#39; do
+    it &#39;scales down an image to be no larger than 256 by 256 pixels&#39; do
+      @uploader.should be_no_larger_than(256, 256)
+    end
+  end
+
+  # 測試圖片是否有確切的維度
+  context &#39;the thumb version&#39; do
+    it &#39;scales down an image to be exactly 64 by 64 pixels&#39; do
+      @uploader.thumb.should have_dimensions(64, 64)
+    end
+  end
+end
+</code></pre></div></article><article id="rails.further"><h2>延伸閱讀</h2><div><p>有幾個絕妙講述 Rails 風格的資源，若有閒暇時應當考慮延伸閱讀：</p>
+
+<ul>
+<li><a href="http://tr3w.com/">The Rails 3 Way</a></li>
+<li><a href="http://guides.rubyonrails.org/">Ruby on Rails Guides</a></li>
+<li><a href="http://pragprog.com/book/achbd/the-rspec-book">The RSpec Book</a></li>
+</ul>
+
+<h2>貢獻</h2>
+
+<p>在本指南所寫的每個東西都不是定案。這只是我渴望想與同樣對 Rails 編碼風格有興趣的大家一起工作，以致於最終我們可以替整個 Ruby 社群創造一個有益的資源。</p>
+
+<p>歡迎開票或發送一個帶有改進的更新請求。在此提前感謝你的幫助！</p>
+
+<h2>口耳相傳</h2>
+
+<p>一份社群驅動的風格指南，對一個社群來說，只是讓人知道有這個社群。推特轉發這份指南，分享給你的朋友或同事。我們得到的每個註解、建議或意見都可以讓這份指南變得更好一點。而我們想要擁有的是最好的指南，不是嗎？</p></div></article></section><!-- Footer--><footer><p>Copyright &copy; 2012. Built with 
+<a href="http://nodejs.org/">Node.js </a>using a
+<a href="https://github.com/visionmedia/jade/">jade </a>and
+<a href="https://github.com/BonsaiDen/JavaScript-Garden">Javascript Garden </a>template.     
+</p></footer><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script><script src="javascript/prettify.js"></script><script src="javascript/plugin.js"></script><script src="javascript/garden.js"></script></body></html>
